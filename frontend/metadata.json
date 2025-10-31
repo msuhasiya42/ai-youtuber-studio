@@ -1,0 +1,5 @@
+{
+  "name": "AI YouTuber Studio",
+  "description": "An AI-powered web app for YouTubers to connect their channel, view analytics, and generate content ideas and scripts. This MVP simulates channel data and uses the Gemini API for content generation.",
+  "requestFramePermissions": []
+}

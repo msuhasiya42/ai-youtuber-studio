@@ -1,0 +1,6 @@
+Analyze why these videos performed well:
+- Use title, transcript, comments, and metrics
+- Return key drivers, replicable patterns, and suggestions
+Output JSON only: { "drivers": [], "patterns": [], "suggestions": [] }
+
+
