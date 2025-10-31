@@ -1,76 +1,55 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react'; // Keep React and hooks, but we'll remove internal fetching
 import ChannelHeader from './ChannelHeader';
-import LiveVideos from './LiveVideos';
-import TopPerformers from './TopPerformers';
-import VideoList from './VideoList';
-import { getChannel } from '../services/backendApi';
-import type { Channel, Video } from '../types';
+// import LiveVideos from './LiveVideos'; // Assuming these are child components
+// import TopPerformers from './TopPerformers';
+// import { getChannel } from '../services/backendApi'; // We'll now pass channelData from App.tsx
 
 interface DashboardProps {
   onDisconnect: () => void;
   onSeeAll: () => void;
+  channelData: { // Add channelData prop
+    id: number;
+    youtube_channel_id: string;
+    name: string;
+    avatar_url?: string;
+    subscribers: number;
+    verified: boolean;
+  } | null;
+  onChannelDataUpdate: (updatedChannel: any) => void; // New prop to handle updates from ChannelHeader
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ onDisconnect, onSeeAll }) => {
-  const [channel, setChannel] = useState<Channel|null>(null);
-  const [videos, setVideos] = useState<Video[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string|null>(null);
-
-  useEffect(() => {
-    setLoading(true);
-    getChannel().then((data) => {
-      if (!data.channel) throw new Error('No channel found.');
-      // Map API shape to Channel and Video types
-      setChannel({
-        id: data.channel.id,
-        name: data.channel.name,
-        avatarUrl: data.channel.avatar_url,
-        isVerified: data.channel.verified,
-        subscriberCount: data.channel.subscribers,
-        totalViews: 0, // Placeholder, backend should return this!
-        totalWatchHours: 0, // Placeholder, backend should return this!
-      });
-      // Videos for dashboard: combine top_videos and add additional if backend supports
-      setVideos(data.top_videos.map((v:any) => ({
-        id: String(v.id),
-        title: v.title,
-        thumbnailUrl: v.thumbnail_url,
-        publishedAt: '',
-        duration: '',
-        viewCount: v.views,
-        likeCount: v.likes,
-        commentCount: 0,
-        ctr: v.ctr,
-      })));
-      setError(null);
-    }).catch((e) => {
-      setError(e.message || 'Failed loading channel');
-      setChannel(null);
-      setVideos([]);
-    }).finally(() => setLoading(false));
-  }, []);
-
-  if (loading) return <div className="w-full min-h-[30vh] flex items-center justify-center text-lg font-bold">Loading…</div>;
-  if (error) return <div className="w-full min-h-[30vh] text-center text-red-500 font-bold">{error}</div>;
-  if (!channel) return <div className="w-full min-h-[30vh] text-center text-gray-500">No channel data found.</div>;
-
+const Dashboard: React.FC<DashboardProps> = ({ onDisconnect, onSeeAll, channelData, onChannelDataUpdate }) => { // Destructure new prop
   return (
-    <div className="p-4 sm:p-6 lg:p-8 max-w-screen-2xl mx-auto">
-      <div className="sticky top-0 z-10 bg-background pt-4 -mt-4 sm:static sm:pt-0 sm:mt-0">
-         <ChannelHeader channel={channel} onDisconnect={onDisconnect} />
+    <div className="flex flex-col min-h-screen bg-gray-900 text-white p-4">
+      <div className="max-w-7xl mx-auto w-full space-y-8">
+        {channelData ? (
+          <ChannelHeader channel={channelData} onDisconnect={onDisconnect} onRefresh={onChannelDataUpdate} />
+        ) : (
+          <div className="text-center p-8 text-xl">
+            No channel found. Please connect your YouTube channel to get started.
+          </div>
+        )}
+        
+        {channelData && (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="col-span-full">
+                <div className="bg-gray-800 rounded-lg shadow-lg p-6">
+                  <h2 className="text-2xl font-semibold mb-4">Dashboard Overview</h2>
+                  <p>Welcome to your AI YouTube Studio! Here you'll find insights, video management tools, and script generation capabilities.</p>
+                  <p className="mt-2">Connect your YouTube channel to unlock all features.</p>
+                  <button 
+                    onClick={onSeeAll} 
+                    className="mt-4 px-6 py-2 bg-indigo-600 rounded-md hover:bg-indigo-700 transition-colors"
+                  >
+                    See All Videos (Coming Soon)
+                  </button>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
       </div>
-      <main className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-3">
-          <LiveVideos videos={videos.slice(0, 3)} />
-        </div>
-        <div className="lg:col-span-2">
-           <VideoList videos={videos.slice(3)} onSeeAll={onSeeAll} />
-        </div>
-        <div className="lg:col-span-1">
-          <TopPerformers videos={videos} />
-        </div>
-      </main>
     </div>
   );
 };

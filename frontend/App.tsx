@@ -19,9 +19,21 @@ async function completeOAuth(code: string): Promise<boolean> {
 
 type View = 'onboarding' | 'dashboard' | 'allVideos';
 
+interface ChannelData {
+  id: number;
+  youtube_channel_id: string;
+  name: string;
+  avatar_url?: string;
+  subscribers: number;
+  verified: boolean;
+  totalViews: number;
+  totalWatchHours: number;
+}
+
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<View>('onboarding');
   const [authChecked, setAuthChecked] = useState(false);
+  const [channelData, setChannelData] = useState<ChannelData | null>(null); // Add channelData state
 
   useEffect(() => {
     // Detect if redirected back from Google after OAuth
@@ -30,21 +42,35 @@ const App: React.FC = () => {
       completeOAuth(code).then(success => {
         if (success) {
           window.history.replaceState({}, document.title, '/');
-          setCurrentView('dashboard');
+          // After successful OAuth, immediately try to fetch channel data
+          getChannel().then(
+            (data) => {
+              setChannelData(data); // Store fetched channel data
+              setCurrentView('dashboard');
+            },
+            (error) => { // Catch errors and set channelData to null
+              console.error("Error fetching channel after OAuth:", error);
+              setChannelData(null); // Clear channel data on error
+              setCurrentView('onboarding');
+            }
+          ).finally(() => setAuthChecked(true));
         } else {
           setCurrentView('onboarding');
+          setAuthChecked(true);
         }
-        setAuthChecked(true);
       });
       return;
     }
     // Try to auto-login if already connected
     getChannel().then(
-      () => {
+      (data) => { // Receive data here
+        setChannelData(data); // Store fetched channel data
         setCurrentView('dashboard');
         setAuthChecked(true);
       },
-      () => {
+      (error) => { // Catch errors and set channelData to null
+        console.error("Error auto-fetching channel:", error);
+        setChannelData(null); // Clear channel data on error
         setCurrentView('onboarding');
         setAuthChecked(true);
       }
@@ -52,10 +78,14 @@ const App: React.FC = () => {
   }, []);
 
   const handleConnect = useCallback(() => {
+    // This is now handled by the OAuth flow.
+    // If we're redirected back from OAuth, channel data should be fetched.
+    // So, we just ensure it transitions to dashboard here.
     setCurrentView('dashboard');
   }, []);
   
   const handleDisconnect = useCallback(() => {
+    setChannelData(null); // Clear channel data on disconnect
     setCurrentView('onboarding');
   }, []);
 
@@ -67,13 +97,17 @@ const App: React.FC = () => {
     setCurrentView('dashboard');
   }, []);
 
+  const handleChannelDataUpdate = useCallback((updatedChannel: ChannelData) => {
+    setChannelData(updatedChannel); // Update App's state with refreshed channel data
+  }, []);
+
   const renderView = () => {
     if (!authChecked) return <div className="w-full min-h-screen flex items-center justify-center">Checking authentication…</div>;
     switch(currentView) {
       case 'onboarding':
         return <Onboarding onConnect={handleConnect} />;
       case 'dashboard':
-        return <Dashboard onDisconnect={handleDisconnect} onSeeAll={handleNavigateToAllVideos} />;
+        return <Dashboard channelData={channelData} onDisconnect={handleDisconnect} onSeeAll={handleNavigateToAllVideos} onChannelDataUpdate={handleChannelDataUpdate} />; // Pass onChannelDataUpdate
       case 'allVideos':
         return <AllVideosPage onBack={handleNavigateToDashboard} />;
       default:

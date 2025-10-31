@@ -14,3 +14,16 @@ export async function getChannel(): Promise<any> {
   if (!res.ok) throw new Error('Not connected');
   return await res.json();
 }
+
+// NEW FUNCTION: Refresh channel data from backend
+export async function refreshChannelData(channelId: number): Promise<any> {
+  const res = await fetch(`${API_URL}/api/channels/${channelId}/refresh`, {
+    method: 'POST',
+    credentials: 'include',
+  });
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.detail || 'Failed to refresh channel data');
+  }
+  return await res.json();
+}

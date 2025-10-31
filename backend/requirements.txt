@@ -16,6 +16,8 @@ python-multipart==0.0.12
 yt-dlp==2024.10.7
 openai==1.51.2
 google-generativeai==0.8.3
+google-api-python-client==2.186.0
+pyjwt==2.10.1
 tenacity==9.0.0
 orjson==3.10.7
 slowapi==0.1.9
