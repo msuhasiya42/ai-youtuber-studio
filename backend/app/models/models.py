@@ -22,6 +22,8 @@ class Channel(Base):
     avatar_url: Mapped[str | None] = mapped_column(Text, nullable=True)
     subscribers: Mapped[int] = mapped_column(Integer, default=0)
     verified: Mapped[bool] = mapped_column(Boolean, default=False)
+    total_views: Mapped[int] = mapped_column(Integer, default=0) # Must be here
+    total_watch_hours: Mapped[float] = mapped_column(Float, default=0.0) # Must be here
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
     owner: Mapped[User | None] = relationship(back_populates="channels")
     videos: Mapped[list["Video"]] = relationship(back_populates="channel")

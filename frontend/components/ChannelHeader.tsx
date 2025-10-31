@@ -13,11 +13,10 @@ const ChannelHeader: React.FC<ChannelHeaderProps> = ({ channel, onDisconnect, on
   const [filter, setFilter] = useState('All time');
   const [isRefreshing, setIsRefreshing] = useState(false); // State for refresh button loading
 
-  const formatNumber = (num: number) => {
-    if (num >= 1_000_000) return `${(num / 1_000_000).toFixed(1)}M`;
-    if (num >= 1_000) return `${(num / 1_000).toFixed(1)}K`;
-    return num.toString();
-  };
+  function formatIndianNumber(num) {
+    if (num == null || isNaN(num)) return "0";
+    return Number(num).toLocaleString("en-IN");
+  }
 
   console.log("channel", channel);
 
@@ -47,13 +46,13 @@ const ChannelHeader: React.FC<ChannelHeaderProps> = ({ channel, onDisconnect, on
             </div>
             <div className="flex items-center gap-2 text-text-secondary mt-1">
                 <SubscribersIcon className="w-4 h-4"/>
-                <span className="font-semibold">{formatNumber(channel.subscribers)}</span>
+                <span className="font-semibold">{formatIndianNumber(channel.subscribers)}</span>
                 <span>subscribers</span>
             </div>
           </div>
         </div>
         <div className="flex items-center gap-2">
-             <button title="Generate Ideas" className="p-2 bg-secondary hover:bg-primary-hover rounded-lg transition-colors"><PlusIcon className="w-5 h-5"/></button>
+             {/* <button title="Generate Ideas" className="p-2 bg-secondary hover:bg-primary-hover rounded-lg transition-colors"><PlusIcon className="w-5 h-5"/></button> */}
              <button
                 onClick={handleRefresh}
                 disabled={isRefreshing}
@@ -69,7 +68,7 @@ const ChannelHeader: React.FC<ChannelHeaderProps> = ({ channel, onDisconnect, on
                     <RefreshCwIcon className="w-5 h-5"/>
                 )}
              </button>
-             <button onClick={onDisconnect} title="Settings & Disconnect" className="p-2 bg-secondary hover:bg-primary-hover rounded-lg transition-colors"><SettingsIcon className="w-5 h-5"/></button>
+             <button onClick={onDisconnect} title="Settings & Disconnect" className="p-2 bg-secondary hover:bg-primary-hover rounded-lg transition-colors">Disconnect</button>
         </div>
       </div>
       
@@ -79,14 +78,14 @@ const ChannelHeader: React.FC<ChannelHeaderProps> = ({ channel, onDisconnect, on
             <ViewsIcon className="w-4 h-4" />
             <span>Total Views</span>
           </div>
-          <p className="text-2xl font-bold text-text-primary">{formatNumber(channel.totalViews)}</p>
+          <p className="text-2xl font-bold text-text-primary">{formatIndianNumber(channel.total_views)}</p>
         </div>
         <div className="flex flex-col gap-2 p-4 bg-background rounded-lg">
           <div className="flex items-center gap-2 text-text-secondary text-sm">
             <WatchHoursIcon className="w-4 h-4" />
             <span>Total Watch Hours</span>
           </div>
-          <p className="text-2xl font-bold text-text-primary">{formatNumber(channel.totalWatchHours)}</p>
+          <p className="text-2xl font-bold text-text-primary">{formatIndianNumber(channel.total_watch_hours)}</p>
         </div>
         <div className="col-span-2 md:col-span-2 flex items-center justify-end">
             <select

@@ -10,6 +10,7 @@ import jwt
 from sqlalchemy.orm import Session
 from app.db.session import get_db
 from app.models.models import User, Channel
+from datetime import datetime, date, timedelta # New import for date calculations
 
 router = APIRouter()
 
@@ -25,6 +26,7 @@ SCOPES = [
     "https://www.googleapis.com/auth/youtube.readonly",
     "https://www.googleapis.com/auth/userinfo.email",
     "openid",
+    "https://www.googleapis.com/auth/yt-analytics.readonly", # NEW SCOPE
 ]
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"  # Only for dev!
@@ -47,7 +49,6 @@ async def get_google_oauth_url(request: Request):
     return {"url": authorization_url}
 
 
-@router.get("/oauth/google/callback")
 @router.get("/oauth/google/callback")
 async def google_oauth_callback(
     request: Request, response: Response, code: str, db: Session = Depends(get_db)
@@ -73,7 +74,7 @@ async def google_oauth_callback(
         raise HTTPException(status_code=400, detail="No ID token received.")
 
     # Decode ID token to get user's email
-    id_info = jwt.decode(creds.id_token, options={"verify_signature": False}) # For verification, you'd add Google's public keys
+    id_info = jwt.decode(creds.id_token, options={"verify_signature": False})
     user_email = id_info.get("email")
 
     if not user_email:
@@ -93,12 +94,19 @@ async def google_oauth_callback(
     db.commit()
     db.refresh(user)
 
-    # Use access token to get YouTube channel info
+    # Use access token to get YouTube channel info (Data API)
+    total_views = 0
+    subscribers = 0
+    youtube_channel_id = None
+    channel_name = "Unknown Channel"
+    avatar_url = None
+    is_verified = False
+
     try:
         youtube = build("youtube", "v3", credentials=creds)
         response_yt = youtube.channels().list(
             mine=True,
-            part="snippet,contentDetails,statistics"
+            part="snippet,statistics"
         ).execute()
 
         if response_yt and response_yt.get("items"):
@@ -106,39 +114,73 @@ async def google_oauth_callback(
             youtube_channel_id = channel_data["id"]
             channel_name = channel_data["snippet"]["title"]
             avatar_url = channel_data["snippet"]["thumbnails"]["default"]["url"]
-            subscribers = channel_data["statistics"].get("subscriberCount", 0)
+            subscribers = int(channel_data["statistics"].get("subscriberCount", 0))
             is_verified = channel_data["snippet"].get("liveStreamingDetails", {}).get("isVerified", False)
-            
-            # Find or create channel
-            channel = db.query(Channel).filter(Channel.youtube_channel_id == youtube_channel_id).first()
-            if not channel:
-                channel = Channel(
-                    owner_id=user.id,
-                    youtube_channel_id=youtube_channel_id,
-                    name=channel_name,
-                    avatar_url=avatar_url,
-                    subscribers=subscribers,
-                    verified=is_verified
-                )
-                db.add(channel)
-            else:
-                # Update existing channel info
-                channel.name = channel_name
-                channel.avatar_url = avatar_url
-                channel.subscribers = subscribers
-                channel.verified = is_verified
-            db.commit()
-            db.refresh(channel)
+            total_views = int(channel_data["statistics"].get("viewCount", 0))
         else:
-            raise HTTPException(status_code=404, detail="No YouTube channel found for the authenticated user.")
+            print(f"No YouTube channel found via Data API for the authenticated user.")
 
     except Exception as e:
-        print(f"Error fetching YouTube channel info: {e}")
-        return JSONResponse(status_code=500, content={"detail": f"Error fetching YouTube channel info: {e}"})
+        print(f"Error fetching YouTube Data API channel info: {e}")
+        # Don't raise here, try to proceed to Analytics API if basic data fetched
+
+    # --- NEW: Fetch total watch hours using YouTube Analytics API ---
+    total_watch_hours = 0.0
+    if youtube_channel_id: # Only proceed if we found a channel ID from Data API
+        try:
+            youtube_analytics = build("youtubeAnalytics", "v2", credentials=creds)
+            # Fetch all-time data
+            today = date.today().isoformat()
+            # An arbitrary early date for 'all time' if channel creation date isn't easily available
+            start_date = "2000-01-01" 
+
+            analytics_response = youtube_analytics.reports().query(
+                ids=f"channel=={youtube_channel_id}",
+                startDate=start_date,
+                endDate=today,
+                metrics="estimatedMinutesWatched"
+            ).execute()
+
+            if analytics_response and analytics_response.get("rows"):
+                estimated_minutes_watched = analytics_response["rows"][0][0]
+                total_watch_hours = float(estimated_minutes_watched) / 60.0
+            else:
+                print(f"No watch hours data found for channel {youtube_channel_id} from Analytics API.")
+
+        except Exception as e:
+            print(f"Error fetching YouTube Analytics API watch hours for channel {youtube_channel_id}: {e}")
+            # Do not raise, just use default 0.0 if analytics fails
+    # --- END NEW: Fetch total watch hours ---
+
+
+    # Find or create channel and update all fields
+    channel = db.query(Channel).filter(Channel.youtube_channel_id == youtube_channel_id).first()
+    if not channel:
+        channel = Channel(
+            owner_id=user.id,
+            youtube_channel_id=youtube_channel_id,
+            name=channel_name,
+            avatar_url=avatar_url,
+            subscribers=subscribers,
+            verified=is_verified,
+            total_views=total_views,
+            total_watch_hours=total_watch_hours
+        )
+        db.add(channel)
+    else:
+        # Update existing channel info
+        channel.name = channel_name
+        channel.avatar_url = avatar_url
+        channel.subscribers = subscribers
+        channel.verified = is_verified
+        channel.total_views = total_views
+        channel.total_watch_hours = total_watch_hours
+    db.commit()
+    db.refresh(channel)
 
     # Create a RedirectResponse explicitly
     redirect_response = RedirectResponse(FRONTEND_URL)
     # Set the cookie directly on the redirect_response object
-    redirect_response.set_cookie(key="user_id", value=str(user.id), httponly=True, secure=False, samesite="Lax") # Added samesite="Lax" for broader compatibility
+    redirect_response.set_cookie(key="user_id", value=str(user.id), httponly=True, secure=False, samesite="Lax", domain="localhost")
 
     return redirect_response
