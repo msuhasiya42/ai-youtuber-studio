@@ -7,6 +7,9 @@ import boto3
 from botocore.exceptions import ClientError
 from io import BytesIO
 from typing import Optional
+from app.core.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 
 class StorageClient:
@@ -59,7 +62,7 @@ class StorageClient:
             region_name=self.region
         )
 
-        print(f"✓ Initialized AWS S3 client (bucket: {self.bucket_name}, region: {self.region})")
+        logger.info(f"Initialized AWS S3 client - bucket: {self.bucket_name}, region: {self.region}")
 
     def _init_minio(self):
         """Initialize MinIO client using boto3"""
@@ -81,13 +84,13 @@ class StorageClient:
             config=boto3.session.Config(signature_version='s3v4')
         )
 
-        print(f"✓ Initialized MinIO client (bucket: {self.bucket_name}, endpoint: {endpoint})")
+        logger.info(f"Initialized MinIO client - bucket: {self.bucket_name}, endpoint: {endpoint}")
 
     def _ensure_bucket_exists(self):
         """Create bucket if it doesn't exist"""
         try:
             self.s3_client.head_bucket(Bucket=self.bucket_name)
-            print(f"✓ Bucket exists: {self.bucket_name}")
+            logger.info(f"Bucket exists: {self.bucket_name}")
         except ClientError as e:
             error_code = e.response['Error']['Code']
             if error_code == '404':
@@ -102,15 +105,15 @@ class StorageClient:
                     else:
                         # us-east-1 or MinIO
                         self.s3_client.create_bucket(Bucket=self.bucket_name)
-                    print(f"✓ Created bucket: {self.bucket_name}")
+                    logger.info(f"Created bucket: {self.bucket_name}")
                 except ClientError as create_error:
-                    print(f"✗ Error creating bucket: {create_error}")
+                    logger.error(f"Error creating bucket {self.bucket_name}: {create_error}", exc_info=True)
                     raise
             elif error_code == '403':
                 # Bucket exists but we don't have permission
-                print(f"⚠ Bucket exists but access denied: {self.bucket_name}")
+                logger.warning(f"Bucket exists but access denied: {self.bucket_name}")
             else:
-                print(f"✗ Error checking bucket: {e}")
+                logger.error(f"Error checking bucket {self.bucket_name}: {e}", exc_info=True)
                 raise
 
     def upload_file(self, file_path: str, object_name: str, content_type: str = "application/octet-stream") -> str:
@@ -128,10 +131,10 @@ class StorageClient:
         try:
             extra_args = {'ContentType': content_type}
             self.s3_client.upload_file(file_path, self.bucket_name, object_name, ExtraArgs=extra_args)
-            print(f"✓ Uploaded {file_path} → s3://{self.bucket_name}/{object_name}")
+            logger.info(f"Uploaded file: {file_path} → s3://{self.bucket_name}/{object_name}")
             return object_name
         except ClientError as e:
-            print(f"✗ Error uploading file: {e}")
+            logger.error(f"Error uploading file {file_path}: {e}", exc_info=True)
             raise
 
     def upload_bytes(self, data: bytes, object_name: str, content_type: str = "application/octet-stream") -> str:
@@ -153,10 +156,10 @@ class StorageClient:
                 Body=data,
                 ContentType=content_type
             )
-            print(f"✓ Uploaded {len(data)} bytes → s3://{self.bucket_name}/{object_name}")
+            logger.info(f"Uploaded {len(data)} bytes → s3://{self.bucket_name}/{object_name}")
             return object_name
         except ClientError as e:
-            print(f"✗ Error uploading bytes: {e}")
+            logger.error(f"Error uploading bytes to {object_name}: {e}", exc_info=True)
             raise
 
     def download_file(self, object_name: str, file_path: str) -> str:
@@ -172,10 +175,10 @@ class StorageClient:
         """
         try:
             self.s3_client.download_file(self.bucket_name, object_name, file_path)
-            print(f"✓ Downloaded s3://{self.bucket_name}/{object_name} → {file_path}")
+            logger.info(f"Downloaded file: s3://{self.bucket_name}/{object_name} → {file_path}")
             return file_path
         except ClientError as e:
-            print(f"✗ Error downloading file: {e}")
+            logger.error(f"Error downloading file {object_name}: {e}", exc_info=True)
             raise
 
     def get_object(self, object_name: str) -> bytes:
@@ -191,19 +194,19 @@ class StorageClient:
         try:
             response = self.s3_client.get_object(Bucket=self.bucket_name, Key=object_name)
             data = response['Body'].read()
-            print(f"✓ Retrieved {len(data)} bytes from s3://{self.bucket_name}/{object_name}")
+            logger.info(f"Retrieved {len(data)} bytes from s3://{self.bucket_name}/{object_name}")
             return data
         except ClientError as e:
-            print(f"✗ Error getting object: {e}")
+            logger.error(f"Error getting object {object_name}: {e}", exc_info=True)
             raise
 
     def delete_object(self, object_name: str):
         """Delete an object from storage"""
         try:
             self.s3_client.delete_object(Bucket=self.bucket_name, Key=object_name)
-            print(f"✓ Deleted s3://{self.bucket_name}/{object_name}")
+            logger.info(f"Deleted object: s3://{self.bucket_name}/{object_name}")
         except ClientError as e:
-            print(f"✗ Error deleting object: {e}")
+            logger.error(f"Error deleting object {object_name}: {e}", exc_info=True)
             raise
 
     def get_presigned_url(self, object_name: str, expires_seconds: int = 3600) -> str:
@@ -223,10 +226,10 @@ class StorageClient:
                 Params={'Bucket': self.bucket_name, 'Key': object_name},
                 ExpiresIn=expires_seconds
             )
-            print(f"✓ Generated presigned URL for {object_name} (expires in {expires_seconds}s)")
+            logger.info(f"Generated presigned URL for {object_name} (expires in {expires_seconds}s)")
             return url
         except ClientError as e:
-            print(f"✗ Error generating presigned URL: {e}")
+            logger.error(f"Error generating presigned URL for {object_name}: {e}", exc_info=True)
             raise
 
     def list_objects(self, prefix: str = "", max_keys: int = 1000) -> list:
@@ -248,13 +251,14 @@ class StorageClient:
             )
 
             if 'Contents' not in response:
+                logger.info(f"No objects found with prefix '{prefix}'")
                 return []
 
             objects = [obj['Key'] for obj in response['Contents']]
-            print(f"✓ Listed {len(objects)} objects with prefix '{prefix}'")
+            logger.info(f"Listed {len(objects)} objects with prefix '{prefix}'")
             return objects
         except ClientError as e:
-            print(f"✗ Error listing objects: {e}")
+            logger.error(f"Error listing objects with prefix '{prefix}': {e}", exc_info=True)
             raise
 
 

@@ -25,6 +25,8 @@ def list_videos(page: int = 1, page_size: int = 6, db: Session = Depends(get_db)
                 "views": v.views,
                 "likes": v.likes,
                 "ctr": v.ctr,
+                "processing_status": v.processing_status,
+                "processing_error": v.processing_error,
             }
             for v in items
         ],
@@ -43,6 +45,8 @@ def get_video(video_id: int, db: Session = Depends(get_db)):
         "title": v.title,
         "thumbnail_url": v.thumbnail_url,
         "transcript_s3_key": v.transcript_s3_key,
+        "processing_status": v.processing_status,
+        "processing_error": v.processing_error,
         "summary": idea.summary if idea else None,
         "ideas": idea.ideas_json if idea else None,
         "scripts": [

@@ -1,7 +1,20 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import String, Integer, DateTime, ForeignKey, Text, Float, Boolean
+from sqlalchemy import String, Integer, DateTime, ForeignKey, Text, Float, Boolean, Enum
 from datetime import datetime
 from app.db.session import Base
+import enum
+
+
+class VideoProcessingStatus(str, enum.Enum):
+    """Video processing pipeline status"""
+    SYNCED = "synced"  # Synced from YouTube, not yet processed
+    AUDIO_DOWNLOADING = "audio_downloading"  # Audio download in progress
+    AUDIO_DOWNLOADED = "audio_downloaded"  # Audio downloaded successfully
+    TRANSCRIBING = "transcribing"  # Transcription in progress
+    TRANSCRIBED = "transcribed"  # Transcription complete
+    INDEXING = "indexing"  # Vector indexing in progress
+    COMPLETE = "complete"  # Fully processed and indexed
+    ERROR = "error"  # Processing failed
 
 
 class User(Base):
@@ -45,6 +58,15 @@ class Video(Base):
     transcript_s3_key: Mapped[str | None] = mapped_column(Text, nullable=True)
     audio_s3_key: Mapped[str | None] = mapped_column(Text, nullable=True)
     summary: Mapped[str | None] = mapped_column(Text, nullable=True)
+
+    # Processing status tracking
+    processing_status: Mapped[str] = mapped_column(
+        Enum(VideoProcessingStatus),
+        default=VideoProcessingStatus.SYNCED,
+        nullable=False
+    )
+    processing_error: Mapped[str | None] = mapped_column(Text, nullable=True)
+    indexed_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
 
 
 class Idea(Base):

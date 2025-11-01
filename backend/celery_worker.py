@@ -12,15 +12,18 @@ app.conf.update(
         "app.services.embedding_worker.*": {"queue": "embedding"},
         "app.services.generation_worker.*": {"queue": "generation"},
         "app.services.insights_worker.*": {"queue": "insights"},
+        "app.services.pipeline_worker.*": {"queue": "ingest"},  # Pipeline runs in ingest queue
     },
     task_serializer="json",
     accept_content=["json"],
     result_serializer="json",
     timezone="UTC",
     enable_utc=True,
+    imports=[
+        "app.services.pipeline_worker",
+        "app.services.ingest_worker",
+        "app.services.transcribe_worker",
+    ],
 )
-
-# Tasks will be auto-discovered when Celery worker starts
-# Do not import task modules here to avoid circular imports with FastAPI
 
 

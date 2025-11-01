@@ -1,0 +1,462 @@
+[2025-11-01 20:36:17] [INFO    ] [req:N/A] [root] ================================================================================
+[2025-11-01 20:36:17] [INFO    ] [req:N/A] [root] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:36:17] [INFO    ] [req:N/A] [root] ================================================================================
+ 
+ -------------- celery@Mayurs-MacBook-Pro.local v5.4.0 (opalescent)
+--- ***** ----- 
+-- ******* ---- macOS-26.0.1-arm64-arm-64bit 2025-11-01 20:36:17
+- *** --- * --- 
+- ** ---------- [config]
+- ** ---------- .> app:         ai_youtuber_studio:0x109a1f740
+- ** ---------- .> transport:   redis://127.0.0.1:16379/0
+- ** ---------- .> results:     redis://127.0.0.1:16379/0
+- *** --- * --- .> concurrency: 2 (prefork)
+-- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+--- ***** ----- 
+ -------------- [queues]
+                .> ingest           exchange=ingest(direct) key=ingest
+                
+
+[tasks]
+  . app.services.ingest_worker.download_audio
+  . app.services.pipeline_worker.process_video_pipeline
+  . app.services.pipeline_worker.queue_video_processing
+  . app.services.transcribe_worker.transcribe_audio
+
+[2025-11-01 20:36:17,596: WARNING/MainProcess] /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/worker/consumer/consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+[2025-11-01 20:36:23,687: INFO/MainProcess] Connected to redis://127.0.0.1:16379/0
+[2025-11-01 20:36:23,689: WARNING/MainProcess] /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/worker/consumer/consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+[2025-11-01 20:36:26,494: INFO/MainProcess] mingle: searching for neighbors
+[2025-11-01 20:36:31,704: INFO/MainProcess] mingle: all alone
+[2025-11-01 20:36:38,435: INFO/MainProcess] celery@Mayurs-MacBook-Pro.local ready.
+[2025-11-01 20:36:39,558: INFO/MainProcess] Task app.services.pipeline_worker.queue_video_processing[fcce4d74-df94-44ed-8cfb-fad9e8a883f5] received
+[2025-11-01 20:36:39,559: INFO/ForkPoolWorker-2] Queueing video 27 (i-A3eXiB-T4) for processing
+[2025-11-01 20:36:40,699: INFO/MainProcess] Task app.services.pipeline_worker.queue_video_processing[855a3c44-635f-48e5-a6b8-2da156dcb933] received
+[2025-11-01 20:36:40,701: INFO/ForkPoolWorker-1] Queueing video 28 (0JeBS6MaNmw) for processing
+[2025-11-01 20:36:42,374: INFO/MainProcess] Task app.services.pipeline_worker.queue_video_processing[b8cf7c44-2c79-451c-b9b3-7aaee86607f6] received
+[2025-11-01 20:36:43,490: INFO/MainProcess] Task app.services.pipeline_worker.queue_video_processing[d90834bf-9430-49f8-b9d8-58588f51b72b] received
+[2025-11-01 20:36:44,887: INFO/MainProcess] Task app.services.pipeline_worker.queue_video_processing[24175ac0-63b1-4ad9-bc57-023d61e4c904] received
+[2025-11-01 20:36:46,003: INFO/MainProcess] Task app.services.pipeline_worker.queue_video_processing[7686edcd-75bf-449c-96ae-9cca81cd20ce] received
+[2025-11-01 20:36:47,400: INFO/MainProcess] Task app.services.pipeline_worker.queue_video_processing[cc2257fa-2798-4109-a690-56677876a028] received
+[2025-11-01 20:36:48,523: INFO/MainProcess] Task app.services.pipeline_worker.queue_video_processing[913ce75c-9a6a-47a5-bb3a-d51d2a8313b0] received
+[2025-11-01 20:36:48,802: INFO/ForkPoolWorker-2] Task app.services.pipeline_worker.queue_video_processing[fcce4d74-df94-44ed-8cfb-fad9e8a883f5] succeeded in 9.244005750006181s: {'success': True, 'video_id': 27, 'status': 'queued'}
+[2025-11-01 20:36:48,806: INFO/ForkPoolWorker-2] Queueing video 29 (18hP-MJ2Zns) for processing
+[2025-11-01 20:36:50,222: INFO/ForkPoolWorker-1] Task app.services.pipeline_worker.queue_video_processing[855a3c44-635f-48e5-a6b8-2da156dcb933] succeeded in 9.52181516699784s: {'success': True, 'video_id': 28, 'status': 'queued'}
+[2025-11-01 20:36:50,502: INFO/MainProcess] Task app.services.pipeline_worker.queue_video_processing[736a58e0-e53a-4b1b-bc99-f6e98f03a9cf] received
+[2025-11-01 20:36:50,502: INFO/ForkPoolWorker-2] Task app.services.pipeline_worker.queue_video_processing[b8cf7c44-2c79-451c-b9b3-7aaee86607f6] succeeded in 1.6962609579932177s: {'success': True, 'video_id': 29, 'status': 'queued'}
+[2025-11-01 20:36:50,504: INFO/ForkPoolWorker-2] Queueing video 30 (jtYnmz0_qY4) for processing
+[2025-11-01 20:36:50,505: INFO/ForkPoolWorker-1] Queueing video 31 (zPEqGu4sbLM) for processing
+[2025-11-01 20:36:51,727: INFO/MainProcess] Task app.services.pipeline_worker.queue_video_processing[5fd6dcc1-a7ce-4c43-a141-6befb476b9dd] received
+[2025-11-01 20:36:52,007: INFO/ForkPoolWorker-1] Task app.services.pipeline_worker.queue_video_processing[24175ac0-63b1-4ad9-bc57-023d61e4c904] succeeded in 1.5026049580046674s: {'success': True, 'video_id': 31, 'status': 'queued'}
+[2025-11-01 20:36:52,007: INFO/ForkPoolWorker-2] Task app.services.pipeline_worker.queue_video_processing[d90834bf-9430-49f8-b9d8-58588f51b72b] succeeded in 1.5027994590054732s: {'success': True, 'video_id': 30, 'status': 'queued'}
+[2025-11-01 20:36:52,575: INFO/ForkPoolWorker-2] Queueing video 32 (N0aRmcW-JJE) for processing
+[2025-11-01 20:36:52,575: INFO/ForkPoolWorker-1] Queueing video 33 (V6K5PCzclSc) for processing
+[2025-11-01 20:36:53,413: INFO/MainProcess] Task app.services.pipeline_worker.queue_video_processing[2c5b2f6d-49a0-4b15-9871-a1b7706b95e1] received
+[2025-11-01 20:36:54,352: INFO/ForkPoolWorker-1] Task app.services.pipeline_worker.queue_video_processing[cc2257fa-2798-4109-a690-56677876a028] succeeded in 1.7765648330096155s: {'success': True, 'video_id': 33, 'status': 'queued'}
+[2025-11-01 20:36:54,352: INFO/ForkPoolWorker-2] Task app.services.pipeline_worker.queue_video_processing[7686edcd-75bf-449c-96ae-9cca81cd20ce] succeeded in 1.7773400419973768s: {'success': True, 'video_id': 32, 'status': 'queued'}
+[2025-11-01 20:36:54,354: INFO/ForkPoolWorker-1] Queueing video 35 (ZPV6bTXrbT4) for processing
+[2025-11-01 20:36:54,354: INFO/ForkPoolWorker-2] Queueing video 34 (iTHp8Spm16c) for processing
+[2025-11-01 20:36:55,776: INFO/ForkPoolWorker-2] Task app.services.pipeline_worker.queue_video_processing[913ce75c-9a6a-47a5-bb3a-d51d2a8313b0] succeeded in 1.4226572920015315s: {'success': True, 'video_id': 34, 'status': 'queued'}
+[2025-11-01 20:36:56,055: INFO/MainProcess] Task app.services.pipeline_worker.queue_video_processing[091b6b06-3760-4d06-80f5-5196da9a8b8b] received
+[2025-11-01 20:36:56,055: INFO/ForkPoolWorker-1] Task app.services.pipeline_worker.queue_video_processing[736a58e0-e53a-4b1b-bc99-f6e98f03a9cf] succeeded in 1.7012190420064144s: {'success': True, 'video_id': 35, 'status': 'queued'}
+[2025-11-01 20:36:56,337: INFO/ForkPoolWorker-2] Queueing video 36 (iY8EM5-pKhw) for processing
+[2025-11-01 20:36:56,337: INFO/ForkPoolWorker-1] Queueing video 37 (RDX0XLsGmRQ) for processing
+[2025-11-01 20:36:57,736: INFO/ForkPoolWorker-1] Task app.services.pipeline_worker.queue_video_processing[2c5b2f6d-49a0-4b15-9871-a1b7706b95e1] succeeded in 1.3982744590030052s: {'success': True, 'video_id': 37, 'status': 'queued'}
+[2025-11-01 20:36:58,140: INFO/MainProcess] Task app.services.pipeline_worker.queue_video_processing[3f7170e0-8d8f-4ee6-9cc1-0440d0c37c32] received
+[2025-11-01 20:36:58,140: INFO/ForkPoolWorker-2] Task app.services.pipeline_worker.queue_video_processing[5fd6dcc1-a7ce-4c43-a141-6befb476b9dd] succeeded in 1.802714958001161s: {'success': True, 'video_id': 36, 'status': 'queued'}
+[2025-11-01 20:36:58,422: INFO/ForkPoolWorker-1] Queueing video 39 (JBAhrIXUKuo) for processing
+[2025-11-01 20:36:58,422: INFO/ForkPoolWorker-2] Queueing video 38 (fUIf0ohwufo) for processing
+[2025-11-01 20:36:59,904: INFO/MainProcess] Task app.services.pipeline_worker.queue_video_processing[681cab18-bd6a-4c7c-95bd-f7d9332545c5] received
+[2025-11-01 20:37:00,183: INFO/ForkPoolWorker-1] Task app.services.pipeline_worker.queue_video_processing[3f7170e0-8d8f-4ee6-9cc1-0440d0c37c32] succeeded in 1.7610176669986686s: {'success': True, 'video_id': 39, 'status': 'queued'}
+[2025-11-01 20:37:00,183: INFO/ForkPoolWorker-2] Task app.services.pipeline_worker.queue_video_processing[091b6b06-3760-4d06-80f5-5196da9a8b8b] succeeded in 1.7610242500086315s: {'success': True, 'video_id': 38, 'status': 'queued'}
+[2025-11-01 20:37:00,186: INFO/ForkPoolWorker-2] Queueing video 40 (NeIZjtWXRrc) for processing
+[2025-11-01 20:37:01,581: INFO/ForkPoolWorker-2] Task app.services.pipeline_worker.queue_video_processing[681cab18-bd6a-4c7c-95bd-f7d9332545c5] succeeded in 1.395021332995384s: {'success': True, 'video_id': 40, 'status': 'queued'}
+[2025-11-01 20:37:01,861: INFO/MainProcess] Task app.services.pipeline_worker.queue_video_processing[46e22a93-faa8-4c35-ab0a-a496777638fc] received
+[2025-11-01 20:37:01,862: INFO/ForkPoolWorker-2] Queueing video 41 (mGM759RqOYE) for processing
+[2025-11-01 20:37:02,981: INFO/MainProcess] Task app.services.pipeline_worker.queue_video_processing[c2ca9201-64e8-43ce-bfad-69ee8c441511] received
+[2025-11-01 20:37:02,983: INFO/ForkPoolWorker-1] Queueing video 42 (7Vapid0EuJM) for processing
+[2025-11-01 20:37:03,260: INFO/ForkPoolWorker-2] Task app.services.pipeline_worker.queue_video_processing[46e22a93-faa8-4c35-ab0a-a496777638fc] succeeded in 1.398055833997205s: {'success': True, 'video_id': 41, 'status': 'queued'}
+[2025-11-01 20:37:04,378: INFO/ForkPoolWorker-1] Task app.services.pipeline_worker.queue_video_processing[c2ca9201-64e8-43ce-bfad-69ee8c441511] succeeded in 1.3948134170059348s: {'success': True, 'video_id': 42, 'status': 'queued'}
+[2025-11-01 20:37:04,656: INFO/MainProcess] Task app.services.pipeline_worker.queue_video_processing[504b0540-c073-4169-b5c8-2372251f4662] received
+[2025-11-01 20:37:04,659: INFO/ForkPoolWorker-2] Queueing video 43 (CY9xugDcKaQ) for processing
+[2025-11-01 20:37:05,777: INFO/MainProcess] Task app.services.pipeline_worker.queue_video_processing[dc1b78e0-e720-4580-8058-ee8b2a766cd8] received
+[2025-11-01 20:37:05,778: INFO/ForkPoolWorker-1] Queueing video 44 (d2ztAgUTU8k) for processing
+[2025-11-01 20:37:06,055: INFO/ForkPoolWorker-2] Task app.services.pipeline_worker.queue_video_processing[504b0540-c073-4169-b5c8-2372251f4662] succeeded in 1.396671458001947s: {'success': True, 'video_id': 43, 'status': 'queued'}
+[2025-11-01 20:37:07,173: INFO/ForkPoolWorker-1] Task app.services.pipeline_worker.queue_video_processing[dc1b78e0-e720-4580-8058-ee8b2a766cd8] succeeded in 1.395022875003633s: {'success': True, 'video_id': 44, 'status': 'queued'}
+[2025-11-01 20:37:07,453: INFO/MainProcess] Task app.services.pipeline_worker.queue_video_processing[a75ea498-5f85-44b7-8714-03726760315b] received
+[2025-11-01 20:37:07,455: INFO/ForkPoolWorker-2] Queueing video 45 (Qy8qZVg3B8k) for processing
+[2025-11-01 20:37:08,687: INFO/MainProcess] Task app.services.pipeline_worker.queue_video_processing[a3303d0f-1b84-4239-8875-a1597bb6f0d9] received
+[2025-11-01 20:37:08,689: INFO/ForkPoolWorker-1] Queueing video 46 (mARjTLW6hoc) for processing
+[2025-11-01 20:37:08,966: INFO/ForkPoolWorker-2] Task app.services.pipeline_worker.queue_video_processing[a75ea498-5f85-44b7-8714-03726760315b] succeeded in 1.5118373750010505s: {'success': True, 'video_id': 45, 'status': 'queued'}
+[2025-11-01 20:37:10,327: INFO/ForkPoolWorker-1] Task app.services.pipeline_worker.queue_video_processing[a3303d0f-1b84-4239-8875-a1597bb6f0d9] succeeded in 1.6386555420031073s: {'success': True, 'video_id': 46, 'status': 'queued'}
+[2025-11-01 20:37:10,735: INFO/MainProcess] Task app.services.pipeline_worker.queue_video_processing[7545ff13-25af-4afd-b074-7a0d8ccfc4af] received
+[2025-11-01 20:37:10,738: INFO/ForkPoolWorker-2] Queueing video 47 (LcnZo-ES_F8) for processing
+[2025-11-01 20:37:12,141: INFO/MainProcess] Task app.services.pipeline_worker.queue_video_processing[72fcd015-09f9-4009-bc9e-e7293fd2521a] received
+[2025-11-01 20:37:12,420: INFO/ForkPoolWorker-2] Task app.services.pipeline_worker.queue_video_processing[7545ff13-25af-4afd-b074-7a0d8ccfc4af] succeeded in 1.6824500420043478s: {'success': True, 'video_id': 47, 'status': 'queued'}
+[2025-11-01 20:37:12,701: INFO/ForkPoolWorker-2] Queueing video 48 (WvBDy-zSABc) for processing
+[2025-11-01 20:37:13,855: INFO/MainProcess] Task app.services.pipeline_worker.queue_video_processing[ef494cd9-549b-43d7-9feb-e16bbe66784f] received
+[2025-11-01 20:37:13,856: INFO/ForkPoolWorker-1] Queueing video 49 (uAYTzXlLCUQ) for processing
+[2025-11-01 20:37:14,134: INFO/ForkPoolWorker-2] Task app.services.pipeline_worker.queue_video_processing[72fcd015-09f9-4009-bc9e-e7293fd2521a] succeeded in 1.4329463339963695s: {'success': True, 'video_id': 48, 'status': 'queued'}
+[2025-11-01 20:37:15,241: INFO/MainProcess] Task app.services.pipeline_worker.queue_video_processing[4a5581ad-c1b2-42b8-bec6-74e8d375d096] received
+[2025-11-01 20:37:15,520: INFO/ForkPoolWorker-1] Task app.services.pipeline_worker.queue_video_processing[ef494cd9-549b-43d7-9feb-e16bbe66784f] succeeded in 1.6633680000086315s: {'success': True, 'video_id': 49, 'status': 'queued'}
+[2025-11-01 20:37:15,800: INFO/ForkPoolWorker-2] Queueing video 50 (xbVMDm-Iv7w) for processing
+[2025-11-01 20:37:17,030: INFO/MainProcess] Task app.services.pipeline_worker.process_video_pipeline[62cfc72c-f1ef-4c75-979e-14292731e83e] received
+[2025-11-01 20:37:17,309: INFO/ForkPoolWorker-2] Task app.services.pipeline_worker.queue_video_processing[4a5581ad-c1b2-42b8-bec6-74e8d375d096] succeeded in 1.5098102499905508s: {'success': True, 'video_id': 50, 'status': 'queued'}
+[2025-11-01 20:37:17,892: INFO/MainProcess] Task app.services.pipeline_worker.process_video_pipeline[24ed4eb8-e5ac-4519-a603-cf3df8736494] received
+[2025-11-01 20:37:18,172: ERROR/ForkPoolWorker-1] Task app.services.pipeline_worker.process_video_pipeline[62cfc72c-f1ef-4c75-979e-14292731e83e] raised unexpected: ImportError("cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)")
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pipeline_worker.py", line 61, in process_video_pipeline
+    from app.services.llm_provider import get_provider
+ImportError: cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)
+[2025-11-01 20:37:19,290: ERROR/ForkPoolWorker-2] Task app.services.pipeline_worker.process_video_pipeline[24ed4eb8-e5ac-4519-a603-cf3df8736494] raised unexpected: ImportError("cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)")
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pipeline_worker.py", line 61, in process_video_pipeline
+    from app.services.llm_provider import get_provider
+ImportError: cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)
+[2025-11-01 20:37:19,569: INFO/MainProcess] Task app.services.pipeline_worker.process_video_pipeline[1a1ad701-2f60-4e5c-af8c-dfac04acf871] received
+[2025-11-01 20:37:20,411: ERROR/ForkPoolWorker-2] Task app.services.pipeline_worker.process_video_pipeline[1a1ad701-2f60-4e5c-af8c-dfac04acf871] raised unexpected: ImportError("cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)")
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pipeline_worker.py", line 61, in process_video_pipeline
+    from app.services.llm_provider import get_provider
+ImportError: cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)
+[2025-11-01 20:37:20,690: INFO/MainProcess] Task app.services.pipeline_worker.process_video_pipeline[fa415c3c-3699-440e-8dce-03b74bd9291d] received
+[2025-11-01 20:37:21,814: ERROR/ForkPoolWorker-2] Task app.services.pipeline_worker.process_video_pipeline[fa415c3c-3699-440e-8dce-03b74bd9291d] raised unexpected: ImportError("cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)")
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pipeline_worker.py", line 61, in process_video_pipeline
+    from app.services.llm_provider import get_provider
+ImportError: cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)
+[2025-11-01 20:37:22,094: INFO/MainProcess] Task app.services.pipeline_worker.process_video_pipeline[d2b4f203-6cc3-485b-8d36-9fca4f48b743] received
+[2025-11-01 20:37:22,935: ERROR/ForkPoolWorker-2] Task app.services.pipeline_worker.process_video_pipeline[d2b4f203-6cc3-485b-8d36-9fca4f48b743] raised unexpected: ImportError("cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)")
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pipeline_worker.py", line 61, in process_video_pipeline
+    from app.services.llm_provider import get_provider
+ImportError: cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)
+[2025-11-01 20:37:23,312: INFO/MainProcess] Task app.services.pipeline_worker.process_video_pipeline[04e5cec9-a355-4661-9794-777ec6e9f467] received
+[2025-11-01 20:37:24,866: INFO/MainProcess] Task app.services.pipeline_worker.process_video_pipeline[03b9fd70-1008-43ca-84dc-3047cace2c26] received
+[2025-11-01 20:37:25,145: ERROR/ForkPoolWorker-2] Task app.services.pipeline_worker.process_video_pipeline[04e5cec9-a355-4661-9794-777ec6e9f467] raised unexpected: ImportError("cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)")
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pipeline_worker.py", line 61, in process_video_pipeline
+    from app.services.llm_provider import get_provider
+ImportError: cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)
+[2025-11-01 20:37:25,789: INFO/MainProcess] Task app.services.pipeline_worker.process_video_pipeline[bcac7441-38aa-4992-b805-a6c8bd93a14b] received
+[2025-11-01 20:37:26,068: ERROR/ForkPoolWorker-1] Task app.services.pipeline_worker.process_video_pipeline[03b9fd70-1008-43ca-84dc-3047cace2c26] raised unexpected: ImportError("cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)")
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pipeline_worker.py", line 61, in process_video_pipeline
+    from app.services.llm_provider import get_provider
+ImportError: cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)
+[2025-11-01 20:37:26,628: ERROR/ForkPoolWorker-2] Task app.services.pipeline_worker.process_video_pipeline[bcac7441-38aa-4992-b805-a6c8bd93a14b] raised unexpected: ImportError("cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)")
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pipeline_worker.py", line 61, in process_video_pipeline
+    from app.services.llm_provider import get_provider
+ImportError: cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)
+[2025-11-01 20:37:27,187: INFO/MainProcess] Task app.services.pipeline_worker.process_video_pipeline[5bc3572f-44b1-4617-ba7e-519e8765ae05] received
+[2025-11-01 20:37:28,037: ERROR/ForkPoolWorker-2] Task app.services.pipeline_worker.process_video_pipeline[5bc3572f-44b1-4617-ba7e-519e8765ae05] raised unexpected: ImportError("cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)")
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pipeline_worker.py", line 61, in process_video_pipeline
+    from app.services.llm_provider import get_provider
+ImportError: cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)
+[2025-11-01 20:37:28,317: INFO/MainProcess] Task app.services.pipeline_worker.process_video_pipeline[d77f5157-b390-411c-9aa2-9a23fe15f488] received
+[2025-11-01 20:37:29,269: ERROR/ForkPoolWorker-2] Task app.services.pipeline_worker.process_video_pipeline[d77f5157-b390-411c-9aa2-9a23fe15f488] raised unexpected: ImportError("cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)")
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pipeline_worker.py", line 61, in process_video_pipeline
+    from app.services.llm_provider import get_provider
+ImportError: cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)
+[2025-11-01 20:37:29,549: INFO/MainProcess] Task app.services.pipeline_worker.process_video_pipeline[0fa3c4b9-3f01-4add-b690-9c9aed0ad2f4] received
+[2025-11-01 20:37:30,807: ERROR/ForkPoolWorker-2] Task app.services.pipeline_worker.process_video_pipeline[0fa3c4b9-3f01-4add-b690-9c9aed0ad2f4] raised unexpected: ImportError("cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)")
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pipeline_worker.py", line 61, in process_video_pipeline
+    from app.services.llm_provider import get_provider
+ImportError: cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)
+[2025-11-01 20:37:31,087: INFO/MainProcess] Task app.services.pipeline_worker.process_video_pipeline[a21df201-790c-440b-baf1-cad440da18f1] received
+[2025-11-01 20:37:31,927: ERROR/ForkPoolWorker-2] Task app.services.pipeline_worker.process_video_pipeline[a21df201-790c-440b-baf1-cad440da18f1] raised unexpected: ImportError("cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)")
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pipeline_worker.py", line 61, in process_video_pipeline
+    from app.services.llm_provider import get_provider
+ImportError: cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)
+[2025-11-01 20:37:32,206: INFO/MainProcess] Task app.services.pipeline_worker.process_video_pipeline[42d00450-aac3-45e7-be65-49d07fe66ca6] received
+[2025-11-01 20:37:33,571: ERROR/ForkPoolWorker-2] Task app.services.pipeline_worker.process_video_pipeline[42d00450-aac3-45e7-be65-49d07fe66ca6] raised unexpected: ImportError("cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)")
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pipeline_worker.py", line 61, in process_video_pipeline
+    from app.services.llm_provider import get_provider
+ImportError: cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)
+[2025-11-01 20:37:33,850: INFO/MainProcess] Task app.services.pipeline_worker.process_video_pipeline[56efeb73-0fc0-4533-9ffc-8df336473441] received
+[2025-11-01 20:37:34,773: ERROR/ForkPoolWorker-2] Task app.services.pipeline_worker.process_video_pipeline[56efeb73-0fc0-4533-9ffc-8df336473441] raised unexpected: ImportError("cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)")
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pipeline_worker.py", line 61, in process_video_pipeline
+    from app.services.llm_provider import get_provider
+ImportError: cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)
+[2025-11-01 20:37:35,335: INFO/MainProcess] Task app.services.pipeline_worker.process_video_pipeline[e9b5e21b-61e3-4d6d-af72-6a5a4e2c7c7f] received
+[2025-11-01 20:37:36,175: INFO/MainProcess] Task app.services.pipeline_worker.process_video_pipeline[0bdaa544-b6dc-4bb5-bf27-5127dd8c48ea] received
+[2025-11-01 20:37:36,454: ERROR/ForkPoolWorker-2] Task app.services.pipeline_worker.process_video_pipeline[e9b5e21b-61e3-4d6d-af72-6a5a4e2c7c7f] raised unexpected: ImportError("cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)")
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pipeline_worker.py", line 61, in process_video_pipeline
+    from app.services.llm_provider import get_provider
+ImportError: cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)
+[2025-11-01 20:37:37,014: ERROR/ForkPoolWorker-1] Task app.services.pipeline_worker.process_video_pipeline[0bdaa544-b6dc-4bb5-bf27-5127dd8c48ea] raised unexpected: ImportError("cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)")
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pipeline_worker.py", line 61, in process_video_pipeline
+    from app.services.llm_provider import get_provider
+ImportError: cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)
+[2025-11-01 20:37:37,292: INFO/MainProcess] Task app.services.pipeline_worker.process_video_pipeline[7f5ba83b-90f2-4366-823b-d57c3971e428] received
+[2025-11-01 20:37:38,504: ERROR/ForkPoolWorker-2] Task app.services.pipeline_worker.process_video_pipeline[7f5ba83b-90f2-4366-823b-d57c3971e428] raised unexpected: ImportError("cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)")
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pipeline_worker.py", line 61, in process_video_pipeline
+    from app.services.llm_provider import get_provider
+ImportError: cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)
+[2025-11-01 20:37:38,783: INFO/MainProcess] Task app.services.pipeline_worker.process_video_pipeline[12fd9880-c693-414b-937a-3bb3d96a9345] received
+[2025-11-01 20:37:39,623: ERROR/ForkPoolWorker-2] Task app.services.pipeline_worker.process_video_pipeline[12fd9880-c693-414b-937a-3bb3d96a9345] raised unexpected: ImportError("cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)")
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pipeline_worker.py", line 61, in process_video_pipeline
+    from app.services.llm_provider import get_provider
+ImportError: cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)
+[2025-11-01 20:37:39,902: INFO/MainProcess] Task app.services.pipeline_worker.process_video_pipeline[bc45acff-3daa-41ca-bc47-edfc9d7d7592] received
+[2025-11-01 20:57:41,862: CRITICAL/MainProcess] Couldn't ack 'ec46354e-77be-4afe-85d2-9f5fe16a6e3d', reason:ConnectionError('Connection closed by server.')
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/kombu/message.py", line 131, in ack_log_error
+    self.ack(multiple=multiple)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/kombu/message.py", line 126, in ack
+    self.channel.basic_ack(self.delivery_tag, multiple=multiple)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/kombu/transport/virtual/base.py", line 670, in basic_ack
+    self.qos.ack(delivery_tag)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/kombu/transport/redis.py", line 384, in ack
+    self._remove_from_indices(delivery_tag).execute()
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/client.py", line 1530, in execute
+    return conn.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/retry.py", line 65, in call_with_retry
+    fail(error)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/client.py", line 1532, in <lambda>
+    lambda error: self._disconnect_raise_reset(conn, error),
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/client.py", line 1508, in _disconnect_raise_reset
+    raise error
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/retry.py", line 62, in call_with_retry
+    return do()
+           ^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/client.py", line 1531, in <lambda>
+    lambda: execute(conn, stack, raise_on_error),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/client.py", line 1375, in _execute_transaction
+    self.parse_response(connection, "_")
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/client.py", line 1462, in parse_response
+    result = Redis.parse_response(self, connection, command_name, **options)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/client.py", line 584, in parse_response
+    response = connection.read_response()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/connection.py", line 592, in read_response
+    response = self._parser.read_response(disable_decoding=disable_decoding)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/_parsers/resp2.py", line 15, in read_response
+    result = self._read_response(disable_decoding=disable_decoding)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/_parsers/resp2.py", line 25, in _read_response
+    raw = self._buffer.readline()
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/_parsers/socket.py", line 115, in readline
+    self._read_from_socket()
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/_parsers/socket.py", line 68, in _read_from_socket
+    raise ConnectionError(SERVER_CLOSED_CONNECTION_ERROR)
+redis.exceptions.ConnectionError: Connection closed by server.
+[2025-11-01 20:57:41,872: WARNING/ForkPoolWorker-2] /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py:662: RuntimeWarning: Exception raised outside body: ConnectionError('Connection closed by server.'):
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pipeline_worker.py", line 61, in process_video_pipeline
+    from app.services.llm_provider import get_provider
+ImportError: cannot import name 'get_provider' from 'app.services.llm_provider' (/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/llm_provider.py)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 470, in trace_task
+    I, R, state, retval = on_error(task_request, exc)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 381, in on_error
+    R = I.handle_error_state(
+        ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 175, in handle_error_state
+    return {
+           ^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/app/trace.py", line 227, in handle_failure
+    task.backend.mark_as_failure(
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/backends/base.py", line 167, in mark_as_failure
+    self.store_result(task_id, exc, state,
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/backends/base.py", line 526, in store_result
+    self._store_result(task_id, result, state, traceback,
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/backends/base.py", line 973, in _store_result
+    current_meta = self._get_task_meta_for(task_id)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/backends/base.py", line 995, in _get_task_meta_for
+    meta = self.get(self.get_key_for_task(task_id))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/celery/backends/redis.py", line 376, in get
+    return self.client.get(key)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/commands/core.py", line 1822, in get
+    return self.execute_command("GET", name, keys=[name])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/client.py", line 559, in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/client.py", line 567, in _execute_command
+    return conn.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/retry.py", line 65, in call_with_retry
+    fail(error)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/client.py", line 571, in <lambda>
+    lambda error: self._disconnect_raise(conn, error),
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/client.py", line 555, in _disconnect_raise
+    raise error
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/retry.py", line 62, in call_with_retry
+    return do()
+           ^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/client.py", line 568, in <lambda>
+    lambda: self._send_command_parse_response(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/client.py", line 542, in _send_command_parse_response
+    return self.parse_response(conn, command_name, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/client.py", line 584, in parse_response
+    response = connection.read_response()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/connection.py", line 592, in read_response
+    response = self._parser.read_response(disable_decoding=disable_decoding)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/_parsers/resp2.py", line 15, in read_response
+    result = self._read_response(disable_decoding=disable_decoding)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/_parsers/resp2.py", line 25, in _read_response
+    raw = self._buffer.readline()
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/_parsers/socket.py", line 115, in readline
+    self._read_from_socket()
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/redis/_parsers/socket.py", line 68, in _read_from_socket
+    raise ConnectionError(SERVER_CLOSED_CONNECTION_ERROR)
+redis.exceptions.ConnectionError: Connection closed by server.
+
+  warn(RuntimeWarning(
+

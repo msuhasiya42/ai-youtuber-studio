@@ -11,6 +11,7 @@ interface ChannelHeaderProps {
 
 const ChannelHeader: React.FC<ChannelHeaderProps> = ({ channel, onDisconnect, onRefresh }) => {
   const [isRefreshing, setIsRefreshing] = useState(false); // State for refresh button loading
+  const [isSyncing, setIsSyncing] = useState(false); // State for sync videos button
 
   function formatIndianNumber(num) {
     if (num == null || isNaN(num)) return "0";
@@ -28,6 +29,44 @@ const ChannelHeader: React.FC<ChannelHeaderProps> = ({ channel, onDisconnect, on
       alert(`Failed to refresh data: ${error.message}`);
     } finally {
       setIsRefreshing(false);
+    }
+  };
+
+  const handleSyncVideos = async () => {
+    setIsSyncing(true);
+    try {
+      const { syncChannelVideos } = await import('../services/backendApi');
+      const result = await syncChannelVideos(channel.id);
+
+      const queuedCount = result.queued_for_processing || 0;
+      const newCount = result.new_videos || 0;
+      const updatedCount = result.updated_videos || 0;
+
+      let message = '';
+
+      // Build sync summary
+      if (newCount === 0 && updatedCount === 0) {
+        message = 'No new videos found. Your channel is up to date!';
+      } else {
+        const parts = [];
+        if (newCount > 0) parts.push(`${newCount} new video${newCount !== 1 ? 's' : ''}`);
+        if (updatedCount > 0) parts.push(`${updatedCount} updated video${updatedCount !== 1 ? 's' : ''}`);
+        message = `Successfully synced ${parts.join(' and ')}.`;
+      }
+
+      // Add processing info
+      if (queuedCount > 0) {
+        message += `\n\n${queuedCount} video${queuedCount !== 1 ? 's are' : ' is'} now being processed in the background (audio download, transcription, and indexing). This may take several minutes.`;
+      } else if (newCount > 0 || updatedCount > 0) {
+        message += '\n\nAll videos have already been processed.';
+      }
+
+      alert(message);
+    } catch (error) {
+      console.error('Failed to sync videos:', error);
+      alert(`Failed to sync videos: ${error.message}`);
+    } finally {
+      setIsSyncing(false);
     }
   };
 
@@ -50,6 +89,24 @@ const ChannelHeader: React.FC<ChannelHeaderProps> = ({ channel, onDisconnect, on
         </div>
         <div className="flex items-center gap-2">
              {/* <button title="Generate Ideas" className="p-2 bg-secondary hover:bg-primary-hover rounded-lg transition-colors"><PlusIcon className="w-5 h-5"/></button> */}
+             <button
+                onClick={handleSyncVideos}
+                disabled={isSyncing}
+                title="Sync Videos from YouTube"
+                className="px-3 py-2 bg-primary hover:bg-primary-hover rounded-lg transition-colors text-sm font-medium"
+             >
+                {isSyncing ? (
+                    <span className="flex items-center gap-2">
+                        <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Syncing...
+                    </span>
+                ) : (
+                    <span>Sync Videos</span>
+                )}
+             </button>
              <button
                 onClick={handleRefresh}
                 disabled={isRefreshing}

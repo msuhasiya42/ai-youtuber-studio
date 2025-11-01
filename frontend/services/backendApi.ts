@@ -27,3 +27,16 @@ export async function refreshChannelData(channelId: number): Promise<any> {
   }
   return await res.json();
 }
+
+// Sync videos from YouTube to database
+export async function syncChannelVideos(channelId: number, limit: number = 50): Promise<any> {
+  const res = await fetch(`${API_URL}/api/channels/${channelId}/sync-videos?limit=${limit}`, {
+    method: 'POST',
+    credentials: 'include',
+  });
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.detail || 'Failed to sync videos');
+  }
+  return await res.json();
+}

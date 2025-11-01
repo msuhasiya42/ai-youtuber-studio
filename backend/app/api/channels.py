@@ -1,4 +1,5 @@
 import os
+import logging
 from fastapi import APIRouter, Depends, HTTPException, Response, Request
 from sqlalchemy.orm import Session
 from app.db.session import get_db
@@ -10,7 +11,9 @@ from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from google.auth.transport.requests import Request as GoogleAuthRequest
 from datetime import date, timedelta # New import for date calculations
+from app.core.logging_config import get_logger, LogExecutionTime
 
+logger = get_logger(__name__)
 router = APIRouter()
 
 # --- New Dependency to get current user ---
@@ -198,6 +201,10 @@ async def sync_channel_videos(
     from app.services.youtube_client import YouTubeClient
     from app.models.models import Video
 
+    logger.info(
+        f"Sync videos request - channel_id={channel_id}, user_id={current_user.id}, limit={limit}"
+    )
+
     # Verify channel belongs to current user
     channel = db.query(Channel).filter(
         Channel.id == channel_id,
@@ -205,13 +212,20 @@ async def sync_channel_videos(
     ).first()
 
     if not channel:
+        logger.warning(
+            f"Sync failed: Channel {channel_id} not found or doesn't belong to user {current_user.id}"
+        )
         raise HTTPException(status_code=404, detail="Channel not found or does not belong to user.")
+
+    logger.info(f"Syncing channel: {channel.name} (youtube_id={channel.youtube_channel_id})")
 
     # Get user's refresh token
     if not current_user.google_refresh_token:
+        logger.error(f"User {current_user.id} has no Google refresh token")
         raise HTTPException(status_code=400, detail="User has no Google refresh token. Reconnect YouTube.")
 
     # Refresh credentials
+    logger.debug("Refreshing Google OAuth credentials")
     creds = Credentials(
         token=None,
         refresh_token=current_user.google_refresh_token,
@@ -223,33 +237,51 @@ async def sync_channel_videos(
 
     try:
         creds.refresh(GoogleAuthRequest())
+        logger.debug("Google OAuth credentials refreshed successfully")
     except Exception as e:
+        logger.error(f"Failed to refresh credentials for user {current_user.id}: {e}", exc_info=True)
         raise HTTPException(status_code=401, detail=f"Failed to refresh credentials: {e}")
 
     # Fetch videos from YouTube
     youtube_client = YouTubeClient(credentials=creds)
 
     try:
-        videos_data = youtube_client.fetch_last_videos(
-            channel_id=channel.youtube_channel_id,
-            limit=limit,
-            order="date"
-        )
+        logger.info(f"Fetching {limit} videos from YouTube for channel {channel.youtube_channel_id}")
+        with LogExecutionTime(logger, f"Fetch videos from YouTube", logging.INFO):
+            videos_data = youtube_client.fetch_last_videos(
+                channel_id=channel.youtube_channel_id,
+                limit=limit,
+                order="date"
+            )
+        logger.info(f"Successfully fetched {len(videos_data)} videos from YouTube")
     except Exception as e:
+        logger.error(
+            f"Failed to fetch videos from YouTube for channel {channel_id}: {e}",
+            exc_info=True
+        )
         raise HTTPException(status_code=500, detail=f"Failed to fetch videos from YouTube: {e}")
 
-    # Store videos in database
+    # Store videos in database and queue processing
+    from app.services.pipeline_worker import queue_video_processing
+
+    logger.info(f"Processing {len(videos_data)} videos for database storage")
+
     new_videos_count = 0
     updated_videos_count = 0
+    queued_for_processing = 0
 
-    for video_data in videos_data:
+    for idx, video_data in enumerate(videos_data, 1):
+        video_id = video_data["video_id"]
+        video_title = video_data["title"]
+
         # Check if video already exists
         existing_video = db.query(Video).filter(
-            Video.youtube_video_id == video_data["video_id"]
+            Video.youtube_video_id == video_id
         ).first()
 
         if existing_video:
             # Update existing video
+            logger.debug(f"[{idx}/{len(videos_data)}] Updating existing video: {video_id} - {video_title[:50]}")
             existing_video.title = video_data["title"]
             existing_video.thumbnail_url = video_data["thumbnail_url"]
             existing_video.duration_seconds = video_data["duration_seconds"]
@@ -257,11 +289,26 @@ async def sync_channel_videos(
             existing_video.views = video_data["views"]
             existing_video.likes = video_data["likes"]
             updated_videos_count += 1
+
+            # Queue for processing if not yet processed or failed
+            from app.models.models import VideoProcessingStatus
+            if existing_video.processing_status in [VideoProcessingStatus.SYNCED, VideoProcessingStatus.ERROR]:
+                try:
+                    logger.debug(f"Queueing existing video {existing_video.id} for processing (status: {existing_video.processing_status})")
+                    queue_video_processing.delay(existing_video.id, existing_video.youtube_video_id)
+                    queued_for_processing += 1
+                    logger.info(f"Successfully queued existing video {existing_video.id} ({video_id}) for processing")
+                except Exception as e:
+                    logger.warning(
+                        f"Failed to queue existing video {existing_video.id} ({video_id}) for processing: {e}",
+                        exc_info=True
+                    )
         else:
             # Create new video
+            logger.info(f"[{idx}/{len(videos_data)}] Creating new video: {video_id} - {video_title[:50]}")
             new_video = Video(
                 channel_id=channel.id,
-                youtube_video_id=video_data["video_id"],
+                youtube_video_id=video_id,
                 title=video_data["title"],
                 thumbnail_url=video_data["thumbnail_url"],
                 duration_seconds=video_data["duration_seconds"],
@@ -270,13 +317,38 @@ async def sync_channel_videos(
                 likes=video_data["likes"],
             )
             db.add(new_video)
+            db.flush()  # Get the video ID without committing
+
+            # Queue for processing
+            try:
+                logger.debug(f"Queueing video {new_video.id} for processing")
+                queue_video_processing.delay(new_video.id, new_video.youtube_video_id)
+                queued_for_processing += 1
+                logger.info(f"Successfully queued video {new_video.id} ({video_id}) for processing")
+            except Exception as e:
+                logger.warning(
+                    f"Failed to queue video {new_video.id} ({video_id}) for processing: {e}",
+                    exc_info=True
+                )
+
             new_videos_count += 1
 
-    db.commit()
+    try:
+        logger.debug("Committing database transaction")
+        db.commit()
+        logger.info(
+            f"Sync complete - new: {new_videos_count}, updated: {updated_videos_count}, "
+            f"queued: {queued_for_processing} (user_id={current_user.id}, channel_id={channel_id})"
+        )
+    except Exception as e:
+        logger.error(f"Database commit failed: {e}", exc_info=True)
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Failed to save videos: {e}")
 
     return {
         "success": True,
         "new_videos": new_videos_count,
         "updated_videos": updated_videos_count,
-        "total_fetched": len(videos_data)
+        "total_fetched": len(videos_data),
+        "queued_for_processing": queued_for_processing
     }

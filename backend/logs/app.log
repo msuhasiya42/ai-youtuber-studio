@@ -1,0 +1,422 @@
+[2025-11-01 20:33:01] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:33:01] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:33:01] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:33:03] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:33:03] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:33:03] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:33:03] [INFO    ] [req:N/A] [app.main:20] FastAPI application initialized
+[2025-11-01 20:33:03] [INFO    ] [req:N/A] [app.main:90] All API routers registered
+[2025-11-01 20:33:03] [INFO    ] [req:N/A] [app.main:94] Redis client initialized: redis://127.0.0.1:16379/0
+[2025-11-01 20:33:03] [INFO    ] [req:N/A] [app.main:101] ================================================================================
+[2025-11-01 20:33:03] [INFO    ] [req:N/A] [app.main:102] AI YouTuber Studio Backend - Starting Up
+[2025-11-01 20:33:03] [INFO    ] [req:N/A] [app.main:103] Environment: development
+[2025-11-01 20:33:03] [INFO    ] [req:N/A] [app.main:104] CORS Origins: ['http://localhost:3000', 'http://localhost:5173']
+[2025-11-01 20:33:03] [INFO    ] [req:N/A] [app.main:105] ================================================================================
+[2025-11-01 20:33:17] [INFO    ] [req:N/A] [app.main:111] ================================================================================
+[2025-11-01 20:33:17] [INFO    ] [req:N/A] [app.main:112] AI YouTuber Studio Backend - Shutting Down
+[2025-11-01 20:33:17] [INFO    ] [req:N/A] [app.main:113] ================================================================================
+[2025-11-01 20:33:21] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:33:21] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:33:21] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:33:23] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:33:23] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:33:23] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:33:23] [INFO    ] [req:N/A] [app.main:20] FastAPI application initialized
+[2025-11-01 20:33:23] [INFO    ] [req:N/A] [app.main:90] All API routers registered
+[2025-11-01 20:33:23] [INFO    ] [req:N/A] [app.main:94] Redis client initialized: redis://127.0.0.1:16379/0
+[2025-11-01 20:33:23] [INFO    ] [req:N/A] [app.main:101] ================================================================================
+[2025-11-01 20:33:23] [INFO    ] [req:N/A] [app.main:102] AI YouTuber Studio Backend - Starting Up
+[2025-11-01 20:33:23] [INFO    ] [req:N/A] [app.main:103] Environment: development
+[2025-11-01 20:33:23] [INFO    ] [req:N/A] [app.main:104] CORS Origins: ['http://localhost:3000', 'http://localhost:5173']
+[2025-11-01 20:33:23] [INFO    ] [req:N/A] [app.main:105] ================================================================================
+[2025-11-01 20:33:24] [INFO    ] [req:N/A] [app.main:111] ================================================================================
+[2025-11-01 20:33:24] [INFO    ] [req:N/A] [app.main:112] AI YouTuber Studio Backend - Shutting Down
+[2025-11-01 20:33:24] [INFO    ] [req:N/A] [app.main:113] ================================================================================
+[2025-11-01 20:33:27] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:33:27] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:33:27] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:33:29] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:33:29] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:33:29] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:33:29] [INFO    ] [req:N/A] [app.main:20] FastAPI application initialized
+[2025-11-01 20:33:29] [INFO    ] [req:N/A] [app.main:90] All API routers registered
+[2025-11-01 20:33:29] [INFO    ] [req:N/A] [app.main:94] Redis client initialized: redis://127.0.0.1:16379/0
+[2025-11-01 20:33:29] [INFO    ] [req:N/A] [app.main:101] ================================================================================
+[2025-11-01 20:33:29] [INFO    ] [req:N/A] [app.main:102] AI YouTuber Studio Backend - Starting Up
+[2025-11-01 20:33:29] [INFO    ] [req:N/A] [app.main:103] Environment: development
+[2025-11-01 20:33:29] [INFO    ] [req:N/A] [app.main:104] CORS Origins: ['http://localhost:3000', 'http://localhost:5173']
+[2025-11-01 20:33:29] [INFO    ] [req:N/A] [app.main:105] ================================================================================
+[2025-11-01 20:33:30] [INFO    ] [req:N/A] [app.main:111] ================================================================================
+[2025-11-01 20:33:30] [INFO    ] [req:N/A] [app.main:112] AI YouTuber Studio Backend - Shutting Down
+[2025-11-01 20:33:30] [INFO    ] [req:N/A] [app.main:113] ================================================================================
+[2025-11-01 20:33:34] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:33:34] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:33:34] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:33:36] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:33:36] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:33:36] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:33:36] [INFO    ] [req:N/A] [app.main:20] FastAPI application initialized
+[2025-11-01 20:33:36] [INFO    ] [req:N/A] [app.main:90] All API routers registered
+[2025-11-01 20:33:36] [INFO    ] [req:N/A] [app.main:94] Redis client initialized: redis://127.0.0.1:16379/0
+[2025-11-01 20:33:36] [INFO    ] [req:N/A] [app.main:101] ================================================================================
+[2025-11-01 20:33:36] [INFO    ] [req:N/A] [app.main:102] AI YouTuber Studio Backend - Starting Up
+[2025-11-01 20:33:36] [INFO    ] [req:N/A] [app.main:103] Environment: development
+[2025-11-01 20:33:36] [INFO    ] [req:N/A] [app.main:104] CORS Origins: ['http://localhost:3000', 'http://localhost:5173']
+[2025-11-01 20:33:36] [INFO    ] [req:N/A] [app.main:105] ================================================================================
+[2025-11-01 20:33:42] [INFO    ] [req:N/A] [app.main:111] ================================================================================
+[2025-11-01 20:33:42] [INFO    ] [req:N/A] [app.main:112] AI YouTuber Studio Backend - Shutting Down
+[2025-11-01 20:33:42] [INFO    ] [req:N/A] [app.main:113] ================================================================================
+[2025-11-01 20:33:46] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:33:46] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:33:46] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:33:48] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:33:48] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:33:48] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:33:48] [INFO    ] [req:N/A] [app.main:20] FastAPI application initialized
+[2025-11-01 20:33:48] [INFO    ] [req:N/A] [app.main:90] All API routers registered
+[2025-11-01 20:33:48] [INFO    ] [req:N/A] [app.main:94] Redis client initialized: redis://127.0.0.1:16379/0
+[2025-11-01 20:33:48] [INFO    ] [req:N/A] [app.main:101] ================================================================================
+[2025-11-01 20:33:48] [INFO    ] [req:N/A] [app.main:102] AI YouTuber Studio Backend - Starting Up
+[2025-11-01 20:33:48] [INFO    ] [req:N/A] [app.main:103] Environment: development
+[2025-11-01 20:33:48] [INFO    ] [req:N/A] [app.main:104] CORS Origins: ['http://localhost:3000', 'http://localhost:5173']
+[2025-11-01 20:33:48] [INFO    ] [req:N/A] [app.main:105] ================================================================================
+[2025-11-01 20:33:49] [INFO    ] [req:N/A] [app.main:111] ================================================================================
+[2025-11-01 20:33:49] [INFO    ] [req:N/A] [app.main:112] AI YouTuber Studio Backend - Shutting Down
+[2025-11-01 20:33:49] [INFO    ] [req:N/A] [app.main:113] ================================================================================
+[2025-11-01 20:33:52] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:33:52] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:33:52] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:33:54] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:33:54] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:33:54] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:33:54] [INFO    ] [req:N/A] [app.main:20] FastAPI application initialized
+[2025-11-01 20:33:54] [INFO    ] [req:N/A] [app.main:90] All API routers registered
+[2025-11-01 20:33:54] [INFO    ] [req:N/A] [app.main:94] Redis client initialized: redis://127.0.0.1:16379/0
+[2025-11-01 20:33:54] [INFO    ] [req:N/A] [app.main:101] ================================================================================
+[2025-11-01 20:33:54] [INFO    ] [req:N/A] [app.main:102] AI YouTuber Studio Backend - Starting Up
+[2025-11-01 20:33:54] [INFO    ] [req:N/A] [app.main:103] Environment: development
+[2025-11-01 20:33:54] [INFO    ] [req:N/A] [app.main:104] CORS Origins: ['http://localhost:3000', 'http://localhost:5173']
+[2025-11-01 20:33:54] [INFO    ] [req:N/A] [app.main:105] ================================================================================
+[2025-11-01 20:33:58] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:33:58] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:33:58] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:34:00] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:34:00] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:34:00] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:34:00] [INFO    ] [req:N/A] [app.main:20] FastAPI application initialized
+[2025-11-01 20:34:00] [INFO    ] [req:N/A] [app.main:90] All API routers registered
+[2025-11-01 20:34:00] [INFO    ] [req:N/A] [app.main:94] Redis client initialized: redis://127.0.0.1:16379/0
+[2025-11-01 20:34:00] [INFO    ] [req:N/A] [app.main:101] ================================================================================
+[2025-11-01 20:34:00] [INFO    ] [req:N/A] [app.main:102] AI YouTuber Studio Backend - Starting Up
+[2025-11-01 20:34:00] [INFO    ] [req:N/A] [app.main:103] Environment: development
+[2025-11-01 20:34:00] [INFO    ] [req:N/A] [app.main:104] CORS Origins: ['http://localhost:3000', 'http://localhost:5173']
+[2025-11-01 20:34:00] [INFO    ] [req:N/A] [app.main:105] ================================================================================
+[2025-11-01 20:34:04] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:34:04] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:34:04] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:34:06] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:34:06] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:34:06] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:34:06] [INFO    ] [req:N/A] [app.main:20] FastAPI application initialized
+[2025-11-01 20:34:06] [INFO    ] [req:N/A] [app.main:90] All API routers registered
+[2025-11-01 20:34:06] [INFO    ] [req:N/A] [app.main:94] Redis client initialized: redis://127.0.0.1:16379/0
+[2025-11-01 20:34:06] [INFO    ] [req:N/A] [app.main:101] ================================================================================
+[2025-11-01 20:34:06] [INFO    ] [req:N/A] [app.main:102] AI YouTuber Studio Backend - Starting Up
+[2025-11-01 20:34:06] [INFO    ] [req:N/A] [app.main:103] Environment: development
+[2025-11-01 20:34:06] [INFO    ] [req:N/A] [app.main:104] CORS Origins: ['http://localhost:3000', 'http://localhost:5173']
+[2025-11-01 20:34:06] [INFO    ] [req:N/A] [app.main:105] ================================================================================
+[2025-11-01 20:34:09] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:34:09] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:34:09] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:34:11] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:34:11] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:34:11] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:34:11] [INFO    ] [req:N/A] [app.main:20] FastAPI application initialized
+[2025-11-01 20:34:11] [INFO    ] [req:N/A] [app.main:90] All API routers registered
+[2025-11-01 20:34:11] [INFO    ] [req:N/A] [app.main:94] Redis client initialized: redis://127.0.0.1:16379/0
+[2025-11-01 20:34:11] [INFO    ] [req:N/A] [app.main:101] ================================================================================
+[2025-11-01 20:34:11] [INFO    ] [req:N/A] [app.main:102] AI YouTuber Studio Backend - Starting Up
+[2025-11-01 20:34:11] [INFO    ] [req:N/A] [app.main:103] Environment: development
+[2025-11-01 20:34:11] [INFO    ] [req:N/A] [app.main:104] CORS Origins: ['http://localhost:3000', 'http://localhost:5173']
+[2025-11-01 20:34:11] [INFO    ] [req:N/A] [app.main:105] ================================================================================
+[2025-11-01 20:34:15] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:34:15] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:34:15] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:34:17] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:34:17] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:34:17] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:34:17] [INFO    ] [req:N/A] [app.main:20] FastAPI application initialized
+[2025-11-01 20:34:17] [INFO    ] [req:N/A] [app.main:90] All API routers registered
+[2025-11-01 20:34:17] [INFO    ] [req:N/A] [app.main:94] Redis client initialized: redis://127.0.0.1:16379/0
+[2025-11-01 20:34:17] [INFO    ] [req:N/A] [app.main:101] ================================================================================
+[2025-11-01 20:34:17] [INFO    ] [req:N/A] [app.main:102] AI YouTuber Studio Backend - Starting Up
+[2025-11-01 20:34:17] [INFO    ] [req:N/A] [app.main:103] Environment: development
+[2025-11-01 20:34:17] [INFO    ] [req:N/A] [app.main:104] CORS Origins: ['http://localhost:3000', 'http://localhost:5173']
+[2025-11-01 20:34:17] [INFO    ] [req:N/A] [app.main:105] ================================================================================
+[2025-11-01 20:34:20] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:34:20] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:34:20] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:34:22] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:34:22] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:34:22] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:34:22] [INFO    ] [req:N/A] [app.main:20] FastAPI application initialized
+[2025-11-01 20:34:22] [INFO    ] [req:N/A] [app.main:90] All API routers registered
+[2025-11-01 20:34:22] [INFO    ] [req:N/A] [app.main:94] Redis client initialized: redis://127.0.0.1:16379/0
+[2025-11-01 20:34:22] [INFO    ] [req:N/A] [app.main:101] ================================================================================
+[2025-11-01 20:34:22] [INFO    ] [req:N/A] [app.main:102] AI YouTuber Studio Backend - Starting Up
+[2025-11-01 20:34:22] [INFO    ] [req:N/A] [app.main:103] Environment: development
+[2025-11-01 20:34:22] [INFO    ] [req:N/A] [app.main:104] CORS Origins: ['http://localhost:3000', 'http://localhost:5173']
+[2025-11-01 20:34:22] [INFO    ] [req:N/A] [app.main:105] ================================================================================
+[2025-11-01 20:34:26] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:34:26] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:34:26] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:34:28] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:34:28] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:34:28] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:34:28] [INFO    ] [req:N/A] [app.main:20] FastAPI application initialized
+[2025-11-01 20:34:28] [INFO    ] [req:N/A] [app.main:90] All API routers registered
+[2025-11-01 20:34:28] [INFO    ] [req:N/A] [app.main:94] Redis client initialized: redis://127.0.0.1:16379/0
+[2025-11-01 20:34:28] [INFO    ] [req:N/A] [app.main:101] ================================================================================
+[2025-11-01 20:34:28] [INFO    ] [req:N/A] [app.main:102] AI YouTuber Studio Backend - Starting Up
+[2025-11-01 20:34:28] [INFO    ] [req:N/A] [app.main:103] Environment: development
+[2025-11-01 20:34:28] [INFO    ] [req:N/A] [app.main:104] CORS Origins: ['http://localhost:3000', 'http://localhost:5173']
+[2025-11-01 20:34:28] [INFO    ] [req:N/A] [app.main:105] ================================================================================
+[2025-11-01 20:34:31] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:34:31] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:34:31] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:34:33] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:34:33] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:34:33] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:34:33] [INFO    ] [req:N/A] [app.main:20] FastAPI application initialized
+[2025-11-01 20:34:33] [INFO    ] [req:N/A] [app.main:90] All API routers registered
+[2025-11-01 20:34:33] [INFO    ] [req:N/A] [app.main:94] Redis client initialized: redis://127.0.0.1:16379/0
+[2025-11-01 20:34:33] [INFO    ] [req:N/A] [app.main:101] ================================================================================
+[2025-11-01 20:34:33] [INFO    ] [req:N/A] [app.main:102] AI YouTuber Studio Backend - Starting Up
+[2025-11-01 20:34:33] [INFO    ] [req:N/A] [app.main:103] Environment: development
+[2025-11-01 20:34:33] [INFO    ] [req:N/A] [app.main:104] CORS Origins: ['http://localhost:3000', 'http://localhost:5173']
+[2025-11-01 20:34:33] [INFO    ] [req:N/A] [app.main:105] ================================================================================
+[2025-11-01 20:34:41] [INFO    ] [req:N/A] [app.main:111] ================================================================================
+[2025-11-01 20:34:41] [INFO    ] [req:N/A] [app.main:112] AI YouTuber Studio Backend - Shutting Down
+[2025-11-01 20:34:41] [INFO    ] [req:N/A] [app.main:113] ================================================================================
+[2025-11-01 20:34:45] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:34:45] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:34:45] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:34:47] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:34:47] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:34:47] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:34:47] [INFO    ] [req:N/A] [app.main:20] FastAPI application initialized
+[2025-11-01 20:34:47] [INFO    ] [req:N/A] [app.main:90] All API routers registered
+[2025-11-01 20:34:47] [INFO    ] [req:N/A] [app.main:94] Redis client initialized: redis://127.0.0.1:16379/0
+[2025-11-01 20:34:47] [INFO    ] [req:N/A] [app.main:101] ================================================================================
+[2025-11-01 20:34:47] [INFO    ] [req:N/A] [app.main:102] AI YouTuber Studio Backend - Starting Up
+[2025-11-01 20:34:47] [INFO    ] [req:N/A] [app.main:103] Environment: development
+[2025-11-01 20:34:47] [INFO    ] [req:N/A] [app.main:104] CORS Origins: ['http://localhost:3000', 'http://localhost:5173']
+[2025-11-01 20:34:47] [INFO    ] [req:N/A] [app.main:105] ================================================================================
+[2025-11-01 20:34:51] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:34:51] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:34:51] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:34:53] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:34:53] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:34:53] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:34:53] [INFO    ] [req:N/A] [app.main:20] FastAPI application initialized
+[2025-11-01 20:34:53] [INFO    ] [req:N/A] [app.main:90] All API routers registered
+[2025-11-01 20:34:53] [INFO    ] [req:N/A] [app.main:94] Redis client initialized: redis://127.0.0.1:16379/0
+[2025-11-01 20:34:53] [INFO    ] [req:N/A] [app.main:101] ================================================================================
+[2025-11-01 20:34:53] [INFO    ] [req:N/A] [app.main:102] AI YouTuber Studio Backend - Starting Up
+[2025-11-01 20:34:53] [INFO    ] [req:N/A] [app.main:103] Environment: development
+[2025-11-01 20:34:53] [INFO    ] [req:N/A] [app.main:104] CORS Origins: ['http://localhost:3000', 'http://localhost:5173']
+[2025-11-01 20:34:53] [INFO    ] [req:N/A] [app.main:105] ================================================================================
+[2025-11-01 20:34:58] [INFO    ] [req:N/A] [app.main:111] ================================================================================
+[2025-11-01 20:34:58] [INFO    ] [req:N/A] [app.main:112] AI YouTuber Studio Backend - Shutting Down
+[2025-11-01 20:34:58] [INFO    ] [req:N/A] [app.main:113] ================================================================================
+[2025-11-01 20:35:01] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:35:01] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:35:01] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:35:03] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:35:03] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:35:03] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:35:03] [INFO    ] [req:N/A] [app.main:20] FastAPI application initialized
+[2025-11-01 20:35:03] [INFO    ] [req:N/A] [app.main:90] All API routers registered
+[2025-11-01 20:35:03] [INFO    ] [req:N/A] [app.main:94] Redis client initialized: redis://127.0.0.1:16379/0
+[2025-11-01 20:35:03] [INFO    ] [req:N/A] [app.main:101] ================================================================================
+[2025-11-01 20:35:03] [INFO    ] [req:N/A] [app.main:102] AI YouTuber Studio Backend - Starting Up
+[2025-11-01 20:35:03] [INFO    ] [req:N/A] [app.main:103] Environment: development
+[2025-11-01 20:35:03] [INFO    ] [req:N/A] [app.main:104] CORS Origins: ['http://localhost:3000', 'http://localhost:5173']
+[2025-11-01 20:35:03] [INFO    ] [req:N/A] [app.main:105] ================================================================================
+[2025-11-01 20:35:15] [INFO    ] [req:N/A] [app.main:111] ================================================================================
+[2025-11-01 20:35:15] [INFO    ] [req:N/A] [app.main:112] AI YouTuber Studio Backend - Shutting Down
+[2025-11-01 20:35:15] [INFO    ] [req:N/A] [app.main:113] ================================================================================
+[2025-11-01 20:35:19] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:35:19] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:35:19] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:35:21] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:35:21] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:35:21] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:35:21] [INFO    ] [req:N/A] [app.main:20] FastAPI application initialized
+[2025-11-01 20:35:21] [INFO    ] [req:N/A] [app.main:90] All API routers registered
+[2025-11-01 20:35:21] [INFO    ] [req:N/A] [app.main:94] Redis client initialized: redis://127.0.0.1:16379/0
+[2025-11-01 20:35:21] [INFO    ] [req:N/A] [app.main:101] ================================================================================
+[2025-11-01 20:35:21] [INFO    ] [req:N/A] [app.main:102] AI YouTuber Studio Backend - Starting Up
+[2025-11-01 20:35:21] [INFO    ] [req:N/A] [app.main:103] Environment: development
+[2025-11-01 20:35:21] [INFO    ] [req:N/A] [app.main:104] CORS Origins: ['http://localhost:3000', 'http://localhost:5173']
+[2025-11-01 20:35:21] [INFO    ] [req:N/A] [app.main:105] ================================================================================
+[2025-11-01 20:35:34] [INFO    ] [req:N/A] [app.main:111] ================================================================================
+[2025-11-01 20:35:34] [INFO    ] [req:N/A] [app.main:112] AI YouTuber Studio Backend - Shutting Down
+[2025-11-01 20:35:34] [INFO    ] [req:N/A] [app.main:113] ================================================================================
+[2025-11-01 20:35:37] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:35:37] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:35:37] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:35:39] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:35:39] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:35:39] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:35:39] [INFO    ] [req:N/A] [app.main:20] FastAPI application initialized
+[2025-11-01 20:35:40] [INFO    ] [req:N/A] [app.main:90] All API routers registered
+[2025-11-01 20:35:40] [INFO    ] [req:N/A] [app.main:94] Redis client initialized: redis://127.0.0.1:16379/0
+[2025-11-01 20:35:40] [INFO    ] [req:N/A] [app.main:101] ================================================================================
+[2025-11-01 20:35:40] [INFO    ] [req:N/A] [app.main:102] AI YouTuber Studio Backend - Starting Up
+[2025-11-01 20:35:40] [INFO    ] [req:N/A] [app.main:103] Environment: development
+[2025-11-01 20:35:40] [INFO    ] [req:N/A] [app.main:104] CORS Origins: ['http://localhost:3000', 'http://localhost:5173']
+[2025-11-01 20:35:40] [INFO    ] [req:N/A] [app.main:105] ================================================================================
+[2025-11-01 20:35:42] [INFO    ] [req:N/A] [app.main:111] ================================================================================
+[2025-11-01 20:35:42] [INFO    ] [req:N/A] [app.main:112] AI YouTuber Studio Backend - Shutting Down
+[2025-11-01 20:35:42] [INFO    ] [req:N/A] [app.main:113] ================================================================================
+[2025-11-01 20:35:46] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:35:46] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:35:46] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:35:48] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:35:48] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:35:48] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:35:48] [INFO    ] [req:N/A] [app.main:20] FastAPI application initialized
+[2025-11-01 20:35:48] [INFO    ] [req:N/A] [app.main:90] All API routers registered
+[2025-11-01 20:35:48] [INFO    ] [req:N/A] [app.main:94] Redis client initialized: redis://127.0.0.1:16379/0
+[2025-11-01 20:35:48] [INFO    ] [req:N/A] [app.main:101] ================================================================================
+[2025-11-01 20:35:48] [INFO    ] [req:N/A] [app.main:102] AI YouTuber Studio Backend - Starting Up
+[2025-11-01 20:35:48] [INFO    ] [req:N/A] [app.main:103] Environment: development
+[2025-11-01 20:35:48] [INFO    ] [req:N/A] [app.main:104] CORS Origins: ['http://localhost:3000', 'http://localhost:5173']
+[2025-11-01 20:35:48] [INFO    ] [req:N/A] [app.main:105] ================================================================================
+[2025-11-01 20:35:53] [INFO    ] [req:N/A] [app.main:111] ================================================================================
+[2025-11-01 20:35:53] [INFO    ] [req:N/A] [app.main:112] AI YouTuber Studio Backend - Shutting Down
+[2025-11-01 20:35:53] [INFO    ] [req:N/A] [app.main:113] ================================================================================
+[2025-11-01 20:35:56] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:35:56] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:35:56] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:35:58] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:35:58] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:35:58] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:35:58] [INFO    ] [req:N/A] [app.main:20] FastAPI application initialized
+[2025-11-01 20:35:58] [INFO    ] [req:N/A] [app.main:90] All API routers registered
+[2025-11-01 20:35:58] [INFO    ] [req:N/A] [app.main:94] Redis client initialized: redis://127.0.0.1:16379/0
+[2025-11-01 20:35:58] [INFO    ] [req:N/A] [app.main:101] ================================================================================
+[2025-11-01 20:35:58] [INFO    ] [req:N/A] [app.main:102] AI YouTuber Studio Backend - Starting Up
+[2025-11-01 20:35:58] [INFO    ] [req:N/A] [app.main:103] Environment: development
+[2025-11-01 20:35:58] [INFO    ] [req:N/A] [app.main:104] CORS Origins: ['http://localhost:3000', 'http://localhost:5173']
+[2025-11-01 20:35:58] [INFO    ] [req:N/A] [app.main:105] ================================================================================
+[2025-11-01 20:36:00] [INFO    ] [req:N/A] [app.main:111] ================================================================================
+[2025-11-01 20:36:00] [INFO    ] [req:N/A] [app.main:112] AI YouTuber Studio Backend - Shutting Down
+[2025-11-01 20:36:00] [INFO    ] [req:N/A] [app.main:113] ================================================================================
+[2025-11-01 20:36:03] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:36:03] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:36:03] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:36:05] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:36:05] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:36:05] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:36:05] [INFO    ] [req:N/A] [app.main:20] FastAPI application initialized
+[2025-11-01 20:36:05] [INFO    ] [req:N/A] [app.main:90] All API routers registered
+[2025-11-01 20:36:05] [INFO    ] [req:N/A] [app.main:94] Redis client initialized: redis://127.0.0.1:16379/0
+[2025-11-01 20:36:05] [INFO    ] [req:N/A] [app.main:101] ================================================================================
+[2025-11-01 20:36:05] [INFO    ] [req:N/A] [app.main:102] AI YouTuber Studio Backend - Starting Up
+[2025-11-01 20:36:05] [INFO    ] [req:N/A] [app.main:103] Environment: development
+[2025-11-01 20:36:05] [INFO    ] [req:N/A] [app.main:104] CORS Origins: ['http://localhost:3000', 'http://localhost:5173']
+[2025-11-01 20:36:05] [INFO    ] [req:N/A] [app.main:105] ================================================================================
+[2025-11-01 20:36:09] [INFO    ] [req:N/A] [app.main:111] ================================================================================
+[2025-11-01 20:36:09] [INFO    ] [req:N/A] [app.main:112] AI YouTuber Studio Backend - Shutting Down
+[2025-11-01 20:36:09] [INFO    ] [req:N/A] [app.main:113] ================================================================================
+[2025-11-01 20:36:13] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:36:13] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:36:13] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:36:15] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:36:15] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:36:15] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:36:15] [INFO    ] [req:N/A] [app.main:20] FastAPI application initialized
+[2025-11-01 20:36:15] [INFO    ] [req:N/A] [app.main:90] All API routers registered
+[2025-11-01 20:36:15] [INFO    ] [req:N/A] [app.main:94] Redis client initialized: redis://127.0.0.1:16379/0
+[2025-11-01 20:36:15] [INFO    ] [req:N/A] [app.main:101] ================================================================================
+[2025-11-01 20:36:15] [INFO    ] [req:N/A] [app.main:102] AI YouTuber Studio Backend - Starting Up
+[2025-11-01 20:36:15] [INFO    ] [req:N/A] [app.main:103] Environment: development
+[2025-11-01 20:36:15] [INFO    ] [req:N/A] [app.main:104] CORS Origins: ['http://localhost:3000', 'http://localhost:5173']
+[2025-11-01 20:36:15] [INFO    ] [req:N/A] [app.main:105] ================================================================================
+[2025-11-01 20:36:17] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:36:17] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:36:17] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:36:21] [INFO    ] [req:N/A] [app.main:111] ================================================================================
+[2025-11-01 20:36:21] [INFO    ] [req:N/A] [app.main:112] AI YouTuber Studio Backend - Shutting Down
+[2025-11-01 20:36:21] [INFO    ] [req:N/A] [app.main:113] ================================================================================
+[2025-11-01 20:36:24] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:36:24] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:36:24] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:36:26] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:36:26] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:36:26] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:36:26] [INFO    ] [req:N/A] [app.main:20] FastAPI application initialized
+[2025-11-01 20:36:26] [INFO    ] [req:N/A] [app.main:90] All API routers registered
+[2025-11-01 20:36:26] [INFO    ] [req:N/A] [app.main:94] Redis client initialized: redis://127.0.0.1:16379/0
+[2025-11-01 20:36:26] [INFO    ] [req:N/A] [app.main:101] ================================================================================
+[2025-11-01 20:36:26] [INFO    ] [req:N/A] [app.main:102] AI YouTuber Studio Backend - Starting Up
+[2025-11-01 20:36:26] [INFO    ] [req:N/A] [app.main:103] Environment: development
+[2025-11-01 20:36:26] [INFO    ] [req:N/A] [app.main:104] CORS Origins: ['http://localhost:3000', 'http://localhost:5173']
+[2025-11-01 20:36:26] [INFO    ] [req:N/A] [app.main:105] ================================================================================
+[2025-11-01 20:36:30] [INFO    ] [req:N/A] [app.main:111] ================================================================================
+[2025-11-01 20:36:30] [INFO    ] [req:N/A] [app.main:112] AI YouTuber Studio Backend - Shutting Down
+[2025-11-01 20:36:30] [INFO    ] [req:N/A] [app.main:113] ================================================================================
+[2025-11-01 20:36:34] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:36:34] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:36:34] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:36:36] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:36:36] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:36:36] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:36:36] [INFO    ] [req:N/A] [app.main:20] FastAPI application initialized
+[2025-11-01 20:36:36] [INFO    ] [req:N/A] [app.main:90] All API routers registered
+[2025-11-01 20:36:36] [INFO    ] [req:N/A] [app.main:94] Redis client initialized: redis://127.0.0.1:16379/0
+[2025-11-01 20:36:36] [INFO    ] [req:N/A] [app.main:101] ================================================================================
+[2025-11-01 20:36:36] [INFO    ] [req:N/A] [app.main:102] AI YouTuber Studio Backend - Starting Up
+[2025-11-01 20:36:36] [INFO    ] [req:N/A] [app.main:103] Environment: development
+[2025-11-01 20:36:36] [INFO    ] [req:N/A] [app.main:104] CORS Origins: ['http://localhost:3000', 'http://localhost:5173']
+[2025-11-01 20:36:36] [INFO    ] [req:N/A] [app.main:105] ================================================================================
+[2025-11-01 20:36:39] [INFO    ] [req:N/A] [app.main:111] ================================================================================
+[2025-11-01 20:36:39] [INFO    ] [req:N/A] [app.main:112] AI YouTuber Studio Backend - Shutting Down
+[2025-11-01 20:36:39] [INFO    ] [req:N/A] [app.main:113] ================================================================================
+[2025-11-01 20:36:43] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:36:43] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:36:43] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:36:45] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:36:45] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:36:45] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:36:45] [INFO    ] [req:N/A] [app.main:20] FastAPI application initialized
+[2025-11-01 20:36:45] [INFO    ] [req:N/A] [app.main:90] All API routers registered
+[2025-11-01 20:36:45] [INFO    ] [req:N/A] [app.main:94] Redis client initialized: redis://127.0.0.1:16379/0
+[2025-11-01 20:36:45] [INFO    ] [req:N/A] [app.main:101] ================================================================================
+[2025-11-01 20:36:45] [INFO    ] [req:N/A] [app.main:102] AI YouTuber Studio Backend - Starting Up
+[2025-11-01 20:36:45] [INFO    ] [req:N/A] [app.main:103] Environment: development
+[2025-11-01 20:36:45] [INFO    ] [req:N/A] [app.main:104] CORS Origins: ['http://localhost:3000', 'http://localhost:5173']
+[2025-11-01 20:36:45] [INFO    ] [req:N/A] [app.main:105] ================================================================================
+[2025-11-01 20:37:35] [INFO    ] [req:742eba87] [app.main:32] Request: GET /api/channels/me [client:127.0.0.1] [user-agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Ap]
+[2025-11-01 20:37:35] [INFO    ] [req:742eba87] [app.main:47] Response: GET /api/channels/me [status:200] [duration:140.45ms]
+[2025-11-01 20:37:35] [INFO    ] [req:622a88f7] [app.main:32] Request: GET /api/channels/me [client:127.0.0.1] [user-agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Ap]
+[2025-11-01 20:37:35] [INFO    ] [req:622a88f7] [app.main:47] Response: GET /api/channels/me [status:200] [duration:5.62ms]
+[2025-11-01 20:57:39] [INFO    ] [req:N/A] [app.main:111] ================================================================================
+[2025-11-01 20:57:39] [INFO    ] [req:N/A] [app.main:112] AI YouTuber Studio Backend - Shutting Down
+[2025-11-01 20:57:39] [INFO    ] [req:N/A] [app.main:113] ================================================================================
+[2025-11-01 20:57:44] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:57:44] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:57:44] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:57:46] [INFO    ] [req:N/A] [root:152] ================================================================================
+[2025-11-01 20:57:46] [INFO    ] [req:N/A] [root:153] Logging initialized - Level: INFO, File: /Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/logs/app.log
+[2025-11-01 20:57:46] [INFO    ] [req:N/A] [root:154] ================================================================================
+[2025-11-01 20:57:46] [INFO    ] [req:N/A] [app.main:20] FastAPI application initialized
+[2025-11-01 20:57:46] [INFO    ] [req:N/A] [app.main:90] All API routers registered
+[2025-11-01 20:57:46] [INFO    ] [req:N/A] [app.main:94] Redis client initialized: redis://127.0.0.1:16379/0
+[2025-11-01 20:57:46] [INFO    ] [req:N/A] [app.main:101] ================================================================================
+[2025-11-01 20:57:46] [INFO    ] [req:N/A] [app.main:102] AI YouTuber Studio Backend - Starting Up
+[2025-11-01 20:57:46] [INFO    ] [req:N/A] [app.main:103] Environment: development
+[2025-11-01 20:57:46] [INFO    ] [req:N/A] [app.main:104] CORS Origins: ['http://localhost:3000', 'http://localhost:5173']
+[2025-11-01 20:57:46] [INFO    ] [req:N/A] [app.main:105] ================================================================================
