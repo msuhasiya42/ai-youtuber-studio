@@ -20,14 +20,7 @@ app.conf.update(
     enable_utc=True,
 )
 
-# Eager import tasks to register
-try:
-    import app.services.ingest_worker  # noqa: F401
-    import app.services.transcribe_worker  # noqa: F401
-    import app.services.embedding_worker  # noqa: F401
-    import app.services.generation_worker  # noqa: F401
-    import app.services.insights_worker  # noqa: F401
-except Exception:  # pragma: no cover
-    pass
+# Tasks will be auto-discovered when Celery worker starts
+# Do not import task modules here to avoid circular imports with FastAPI
 
 

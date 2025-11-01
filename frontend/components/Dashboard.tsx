@@ -16,9 +16,10 @@ interface DashboardProps {
     verified: boolean;
   } | null;
   onChannelDataUpdate: (updatedChannel: any) => void; // New prop to handle updates from ChannelHeader
+  onOpenContentStudio: () => void; // New prop to navigate to Content Studio
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ onDisconnect, onSeeAll, channelData, onChannelDataUpdate }) => { // Destructure new prop
+const Dashboard: React.FC<DashboardProps> = ({ onDisconnect, onSeeAll, channelData, onChannelDataUpdate, onOpenContentStudio }) => { // Destructure new prop
   return (
     <div className="flex flex-col min-h-screen bg-gray-900 text-white p-4">
       <div className="max-w-7xl mx-auto w-full space-y-8">
@@ -37,13 +38,21 @@ const Dashboard: React.FC<DashboardProps> = ({ onDisconnect, onSeeAll, channelDa
                 <div className="bg-gray-800 rounded-lg shadow-lg p-6">
                   <h2 className="text-2xl font-semibold mb-4">Dashboard Overview</h2>
                   <p>Welcome to your AI YouTube Studio! Here you'll find insights, video management tools, and script generation capabilities.</p>
-                  <p className="mt-2">Connect your YouTube channel to unlock all features.</p>
-                  <button 
-                    onClick={onSeeAll} 
-                    className="mt-4 px-6 py-2 bg-indigo-600 rounded-md hover:bg-indigo-700 transition-colors"
-                  >
-                    See All Videos (Coming Soon)
-                  </button>
+                  <p className="mt-2">Use AI Content Studio to generate scripts, optimize titles, and analyze your top-performing videos.</p>
+                  <div className="mt-4 flex gap-4">
+                    <button
+                      onClick={onOpenContentStudio}
+                      className="px-6 py-2 bg-indigo-600 rounded-md hover:bg-indigo-700 transition-colors font-semibold"
+                    >
+                      🎬 AI Content Studio
+                    </button>
+                    <button
+                      onClick={onSeeAll}
+                      className="px-6 py-2 bg-gray-700 rounded-md hover:bg-gray-600 transition-colors"
+                    >
+                      See All Videos (Coming Soon)
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

@@ -129,7 +129,9 @@ async def refresh_channel_data(
             channel_name = channel_data_yt["snippet"]["title"]
             avatar_url = channel_data_yt["snippet"]["thumbnails"]["default"]["url"]
             subscribers = int(channel_data_yt["statistics"].get("subscriberCount", 0))
-            is_verified = channel_data_yt["snippet"].get("liveStreamingDetails", {}).get("isVerified", False)
+            # Note: YouTube API doesn't provide a direct verification status field
+            # Keep existing verification status or default to False
+            is_verified = channel.verified  # Maintain existing verification status
             total_views = int(channel_data_yt["statistics"].get("viewCount", 0))
         else:
             print(f"No Data API channel info found for {channel.youtube_channel_id}.")
@@ -140,7 +142,8 @@ async def refresh_channel_data(
 
 
     # --- NEW: Fetch total watch hours using YouTube Analytics API ---
-    total_watch_hours = 0.0
+    total_watch_hours = channel.total_watch_hours  # Default to existing value
+    analytics_error = None
     try:
         youtube_analytics = build("youtubeAnalytics", "v2", credentials=creds)
         today = date.today().isoformat()
@@ -157,11 +160,14 @@ async def refresh_channel_data(
             estimated_minutes_watched = analytics_response["rows"][0][0]
             total_watch_hours = float(estimated_minutes_watched) / 60.0
         else:
-            print(f"No watch hours data found for channel {channel.youtube_channel_id} from Analytics API.")
+            analytics_error = "No watch hours data returned from Analytics API. Data may be delayed by 24-48 hours."
+            print(f"Warning: {analytics_error} Channel: {channel.youtube_channel_id}")
 
     except Exception as e:
+        analytics_error = str(e)
         print(f"Error fetching YouTube Analytics API watch hours for channel {channel.name}: {e}")
-        # Do not raise, just use default 0.0 if analytics fails
+        print(f"Note: Analytics data may be unavailable or delayed. Using existing value: {total_watch_hours}")
+        # Do not raise, keep existing value if analytics fails
 
     # Update existing channel object with all fetched data
     channel.name = channel_name
@@ -175,3 +181,102 @@ async def refresh_channel_data(
     db.commit()
     db.refresh(channel)
     return channel
+
+
+# --- SYNC VIDEOS ENDPOINT ---
+@router.post("/{channel_id}/sync-videos")
+async def sync_channel_videos(
+    channel_id: int,
+    limit: int = 50,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Sync videos from YouTube for the specified channel.
+    Fetches latest videos and stores them in the database.
+    """
+    from app.services.youtube_client import YouTubeClient
+    from app.models.models import Video
+
+    # Verify channel belongs to current user
+    channel = db.query(Channel).filter(
+        Channel.id == channel_id,
+        Channel.owner_id == current_user.id
+    ).first()
+
+    if not channel:
+        raise HTTPException(status_code=404, detail="Channel not found or does not belong to user.")
+
+    # Get user's refresh token
+    if not current_user.google_refresh_token:
+        raise HTTPException(status_code=400, detail="User has no Google refresh token. Reconnect YouTube.")
+
+    # Refresh credentials
+    creds = Credentials(
+        token=None,
+        refresh_token=current_user.google_refresh_token,
+        token_uri="https://oauth2.googleapis.com/token",
+        client_id=GOOGLE_CLIENT_ID,
+        client_secret=GOOGLE_CLIENT_SECRET,
+        scopes=["https://www.googleapis.com/auth/youtube.readonly"],
+    )
+
+    try:
+        creds.refresh(GoogleAuthRequest())
+    except Exception as e:
+        raise HTTPException(status_code=401, detail=f"Failed to refresh credentials: {e}")
+
+    # Fetch videos from YouTube
+    youtube_client = YouTubeClient(credentials=creds)
+
+    try:
+        videos_data = youtube_client.fetch_last_videos(
+            channel_id=channel.youtube_channel_id,
+            limit=limit,
+            order="date"
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch videos from YouTube: {e}")
+
+    # Store videos in database
+    new_videos_count = 0
+    updated_videos_count = 0
+
+    for video_data in videos_data:
+        # Check if video already exists
+        existing_video = db.query(Video).filter(
+            Video.youtube_video_id == video_data["video_id"]
+        ).first()
+
+        if existing_video:
+            # Update existing video
+            existing_video.title = video_data["title"]
+            existing_video.thumbnail_url = video_data["thumbnail_url"]
+            existing_video.duration_seconds = video_data["duration_seconds"]
+            existing_video.published_at = video_data["published_at"]
+            existing_video.views = video_data["views"]
+            existing_video.likes = video_data["likes"]
+            updated_videos_count += 1
+        else:
+            # Create new video
+            new_video = Video(
+                channel_id=channel.id,
+                youtube_video_id=video_data["video_id"],
+                title=video_data["title"],
+                thumbnail_url=video_data["thumbnail_url"],
+                duration_seconds=video_data["duration_seconds"],
+                published_at=video_data["published_at"],
+                views=video_data["views"],
+                likes=video_data["likes"],
+            )
+            db.add(new_video)
+            new_videos_count += 1
+
+    db.commit()
+
+    return {
+        "success": True,
+        "new_videos": new_videos_count,
+        "updated_videos": updated_videos_count,
+        "total_fetched": len(videos_data)
+    }

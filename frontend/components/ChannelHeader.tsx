@@ -10,15 +10,12 @@ interface ChannelHeaderProps {
 }
 
 const ChannelHeader: React.FC<ChannelHeaderProps> = ({ channel, onDisconnect, onRefresh }) => {
-  const [filter, setFilter] = useState('All time');
   const [isRefreshing, setIsRefreshing] = useState(false); // State for refresh button loading
 
   function formatIndianNumber(num) {
     if (num == null || isNaN(num)) return "0";
     return Number(num).toLocaleString("en-IN");
   }
-
-  console.log("channel", channel);
 
   const handleRefresh = async () => {
     setIsRefreshing(true);
@@ -72,7 +69,7 @@ const ChannelHeader: React.FC<ChannelHeaderProps> = ({ channel, onDisconnect, on
         </div>
       </div>
       
-      <div className="mt-6 border-t border-border pt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="mt-6 border-t border-border pt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex flex-col gap-2 p-4 bg-background rounded-lg">
           <div className="flex items-center gap-2 text-text-secondary text-sm">
             <ViewsIcon className="w-4 h-4" />
@@ -86,18 +83,6 @@ const ChannelHeader: React.FC<ChannelHeaderProps> = ({ channel, onDisconnect, on
             <span>Total Watch Hours</span>
           </div>
           <p className="text-2xl font-bold text-text-primary">{formatIndianNumber(channel.total_watch_hours)}</p>
-        </div>
-        <div className="col-span-2 md:col-span-2 flex items-center justify-end">
-            <select
-                value={filter}
-                onChange={(e) => setFilter(e.target.value)}
-                className="bg-secondary border border-border text-text-primary text-sm rounded-lg focus:ring-primary focus:border-primary block w-full sm:w-auto p-2.5"
-                >
-                <option>All time</option>
-                <option>Last 3 months</option>
-                <option>Last 1 month</option>
-                <option>Last 1 week</option>
-            </select>
         </div>
       </div>
     </header>

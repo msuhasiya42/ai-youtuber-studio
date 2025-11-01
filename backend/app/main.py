@@ -6,7 +6,7 @@ from fastapi.responses import ORJSONResponse
 import os
 import asyncio
 import redis
-from app.api import auth, channels, videos, insights
+from app.api import auth, channels, videos, insights, transcripts, content_studio
 
 
 app = FastAPI(default_response_class=ORJSONResponse, title="AI YouTuber Studio")
@@ -24,6 +24,8 @@ app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
 app.include_router(channels.router, prefix="/api/channels", tags=["channels"])
 app.include_router(videos.router, prefix="/api/videos", tags=["videos"])
 app.include_router(insights.router, prefix="/api/insights", tags=["insights"])
+app.include_router(transcripts.router, prefix="/api/transcripts", tags=["transcripts"])
+app.include_router(content_studio.router, prefix="/api/content-studio", tags=["content-studio"])
 
 
 redis_url = os.getenv("REDIS_URL", "redis://redis:6379/0")

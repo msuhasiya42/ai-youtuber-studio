@@ -1,9 +1,82 @@
-from celery_worker import app
+"""
+Ingest worker for downloading audio from YouTube videos using yt-dlp.
+"""
+from celery_worker import app as celery_app
+import yt_dlp
+import os
+import tempfile
+from app.services.storage_client import get_storage_client
 
 
-@app.task
-def download_audio(video_url: str) -> dict:
-    # Placeholder for yt-dlp usage
-    return {"status": "ok", "s3_key": f"audio/{video_url.split('=')[-1]}.mp3"}
+@celery_app.task
+def download_audio(video_id: str) -> dict:
+    """
+    Download audio from a YouTube video and upload to MinIO storage.
+
+    Args:
+        video_id: YouTube video ID (not full URL)
+
+    Returns:
+        dict with status and s3_key
+    """
+    video_url = f"https://www.youtube.com/watch?v={video_id}"
+    storage_client = get_storage_client()
+
+    # Create temporary directory for download
+    with tempfile.TemporaryDirectory() as temp_dir:
+        output_template = os.path.join(temp_dir, f"{video_id}.%(ext)s")
+
+        # yt-dlp options for audio extraction
+        ydl_opts = {
+            'format': 'bestaudio/best',
+            'outtmpl': output_template,
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                'preferredquality': '192',
+            }],
+            'quiet': True,
+            'no_warnings': True,
+        }
+
+        try:
+            # Download audio
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                ydl.download([video_url])
+
+            # Find the downloaded file (should be .mp3 after postprocessing)
+            audio_file_path = os.path.join(temp_dir, f"{video_id}.mp3")
+
+            if not os.path.exists(audio_file_path):
+                # Fallback: check for other extensions
+                for file in os.listdir(temp_dir):
+                    if file.startswith(video_id):
+                        audio_file_path = os.path.join(temp_dir, file)
+                        break
+
+            if not os.path.exists(audio_file_path):
+                raise FileNotFoundError(f"Downloaded audio file not found for {video_id}")
+
+            # Upload to MinIO
+            s3_key = f"audio/{video_id}.mp3"
+            storage_client.upload_file(
+                file_path=audio_file_path,
+                object_name=s3_key,
+                content_type="audio/mpeg"
+            )
+
+            return {
+                "status": "success",
+                "s3_key": s3_key,
+                "video_id": video_id
+            }
+
+        except Exception as e:
+            print(f"Error downloading audio for {video_id}: {e}")
+            return {
+                "status": "error",
+                "error": str(e),
+                "video_id": video_id
+            }
 
 

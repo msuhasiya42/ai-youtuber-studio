@@ -1,8 +1,8 @@
-from celery_worker import app
+from celery_worker import app as celery_app
 from app.services.llm_provider import get_provider
 
 
-@app.task
+@celery_app.task
 def generate_top_performer_insights(context: str) -> dict:
     provider = get_provider()
     prompt = (

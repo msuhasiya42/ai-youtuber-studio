@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import Onboarding from './components/Onboarding';
 import Dashboard from './components/Dashboard';
 import AllVideosPage from './components/AllVideosPage';
+import ContentStudio from './pages/ContentStudio';
 import { getChannel } from './services/backendApi';
 
 // Utility to parse code out of url
@@ -17,7 +18,7 @@ async function completeOAuth(code: string): Promise<boolean> {
   return resp.ok;
 }
 
-type View = 'onboarding' | 'dashboard' | 'allVideos';
+type View = 'onboarding' | 'dashboard' | 'allVideos' | 'contentStudio';
 
 interface ChannelData {
   id: number;
@@ -26,8 +27,8 @@ interface ChannelData {
   avatar_url?: string;
   subscribers: number;
   verified: boolean;
-  totalViews: number;
-  totalWatchHours: number;
+  total_views: number;
+  total_watch_hours: number;
 }
 
 const App: React.FC = () => {
@@ -97,6 +98,10 @@ const App: React.FC = () => {
     setCurrentView('dashboard');
   }, []);
 
+  const handleNavigateToContentStudio = useCallback(() => {
+    setCurrentView('contentStudio');
+  }, []);
+
   const handleChannelDataUpdate = useCallback((updatedChannel: ChannelData) => {
     setChannelData(updatedChannel); // Update App's state with refreshed channel data
   }, []);
@@ -107,9 +112,15 @@ const App: React.FC = () => {
       case 'onboarding':
         return <Onboarding onConnect={handleConnect} />;
       case 'dashboard':
-        return <Dashboard channelData={channelData} onDisconnect={handleDisconnect} onSeeAll={handleNavigateToAllVideos} onChannelDataUpdate={handleChannelDataUpdate} />; // Pass onChannelDataUpdate
+        return <Dashboard channelData={channelData} onDisconnect={handleDisconnect} onSeeAll={handleNavigateToAllVideos} onChannelDataUpdate={handleChannelDataUpdate} onOpenContentStudio={handleNavigateToContentStudio} />; // Pass onChannelDataUpdate
       case 'allVideos':
         return <AllVideosPage onBack={handleNavigateToDashboard} />;
+      case 'contentStudio':
+        return channelData ? (
+          <ContentStudio channelId={channelData.id} channelName={channelData.name} />
+        ) : (
+          <div className="w-full min-h-screen flex items-center justify-center">Loading...</div>
+        );
       default:
         // Fallback to onboarding view
         return <Onboarding onConnect={handleConnect} />;

@@ -16,7 +16,7 @@ class LLMProvider(ABC):
         ...
 
 
-def get_provider() -> "LLMProvider":
+def get_llm_provider() -> "LLMProvider":
     provider = os.getenv("LLM_PROVIDER", "gemini").lower()
     if provider == "openai":
         from app.services.providers.openai_provider import OpenAIProvider
