@@ -1,0 +1,181 @@
+name: Deploy Backend to EC2
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'backend/**'
+      - '.github/workflows/deploy-backend.yml'
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  deploy:
+    name: Deploy to EC2
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create deployment archive
+        run: |
+          cd backend
+          tar -czf ../backend-deploy.tar.gz \
+            --exclude='__pycache__' \
+            --exclude='*.pyc' \
+            --exclude='.pytest_cache' \
+            --exclude='logs/*' \
+            --exclude='.env' \
+            .
+
+      - name: Copy files to EC2
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_SSH_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: ${{ secrets.EC2_SSH_PORT || '22' }}
+          source: "backend-deploy.tar.gz"
+          target: "/home/${{ secrets.EC2_SSH_USER }}/ai-youtuber-studio/"
+
+      - name: Deploy on EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_SSH_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: ${{ secrets.EC2_SSH_PORT || '22' }}
+          script: |
+            set -e
+
+            echo "=== Starting deployment ==="
+
+            # Navigate to deployment directory
+            cd /home/${{ secrets.EC2_SSH_USER }}/ai-youtuber-studio
+
+            # Create backend directory if it doesn't exist
+            mkdir -p backend
+            cd backend
+
+            # Extract new code
+            echo "Extracting new code..."
+            tar -xzf ../backend-deploy.tar.gz
+            rm ../backend-deploy.tar.gz
+
+            # Check if .env exists, if not create from secrets
+            if [ ! -f .env ]; then
+              echo "Creating .env file..."
+              cat > .env <<EOF
+            # Database
+            DATABASE_URL=${{ secrets.DATABASE_URL }}
+
+            # Redis
+            REDIS_URL=${{ secrets.REDIS_URL }}
+
+            # Chroma
+            CHROMA_HOST=${{ secrets.CHROMA_HOST }}
+            CHROMA_PORT=${{ secrets.CHROMA_PORT }}
+
+            # AWS S3
+            AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_REGION=${{ secrets.AWS_REGION }}
+            S3_BUCKET_NAME=${{ secrets.S3_BUCKET_NAME }}
+
+            # Google OAuth
+            GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
+            GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}
+            GOOGLE_REDIRECT_URI=${{ secrets.GOOGLE_REDIRECT_URI }}
+
+            # OpenAI
+            OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
+
+            # Gemini
+            GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
+
+            # CORS
+            BACKEND_CORS_ORIGINS=${{ secrets.BACKEND_CORS_ORIGINS }}
+
+            # Environment
+            ENV=production
+            EOF
+            fi
+
+            # Stop existing containers gracefully
+            echo "Stopping existing containers..."
+            sudo docker compose -f docker-compose.prod.yml down --timeout 30 || true
+
+            # Remove old images to free space (optional, comment out if you want to keep them)
+            echo "Cleaning up old images..."
+            sudo docker image prune -f || true
+
+            # Build and start new containers
+            echo "Building and starting containers..."
+            sudo docker compose -f docker-compose.prod.yml build --no-cache
+            sudo docker compose -f docker-compose.prod.yml up -d
+
+            # Wait for services to start
+            echo "Waiting for services to start..."
+            sleep 10
+
+            # Check container status
+            echo "=== Container Status ==="
+            sudo docker compose -f docker-compose.prod.yml ps
+
+            # Check backend health
+            echo "=== Checking Backend Health ==="
+            max_attempts=10
+            attempt=1
+            while [ $attempt -le $max_attempts ]; do
+              if curl -f http://localhost:8000/health; then
+                echo "✓ Backend is healthy"
+                break
+              else
+                echo "Attempt $attempt/$max_attempts: Backend not ready yet..."
+                sleep 5
+                attempt=$((attempt + 1))
+              fi
+            done
+
+            if [ $attempt -gt $max_attempts ]; then
+              echo "✗ Backend health check failed"
+              echo "=== Backend Logs ==="
+              sudo docker logs ai-youtuber-backend --tail 100
+              exit 1
+            fi
+
+            # Check worker status
+            echo "=== Checking Worker Status ==="
+            if sudo docker exec ai-youtuber-worker celery -A celery_worker inspect ping; then
+              echo "✓ Worker is running"
+            else
+              echo "⚠ Worker health check failed (may take time to start)"
+              echo "=== Worker Logs ==="
+              sudo docker logs ai-youtuber-worker --tail 100
+            fi
+
+            # Show logs
+            echo "=== Recent Backend Logs ==="
+            sudo docker logs ai-youtuber-backend --tail 50
+
+            echo "=== Recent Worker Logs ==="
+            sudo docker logs ai-youtuber-worker --tail 50
+
+            echo "=== Deployment Complete ==="
+
+            # Reload nginx to pick up any changes
+            if sudo systemctl is-active --quiet nginx; then
+              echo "Reloading nginx..."
+              sudo systemctl reload nginx
+            fi
+
+      - name: Deployment status notification
+        if: always()
+        run: |
+          if [ ${{ job.status }} == 'success' ]; then
+            echo "✓ Deployment successful!"
+          else
+            echo "✗ Deployment failed!"
+            exit 1
+          fi
