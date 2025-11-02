@@ -57,8 +57,7 @@ def process_video_pipeline(video_id: int, youtube_video_id: str):
     from app.services.ingest_worker import download_audio
     from app.services.transcribe_worker import transcribe_audio
     from app.services.storage_client import StorageClient
-    from app.services.vector_store import VectorStore
-    from app.services.llm_provider import get_provider
+    from app.services.vector_store import get_vector_store
     from datetime import datetime
     import json
 
@@ -135,8 +134,7 @@ def process_video_pipeline(video_id: int, youtube_video_id: str):
         }
 
         # Index in ChromaDB
-        llm_provider = get_provider()
-        vector_store = VectorStore(llm_provider)
+        vector_store = get_vector_store()
 
         chunks_indexed = vector_store.index_transcript(
             video_id=str(video.id),

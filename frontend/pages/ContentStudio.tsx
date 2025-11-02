@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { analyzeChannelPatterns, generateScript, generateTitles, type PatternAnalysis, type GeneratedScript, type TitleSuggestion } from '../services/contentStudioApi';
+import React, { useState } from 'react';
+import { generateScript, generateTitles, type GeneratedScript, type TitleSuggestion } from '../services/contentStudioApi';
 
 interface ContentStudioProps {
   channelId: number;
   channelName: string;
 }
 
-type Tab = 'script' | 'titles' | 'insights';
+type Tab = 'script' | 'titles';
 
 const ContentStudio: React.FC<ContentStudioProps> = ({ channelId, channelName }) => {
   const [activeTab, setActiveTab] = useState<Tab>('script');
@@ -23,9 +23,6 @@ const ContentStudio: React.FC<ContentStudioProps> = ({ channelId, channelName })
   // Title Optimizer State
   const [titleTopic, setTitleTopic] = useState('');
   const [generatedTitles, setGeneratedTitles] = useState<TitleSuggestion[]>([]);
-
-  // Insights State
-  const [patterns, setPatterns] = useState<PatternAnalysis | null>(null);
 
   const handleGenerateScript = async () => {
     if (!scriptTopic.trim()) {
@@ -71,26 +68,6 @@ const ContentStudio: React.FC<ContentStudioProps> = ({ channelId, channelName })
     }
   };
 
-  const handleAnalyzePatterns = async () => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const result = await analyzeChannelPatterns(channelId, 10);
-      setPatterns(result);
-    } catch (err: any) {
-      setError(err.message || 'Failed to analyze patterns');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (activeTab === 'insights' && !patterns) {
-      handleAnalyzePatterns();
-    }
-  }, [activeTab]);
-
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
     alert('Copied to clipboard!');
@@ -127,16 +104,6 @@ const ContentStudio: React.FC<ContentStudioProps> = ({ channelId, channelName })
               }`}
             >
               Title Optimizer
-            </button>
-            <button
-              onClick={() => setActiveTab('insights')}
-              className={`pb-4 px-2 font-medium border-b-2 transition-colors ${
-                activeTab === 'insights'
-                  ? 'border-indigo-500 text-indigo-500'
-                  : 'border-transparent text-gray-400 hover:text-white'
-              }`}
-            >
-              Performance Insights
             </button>
           </nav>
         </div>
@@ -347,86 +314,6 @@ const ContentStudio: React.FC<ContentStudioProps> = ({ channelId, channelName })
                   ))}
                 </div>
               </div>
-            )}
-          </div>
-        )}
-
-        {/* Performance Insights Tab */}
-        {activeTab === 'insights' && (
-          <div className="space-y-6">
-            {loading && !patterns && (
-              <div className="text-center py-12">
-                <p className="text-gray-400">Analyzing your top videos...</p>
-              </div>
-            )}
-
-            {patterns && (
-              <>
-                <div className="bg-gray-800 rounded-lg p-6">
-                  <h2 className="text-2xl font-bold mb-4">Performance Patterns</h2>
-                  <p className="text-gray-400 mb-6">
-                    Analysis of your top {patterns.videos_analyzed} performing videos
-                  </p>
-
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="bg-indigo-900/30 rounded-lg p-4">
-                      <p className="text-sm text-gray-400 mb-1">Avg. Views</p>
-                      <p className="text-2xl font-bold">{patterns.engagement_patterns.average_views.toLocaleString()}</p>
-                    </div>
-                    <div className="bg-indigo-900/30 rounded-lg p-4">
-                      <p className="text-sm text-gray-400 mb-1">Engagement Rate</p>
-                      <p className="text-2xl font-bold">{patterns.engagement_patterns.engagement_rate}%</p>
-                    </div>
-                    <div className="bg-indigo-900/30 rounded-lg p-4">
-                      <p className="text-sm text-gray-400 mb-1">Optimal Duration</p>
-                      <p className="text-2xl font-bold">{patterns.duration_patterns.average_minutes} min</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-gray-800 rounded-lg p-6">
-                  <h3 className="text-xl font-bold mb-4">Top Keywords</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {patterns.title_patterns.common_keywords.slice(0, 10).map((kw, idx) => (
-                      <span key={idx} className="bg-indigo-900/40 px-3 py-1 rounded-full text-sm">
-                        {kw.word} ({kw.count})
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {patterns.content_themes && patterns.content_themes.length > 0 && (
-                  <div className="bg-gray-800 rounded-lg p-6">
-                    <h3 className="text-xl font-bold mb-4">Content Themes</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      {patterns.content_themes.map((theme, idx) => (
-                        <div key={idx} className="bg-gray-700/50 px-4 py-3 rounded-lg">
-                          {theme}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                <div className="bg-gray-800 rounded-lg p-6">
-                  <h3 className="text-xl font-bold mb-4">Recommendations</h3>
-                  <ul className="space-y-2">
-                    {patterns.recommendations.map((rec, idx) => (
-                      <li key={idx} className="flex items-start gap-3">
-                        <span className="text-green-400 mt-1">✓</span>
-                        <span>{rec}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <button
-                  onClick={handleAnalyzePatterns}
-                  className="w-full bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 rounded-lg transition-colors"
-                >
-                  Refresh Analysis
-                </button>
-              </>
             )}
           </div>
         )}

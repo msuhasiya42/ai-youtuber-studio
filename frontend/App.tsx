@@ -3,6 +3,9 @@ import Onboarding from './components/Onboarding';
 import Dashboard from './components/Dashboard';
 import AllVideosPage from './components/AllVideosPage';
 import ContentStudio from './pages/ContentStudio';
+import PerformanceAnalyzer from './pages/PerformanceAnalyzer';
+import VideoProcessingDashboard from './pages/VideoProcessingDashboard';
+import Navbar from './components/Navbar';
 import { getChannel } from './services/backendApi';
 
 // Utility to parse code out of url
@@ -18,7 +21,7 @@ async function completeOAuth(code: string): Promise<boolean> {
   return resp.ok;
 }
 
-type View = 'onboarding' | 'dashboard' | 'allVideos' | 'contentStudio';
+type View = 'onboarding' | 'dashboard' | 'allVideos' | 'contentStudio' | 'analyzer' | 'videoStatus';
 
 interface ChannelData {
   id: number;
@@ -102,6 +105,10 @@ const App: React.FC = () => {
     setCurrentView('contentStudio');
   }, []);
 
+  const handleNavigate = useCallback((view: View) => {
+    setCurrentView(view);
+  }, []);
+
   const handleChannelDataUpdate = useCallback((updatedChannel: ChannelData) => {
     setChannelData(updatedChannel); // Update App's state with refreshed channel data
   }, []);
@@ -121,6 +128,18 @@ const App: React.FC = () => {
         ) : (
           <div className="w-full min-h-screen flex items-center justify-center">Loading...</div>
         );
+      case 'analyzer':
+        return channelData ? (
+          <PerformanceAnalyzer channelId={channelData.id} channelName={channelData.name} />
+        ) : (
+          <div className="w-full min-h-screen flex items-center justify-center">Loading...</div>
+        );
+      case 'videoStatus':
+        return channelData ? (
+          <VideoProcessingDashboard channelId={channelData.id} channelName={channelData.name} />
+        ) : (
+          <div className="w-full min-h-screen flex items-center justify-center">Loading...</div>
+        );
       default:
         // Fallback to onboarding view
         return <Onboarding onConnect={handleConnect} />;
@@ -129,6 +148,9 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen w-full">
+      {currentView !== 'onboarding' && (
+        <Navbar currentView={currentView} onNavigate={handleNavigate} />
+      )}
       {renderView()}
     </div>
   );

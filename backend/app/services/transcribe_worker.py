@@ -27,6 +27,7 @@ def transcribe_audio(s3_key: str, video_id: str) -> dict:
     """
     logger.info(f"Starting transcription for video: {video_id}, audio: {s3_key}")
     storage_client = get_storage_client()
+    # I don't have open ai key - need to add
     openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
     try:
@@ -73,9 +74,9 @@ def transcribe_audio(s3_key: str, video_id: str) -> dict:
                 logger.debug(f"Processing {len(transcript_response.segments)} transcript segments")
                 for segment in transcript_response.segments:
                     transcript_data["segments"].append({
-                        "start": segment.get("start"),
-                        "end": segment.get("end"),
-                        "text": segment.get("text"),
+                        "start": segment.start,
+                        "end": segment.end,
+                        "text": segment.text,
                     })
                 logger.info(f"Extracted {len(transcript_data['segments'])} segments from transcript")
 

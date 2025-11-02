@@ -40,3 +40,28 @@ export async function syncChannelVideos(channelId: number, limit: number = 50): 
   }
   return await res.json();
 }
+
+// Get all videos with their processing status
+export async function getVideosWithStatus(page: number = 1, pageSize: number = 100): Promise<any> {
+  const res = await fetch(`${API_URL}/api/videos?page=${page}&page_size=${pageSize}`, {
+    credentials: 'include',
+  });
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.detail || 'Failed to fetch videos');
+  }
+  return await res.json();
+}
+
+// Retry processing for a failed video
+export async function retryVideoProcessing(videoId: number): Promise<any> {
+  const res = await fetch(`${API_URL}/api/videos/${videoId}/retry`, {
+    method: 'POST',
+    credentials: 'include',
+  });
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.detail || 'Failed to retry video processing');
+  }
+  return await res.json();
+}

@@ -10,7 +10,7 @@ import sys
 from pathlib import Path
 
 # Add backend to path
-backend_dir = Path(__file__).parent.parent / "backend"
+backend_dir = Path(__file__).parent.parent  # parent.parent is backend/
 sys.path.insert(0, str(backend_dir))
 
 # Load environment variables
@@ -120,7 +120,7 @@ def test_redis():
 
     except Exception as e:
         test_failure("Redis connection failed", str(e))
-        test_warning("Make sure SSH tunnel is running: ./scripts/start_tunnels.sh")
+        test_warning("Make sure SSH tunnel is running: ./backend/scripts/start_tunnels.sh")
         return False
 
 
@@ -147,7 +147,7 @@ def test_chromadb():
 
     except Exception as e:
         test_failure("ChromaDB connection failed", str(e))
-        test_warning("Make sure SSH tunnel is running: ./scripts/start_tunnels.sh")
+        test_warning("Make sure SSH tunnel is running: ./backend/scripts/start_tunnels.sh")
         test_warning("Make sure ChromaDB is running on EC2: docker-compose up -d chroma")
         return False
 
@@ -314,7 +314,7 @@ def main():
     if passed == total:
         print(f"{Colors.GREEN}✓ All services are connected and operational!{Colors.NC}\n")
         print("You're ready to start the application:")
-        print("  ./scripts/start_all.sh")
+        print("  ./backend/scripts/start_all.sh")
         print("")
         return 0
     else:

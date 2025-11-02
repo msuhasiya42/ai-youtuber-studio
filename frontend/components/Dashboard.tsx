@@ -39,20 +39,6 @@ const Dashboard: React.FC<DashboardProps> = ({ onDisconnect, onSeeAll, channelDa
                   <h2 className="text-2xl font-semibold mb-4">Dashboard Overview</h2>
                   <p>Welcome to your AI YouTube Studio! Here you'll find insights, video management tools, and script generation capabilities.</p>
                   <p className="mt-2">Use AI Content Studio to generate scripts, optimize titles, and analyze your top-performing videos.</p>
-                  <div className="mt-4 flex gap-4">
-                    <button
-                      onClick={onOpenContentStudio}
-                      className="px-6 py-2 bg-indigo-600 rounded-md hover:bg-indigo-700 transition-colors font-semibold"
-                    >
-                      🎬 AI Content Studio
-                    </button>
-                    <button
-                      onClick={onSeeAll}
-                      className="px-6 py-2 bg-gray-700 rounded-md hover:bg-gray-600 transition-colors"
-                    >
-                      See All Videos (Coming Soon)
-                    </button>
-                  </div>
                 </div>
               </div>
             </div>

@@ -19,7 +19,7 @@ echo ""
 # Navigate to backend directory
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
-BACKEND_DIR="$PROJECT_ROOT/backend"
+BACKEND_DIR="$PROJECT_ROOT"  # PROJECT_ROOT is already backend/
 
 cd "$BACKEND_DIR"
 

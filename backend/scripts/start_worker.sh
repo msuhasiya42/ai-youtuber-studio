@@ -19,7 +19,7 @@ echo ""
 # Navigate to backend directory
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
-BACKEND_DIR="$PROJECT_ROOT/backend"
+BACKEND_DIR="$PROJECT_ROOT"  # PROJECT_ROOT is already backend/
 
 cd "$BACKEND_DIR"
 
@@ -59,7 +59,7 @@ if [ -n "$REDIS_URL" ]; then
     else
         echo -e "${YELLOW}Warning: Cannot connect to Redis${NC}"
         echo "Make sure SSH tunnels are running:"
-        echo "  ./scripts/start_tunnels.sh"
+        echo "  ./backend/scripts/start_tunnels.sh"
     fi
 fi
 

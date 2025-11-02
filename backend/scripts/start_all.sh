@@ -90,7 +90,7 @@ echo ""
 echo -e "${BLUE}Step 3: Testing service connections...${NC}"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
-cd "$SCRIPT_DIR/../backend"
+cd "$SCRIPT_DIR/.."  # Go from scripts/ to backend/
 
 # Source .env
 if [ -f ".env" ]; then
@@ -157,13 +157,13 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
         xterm -e "cd '$SCRIPT_DIR' && ./start_worker.sh" &
     else
         echo -e "${YELLOW}Please run these commands in separate terminals:${NC}"
-        echo "  Terminal 1: ./scripts/start_backend.sh"
-        echo "  Terminal 2: ./scripts/start_worker.sh"
+        echo "  Terminal 1: ./start_backend.sh"
+        echo "  Terminal 2: ./start_worker.sh"
     fi
 else
     echo -e "${YELLOW}Please run these commands in separate terminals:${NC}"
-    echo "  Terminal 1: ./scripts/start_backend.sh"
-    echo "  Terminal 2: ./scripts/start_worker.sh"
+    echo "  Terminal 1: ./start_backend.sh"
+    echo "  Terminal 2: ./start_worker.sh"
 fi
 
 echo ""
