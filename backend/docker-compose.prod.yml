@@ -26,7 +26,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://127.0.0.1:8000/health 2>/dev/null || exit 1"]
+      test: ["CMD-SHELL", "python3 -c \"import http.client,sys; conn=http.client.HTTPConnection('127.0.0.1',8000,timeout=5); conn.request('GET','/health'); r=conn.getresponse(); body=r.read().decode(); sys.exit(0) if r.status==200 else sys.exit(1)\""]
       interval: 10s
       timeout: 5s
       retries: 5
