@@ -71,7 +71,7 @@ class LoggingMiddleware(BaseHTTPMiddleware):
 # Add middleware
 app.add_middleware(LoggingMiddleware)
 
-origins = os.getenv("BACKEND_CORS_ORIGINS", "http://localhost:3000").split(",")
+origins = os.getenv("BACKEND_CORS_ORIGINS", "http://localhost:3000,https://ai-youtuber-studio.vercel.app/").split(",")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
