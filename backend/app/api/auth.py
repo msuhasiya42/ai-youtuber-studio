@@ -20,7 +20,7 @@ GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET", "")
 # Change this to your deployed frontend URL in production
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000")
 # This must also be whitelisted in your Google Cloud OAuth "Authorized redirect URIs"
-REDIRECT_URI = os.getenv("GOOGLE_OAUTH_REDIRECT_URI") or "http://localhost:8000/api/auth/oauth/google/callback"
+REDIRECT_URI = os.getenv("GOOGLE_OAUTH_REDIRECT_URI", "http://localhost:8000/api/auth/oauth/google/callback")
 
 SCOPES = [
     "https://www.googleapis.com/auth/youtube.readonly",
@@ -180,7 +180,28 @@ async def google_oauth_callback(
 
     # Create a RedirectResponse explicitly
     redirect_response = RedirectResponse(FRONTEND_URL)
-    # Set the cookie directly on the redirect_response object
-    redirect_response.set_cookie(key="user_id", value=str(user.id), httponly=True, secure=False, samesite="Lax", domain="localhost")
+
+    # Determine if we're in production (HTTPS) or development (HTTP localhost)
+    is_production = not FRONTEND_URL.startswith("http://localhost")
+
+    # Get cookie domain from env variable
+    # For production: use ".redirectme.net" (with leading dot for subdomain support)
+    # For development: use "localhost" or None
+    cookie_domain = os.getenv("COOKIE_DOMAIN")
+    if cookie_domain is None:
+        # Auto-detect: use None for production (let browser determine), "localhost" for dev
+        cookie_domain = "localhost" if not is_production else None
+
+    # Set the cookie with production-ready settings
+    # SameSite=None + Secure=True required for cross-site cookies over HTTPS
+    redirect_response.set_cookie(
+        key="user_id",
+        value=str(user.id),
+        httponly=True,
+        secure=is_production,  # True for HTTPS (production), False for HTTP (localhost)
+        samesite="none" if is_production else "lax",  # "none" allows cross-site cookies
+        domain=cookie_domain,  # Configurable domain
+        path="/"
+    )
 
     return redirect_response
