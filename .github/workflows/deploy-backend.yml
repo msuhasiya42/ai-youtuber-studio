@@ -128,7 +128,7 @@ jobs:
             max_attempts=10
             attempt=1
             while [ $attempt -le $max_attempts ]; do
-              if curl -f http://localhost:8000/health; then
+              if curl -f http://localhost:8000/api/health; then
                 echo "✓ Backend is healthy"
                 break
               else
