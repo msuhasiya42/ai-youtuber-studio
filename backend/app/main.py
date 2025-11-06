@@ -2,12 +2,14 @@ from dotenv import load_dotenv
 load_dotenv()
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Request, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import ORJSONResponse, Response
+from fastapi.responses import ORJSONResponse, Response, FileResponse
+from fastapi.staticfiles import StaticFiles
 from starlette.middleware.base import BaseHTTPMiddleware
 import os
 import asyncio
 import redis
 import time
+from pathlib import Path
 from app.api import auth, channels, videos, insights, transcripts, content_studio
 from app.core.logging_config import setup_logging, get_logger, set_request_id, clear_request_id
 
@@ -113,14 +115,36 @@ async def shutdown_event():
     logger.info("=" * 80)
 
 
-@app.get("/")
+@app.get("/api")
 async def root():
     return {"status": "ok", "docs": "/docs"}
 
 
-@app.get("/health")
+@app.get("/api/health")
 async def health():
     return {"status": "ok"}
+
+
+# Serve static frontend files
+frontend_dist = Path(__file__).parent.parent.parent / "frontend" / "dist"
+if frontend_dist.exists():
+    app.mount("/assets", StaticFiles(directory=str(frontend_dist / "assets")), name="assets")
+    logger.info(f"Static files mounted from: {frontend_dist}")
+
+    # Catch-all route for SPA - must be defined last
+    @app.get("/{full_path:path}")
+    async def serve_spa(full_path: str):
+        """Serve index.html for all non-API routes to support SPA routing"""
+        # Don't intercept API routes, websocket, or health check
+        if full_path.startswith("api/") or full_path == "ws" or full_path == "health":
+            return Response(status_code=404)
+
+        index_file = frontend_dist / "index.html"
+        if index_file.exists():
+            return FileResponse(index_file)
+        return Response(status_code=404)
+else:
+    logger.warning(f"Frontend dist directory not found: {frontend_dist}")
 
 
 @app.websocket("/ws")
