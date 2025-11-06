@@ -11,45 +11,7 @@ This guide covers deploying AI YouTuber Studio to production using AWS services.
 5. [Scaling & Optimization](#scaling--optimization)
 6. [Security Best Practices](#security-best-practices)
 
----
 
-## Architecture Overview
-
-```
-Production Architecture (AWS)
-
-┌─────────────────────────────────────────────────────────────┐
-│                      AWS Cloud                               │
-│                                                              │
-│  ┌────────────────┐     ┌────────────────┐                 │
-│  │   CloudFront   │────▶│   S3 (Static)  │  Frontend       │
-│  │     (CDN)      │     │    Website     │                  │
-│  └────────────────┘     └────────────────┘                  │
-│                                                              │
-│  ┌────────────────┐     ┌────────────────┐                 │
-│  │  API Gateway   │────▶│   Lambda       │  Backend Option │
-│  │  / ALB         │     │   Functions    │  (Serverless)   │
-│  └────────────────┘     └────────────────┘                  │
-│          │                                                   │
-│          │              ┌────────────────┐                  │
-│          └─────────────▶│   EC2 (FastAPI)│  Backend Option │
-│                         │   + Celery     │  (Traditional)  │
-│                         └────────────────┘                  │
-│                                                              │
-│  ┌────────────────┐     ┌────────────────┐                 │
-│  │   RDS          │     │   ElastiCache  │                  │
-│  │   PostgreSQL   │     │   Redis        │                  │
-│  └────────────────┘     └────────────────┘                  │
-│                                                              │
-│  ┌────────────────┐     ┌────────────────┐                  │
-│  │   S3           │     │   EC2/ECS      │                  │
-│  │   (Storage)    │     │   ChromaDB     │                  │
-│  └────────────────┘     └────────────────┘                  │
-│                                                              │
-└─────────────────────────────────────────────────────────────┘
-```
-
----
 
 ## Quick Start
 

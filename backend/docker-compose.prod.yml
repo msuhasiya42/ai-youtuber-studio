@@ -34,7 +34,7 @@ services:
     networks:
       - ai-youtuber-network
     healthcheck:
-      test: ["CMD-SHELL", "python3 -c \"import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/heartbeat', timeout=5)\""]
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8000/api/v2/heartbeat || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
