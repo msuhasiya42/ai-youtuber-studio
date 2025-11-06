@@ -30,7 +30,7 @@ cryptography==43.0.3
 pyjwt==2.10.1
 
 # YouTube Integration
-yt-dlp==2024.10.7
+yt-dlp==2025.11.1
 google-api-python-client==2.186.0
 google-auth==2.29.0
 google-auth-oauthlib==1.2.0

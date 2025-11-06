@@ -21,7 +21,7 @@ services:
 
   # ChromaDB (Vector Database)
   chroma:
-    image: chromadb/chroma:latest
+    image: chromadb/chroma:0.6.3
     container_name: ai-youtuber-chroma
     restart: unless-stopped
     ports:

@@ -1,20 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
-type View = 'dashboard' | 'contentStudio' | 'analyzer' | 'videoStatus' | 'allVideos';
+const Navbar: React.FC = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-interface NavbarProps {
-  currentView: View;
-  onNavigate: (view: View) => void;
-}
-
-const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
-  const navItems: { view: View; label: string; icon: string }[] = [
-    { view: 'dashboard', label: 'Home', icon: '🏠' },
-    { view: 'contentStudio', label: 'Content Studio', icon: '🎬' },
-    { view: 'analyzer', label: 'Performance Analyzer', icon: '📊' },
-    { view: 'videoStatus', label: 'Processing Status', icon: '⚙️' },
-    { view: 'allVideos', label: 'All Videos', icon: '📹' },
+  const navItems = [
+    { path: '/dashboard', label: 'Home', icon: '🏠' },
+    { path: '/content-studio', label: 'Content Studio', icon: '🎬' },
+    { path: '/analyzer', label: 'Performance Analyzer', icon: '📊' },
+    { path: '/processing-status', label: 'Processing Status', icon: '⚙️' },
+    { path: '/all-videos', label: 'All Videos', icon: '📹' },
   ];
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
     <nav className="bg-gray-800 border-b border-gray-700">
@@ -25,25 +23,71 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
             <h1 className="text-xl font-bold text-white">AI YouTuber Studio</h1>
           </div>
 
-          {/* Navigation Links */}
-          <div className="flex space-x-1">
+          {/* Desktop Navigation Links */}
+          <div className="hidden md:flex space-x-1">
             {navItems.map((item) => (
-              <button
-                key={item.view}
-                onClick={() => onNavigate(item.view)}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-                  currentView === item.view
-                    ? 'bg-gray-900 text-white'
-                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                }`}
+              <NavLink
+                key={item.path}
+                to={item.path}
+                className={({ isActive }) =>
+                  `px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                    isActive
+                      ? 'bg-gray-900 text-white'
+                      : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                  }`
+                }
               >
                 <span className="mr-2">{item.icon}</span>
-                <span className="hidden sm:inline">{item.label}</span>
-              </button>
+                <span>{item.label}</span>
+              </NavLink>
             ))}
+          </div>
+
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
+            <button
+              onClick={toggleMenu}
+              className="text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white p-2"
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? (
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
           </div>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="md:hidden border-t border-gray-700">
+          <div className="px-2 pt-2 pb-3 space-y-1">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                onClick={() => setIsMenuOpen(false)}
+                className={({ isActive }) =>
+                  `block px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                    isActive
+                      ? 'bg-gray-900 text-white'
+                      : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                  }`
+                }
+              >
+                <span className="mr-2">{item.icon}</span>
+                <span>{item.label}</span>
+              </NavLink>
+            ))}
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
