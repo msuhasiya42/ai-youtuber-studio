@@ -1,6 +1,45 @@
 version: '3.8'
 
 services:
+  # Redis (Message Broker & Cache)
+  redis:
+    image: redis:7
+    container_name: ai-youtuber-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - ai-youtuber-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    command: redis-server --appendonly yes
+
+  # ChromaDB (Vector Database)
+  chroma:
+    image: chromadb/chroma:latest
+    container_name: ai-youtuber-chroma
+    restart: unless-stopped
+    ports:
+      - "8001:8000"
+    volumes:
+      - chroma_data:/chroma/chroma
+    environment:
+      - IS_PERSISTENT=TRUE
+      - ANONYMIZED_TELEMETRY=FALSE
+    networks:
+      - ai-youtuber-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/heartbeat"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
   # Backend FastAPI Application - Production
   backend:
     build:
@@ -15,12 +54,15 @@ services:
       - .env
     environment:
       - PYTHONUNBUFFERED=1
-      - REDIS_URL=${REDIS_URL:-redis://host.docker.internal:6379/0}
-      - CHROMA_HOST=${CHROMA_HOST:-host.docker.internal}
-      - CHROMA_PORT=${CHROMA_PORT:-8001}
+      - REDIS_URL=redis://redis:6379/0
+      - CHROMA_HOST=chroma
+      - CHROMA_PORT=8000
       - DATABASE_URL=${DATABASE_URL}
     volumes:
       - ./logs:/app/logs
+    depends_on:
+      - redis
+      - chroma
     networks:
       - ai-youtuber-network
     extra_hosts:
@@ -45,14 +87,16 @@ services:
       - .env
     environment:
       - PYTHONUNBUFFERED=1
-      - REDIS_URL=${REDIS_URL:-redis://host.docker.internal:6379/0}
-      - CHROMA_HOST=${CHROMA_HOST:-host.docker.internal}
-      - CHROMA_PORT=${CHROMA_PORT:-8001}
+      - REDIS_URL=redis://redis:6379/0
+      - CHROMA_HOST=chroma
+      - CHROMA_PORT=8000
       - DATABASE_URL=${DATABASE_URL}
       - C_FORCE_ROOT=true
     volumes:
       - ./logs:/app/logs
     depends_on:
+      - redis
+      - chroma
       - backend
     networks:
       - ai-youtuber-network
@@ -74,3 +118,7 @@ services:
 networks:
   ai-youtuber-network:
     driver: bridge
+
+volumes:
+  redis_data:
+  chroma_data:
