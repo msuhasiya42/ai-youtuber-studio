@@ -44,6 +44,13 @@ def download_audio(video_id: str) -> dict:
             'no_warnings': True,
         }
 
+        cookies_file = os.getenv("YTDLP_COOKIES_FILE")
+        if cookies_file:
+            ydl_opts['cookiefile'] = cookies_file
+            logger.info(f"Using yt-dlp with cookies from: {cookies_file}")
+        else:
+            logger.warning("YTDLP_COOKIES_FILE not set. yt-dlp might encounter age restrictions or login issues.")
+
         try:
             # Download audio
             logger.info(f"Downloading audio from YouTube: {video_url}")
