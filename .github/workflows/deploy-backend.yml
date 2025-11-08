@@ -106,6 +106,13 @@ jobs:
             echo "Stopping existing containers..."
             sudo docker compose -f docker-compose.prod.yml down --timeout 30 || true
 
+            # Explicitly remove any lingering containers to prevent "Conflict" errors
+            echo "Removing any lingering containers to prevent conflicts..."
+            sudo docker rm -f ai-youtuber-redis || true
+            sudo docker rm -f ai-youtuber-chroma || true # Add for other named containers if needed
+            sudo docker rm -f ai-youtuber-backend || true
+            sudo docker rm -f ai-youtuber-worker || true
+            
             # Remove old images to free space (optional, comment out if you want to keep them)
             echo "Cleaning up old images..."
             sudo docker image prune -f || true
