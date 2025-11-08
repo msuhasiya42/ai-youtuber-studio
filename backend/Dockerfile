@@ -14,6 +14,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
+# Copy Alembic configuration and migrations
+COPY alembic.ini /app/
+COPY alembic /app/alembic/
+
 COPY app /app/app
 COPY celery_worker.py /app/celery_worker.py
 
