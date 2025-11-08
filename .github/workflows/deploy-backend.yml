@@ -119,6 +119,16 @@ jobs:
             echo "Waiting for services to start..."
             sleep 10
 
+            # Run database migrations (IMPORTANT!)
+            echo "Running database migrations..."
+            sudo docker compose -f docker-compose.prod.yml exec backend alembic upgrade head
+            if [ $? -ne 0 ]; then
+              echo "✗ Database migration failed!"
+              sudo docker logs ai-youtuber-backend --tail 100
+              exit 1
+            fi
+            echo "✓ Database migration completed."
+
             # Check container status
             echo "=== Container Status ==="
             sudo docker compose -f docker-compose.prod.yml ps
