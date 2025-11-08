@@ -6,6 +6,8 @@ import AllVideosPage from './components/AllVideosPage';
 import ContentStudio from './pages/ContentStudio';
 import PerformanceAnalyzer from './pages/PerformanceAnalyzer';
 import VideoProcessingDashboard from './pages/VideoProcessingDashboard';
+import ChannelAnalyticsDashboard from './pages/ChannelAnalyticsDashboard';
+import VideoAnalyticsDetail from './pages/VideoAnalyticsDetail';
 import Navbar from './components/Navbar';
 import { getChannel } from './services/backendApi';
 
@@ -164,6 +166,17 @@ const App: React.FC = () => {
             )
           }
         />
+        <Route
+          path="/analytics"
+          element={
+            channelData ? (
+              <ChannelAnalyticsDashboard channelId={channelData.id} channelName={channelData.name} />
+            ) : (
+              <div className="w-full min-h-screen flex items-center justify-center">Loading...</div>
+            )
+          }
+        />
+        <Route path="/video/:videoId/analytics" element={<VideoAnalyticsDetail />} />
       </Routes>
     </div>
   );

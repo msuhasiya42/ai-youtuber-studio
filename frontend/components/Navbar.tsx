@@ -6,6 +6,7 @@ const Navbar: React.FC = () => {
 
   const navItems = [
     { path: '/dashboard', label: 'Home', icon: '🏠' },
+    { path: '/analytics', label: 'Analytics', icon: '📈' },
     { path: '/content-studio', label: 'Content Studio', icon: '🎬' },
     { path: '/analyzer', label: 'Performance Analyzer', icon: '📊' },
     { path: '/processing-status', label: 'Processing Status', icon: '⚙️' },

@@ -10,7 +10,7 @@ import asyncio
 import redis
 import time
 from pathlib import Path
-from app.api import auth, channels, videos, insights, transcripts, content_studio
+from app.api import auth, channels, videos, insights, transcripts, content_studio, analytics
 from app.core.logging_config import setup_logging, get_logger, set_request_id, clear_request_id
 
 # Initialize logging
@@ -85,6 +85,7 @@ app.add_middleware(
 app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
 app.include_router(channels.router, prefix="/api/channels", tags=["channels"])
 app.include_router(videos.router, prefix="/api/videos", tags=["videos"])
+app.include_router(analytics.router, prefix="/api/analytics", tags=["analytics"])
 app.include_router(insights.router, prefix="/api/insights", tags=["insights"])
 app.include_router(transcripts.router, prefix="/api/transcripts", tags=["transcripts"])
 app.include_router(content_studio.router, prefix="/api/content-studio", tags=["content-studio"])

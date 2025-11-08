@@ -36,17 +36,11 @@ const Onboarding: React.FC<OnboardingProps> = ({ onConnect }) => {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button
             onClick={handleConnect}
-            className="group flex items-center justify-center gap-3 px-8 py-4 bg-primary text-white font-semibold rounded-lg shadow-lg hover:bg-primary-hover transition-all duration-300 transform hover:scale-105 disabled:opacity-50"
+            className="group flex items-center justify-center gap-3 px-6 py-2 bg-primary text-white font-semibold rounded-lg shadow-lg hover:bg-primary-hover transition-all duration-300 transform hover:scale-105 disabled:opacity-50"
             disabled={loading}
           >
-            <YoutubeIcon className="w-6 h-6" />
+            <YoutubeIcon className="w-16 h-16" />
             {loading ? 'Loading…' : 'Connect with YouTube'}
-          </button>
-           <button
-            disabled
-            className="flex items-center justify-center gap-3 px-8 py-4 bg-secondary text-text-secondary font-semibold rounded-lg shadow-lg cursor-not-allowed opacity-50"
-          >
-            Paste Channel Link (Read-Only)
           </button>
         </div>
         {error && <div className="mt-4 text-red-500 font-semibold">{error}</div>}
