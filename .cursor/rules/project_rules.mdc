@@ -1,0 +1,175 @@
+---
+description: AI YouTuber Studio - Cursor Rules
+alwaysApply: false
+---
+Here’s your optimized and strict .md version ready to be saved as:
+AI_YOUTUBER_STUDIO_CURSOR_RULES.md
+
+⸻
+
+⚙️ AI YouTuber Studio - Cursor Rules
+
+🚫 File Generation
+	•	❌ Never create .md files unless explicitly instructed: “Generate documentation.”
+	•	✅ Update existing docs only for major changes.
+	•	❌ Do not auto-create feature or migration docs.
+
+⸻
+
+🏗️ Architecture Summary
+
+Backend: FastAPI (Python 3.12+)
+Frontend: React + TypeScript + Vite
+Database: PostgreSQL
+Cache: Redis
+Queue: Celery
+APIs: YouTube Data v3, Analytics v2
+LLM: GPT-4 / Gemini
+
+backend/ → api, models, services, db, core
+frontend/ → components, pages, services, types.ts
+
+
+⸻
+
+💻 Coding Rules
+
+Python
+	•	Add type hints, use async/await, follow PEP 8, and use Google-style docstrings.
+	•	Use logger, not print.
+	•	Handle errors with try/except and HTTPException.
+	•	Keep business logic in services/, not in routes.
+
+TypeScript
+	•	Enable strict mode.
+	•	Use interfaces, async/await, and try/catch.
+	•	Components must be ≤ 300 lines, functional, and use hooks.
+	•	All API calls go in frontend/services/.
+
+⸻
+
+🗄️ Database
+	•	Create Alembic migrations only when schema changes.
+	•	Add indexes on foreign keys and frequently queried columns.
+	•	Keep models pure — no business logic.
+
+⸻
+
+🔌 API
+	•	Follow RESTful conventions.
+	•	Use correct HTTP verbs and consistent JSON responses.
+	•	Raise HTTPException with descriptive messages.
+
+⸻
+
+🎨 Frontend
+	•	One component per file, typed props.
+	•	Reuse logic via custom hooks.
+	•	Style using Tailwind CSS (mobile-first).
+	•	Remove all console.log from production.
+
+⸻
+
+🔄 Celery
+	•	Tasks must be idempotent.
+	•	Use retry with exponential backoff.
+	•	Log key progress points.
+	•	Return structured dicts: { success, data, error }.
+
+⸻
+
+🔐 Security
+	•	Use OAuth 2.0 for YouTube.
+	•	Encrypt stored tokens.
+	•	Validate user/channel ownership.
+	•	Protect routes with Depends(get_current_user).
+
+⸻
+
+📊 Logging
+	•	Use structured logging with levels: DEBUG, INFO, WARNING, ERROR.
+	•	Log:
+	•	Requests/responses
+	•	Worker task lifecycle
+	•	External API calls
+	•	Errors and timing
+
+⸻
+
+🧪 Testing
+	•	Use pytest.
+	•	Mock external APIs.
+	•	Cover error paths and edge cases.
+
+⸻
+
+🚀 Performance
+	•	Use async I/O and connection pooling.
+	•	Add DB indexes, cache heavy ops (Redis).
+	•	Frontend: lazy load, memoize, code split.
+
+⸻
+
+📦 Dependencies
+
+Backend:
+
+pip install pkg==ver
+pip freeze | grep pkg >> requirements.txt
+
+Frontend:
+
+npm install pkg@ver
+
+	•	Avoid bloat; prefer stdlib and maintained packages.
+
+⸻
+
+🔧 Environment
+	•	Add all new vars to .env.example.
+	•	Never commit real .env files.
+
+⸻
+
+✅ Review Checklist
+	•	Type hints / interfaces
+	•	Error handling + logging
+	•	Indexes (if needed)
+	•	Endpoint tested
+	•	Responsive UI
+	•	No prints/logs in prod
+	•	Docs updated only if major change
+
+⸻
+
+🚫 Anti-Patterns
+
+Backend: print(), blocking I/O, missing type hints, hardcoded values, logic in routes.
+Frontend: inline API calls, no loading/error states, prop drilling, unused imports, missing types.
+
+⸻
+
+💡 Best Practices
+	•	DRY, clear naming, small focused functions.
+	•	Use caching, pagination, and batch operations.
+	•	Handle YouTube API rate limits gracefully.
+	•	Always test with edge cases.
+
+⸻
+
+🤖 Cursor AI Rules
+	•	Edit existing files; never auto-create .md.
+	•	Fix lint errors automatically.
+	•	Use parallel edits when possible.
+	•	Keep changes minimal and aligned with architecture.
+	•	Reuse existing utilities; avoid duplication.
+
+⸻
+
+Strict Mode: ✅ ON
+Last Updated: November 9, 2025
+Version: 2.0.0
+
+⸻
+
+Would you like me to generate the corresponding .cursorrules JSON version too (for Cursor’s automatic enforcement)? It’ll apply all these behaviors directly in the IDE.

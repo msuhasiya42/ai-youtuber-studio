@@ -4,6 +4,9 @@ Requires authenticated user credentials via OAuth.
 """
 from celery_worker import app as celery_app
 import json
+import os
+from google.oauth2.credentials import Credentials
+from google.auth.transport.requests import Request as GoogleAuthRequest
 from app.services.storage_client import get_storage_client
 from app.services.youtube_client import YouTubeClient
 from app.core.logging_config import get_logger
@@ -11,6 +14,9 @@ from app.db.session import SessionLocal
 from app.models.models import Video
 
 logger = get_logger(__name__)
+
+GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
 
 
 @celery_app.task
@@ -132,7 +138,31 @@ def _fetch_authenticated_captions(video_id: str, video: Video) -> dict:
     Raises:
         ValueError: If no captions are available or authentication fails
     """
-    youtube_client = YouTubeClient(user=video.channel.owner)
+    user = video.channel.owner
+    
+    # Create credentials from user's refresh token
+    if not user or not user.google_refresh_token:
+        raise ValueError("User authentication required - no refresh token")
+    
+    creds = Credentials(
+        token=None,
+        refresh_token=user.google_refresh_token,
+        token_uri="https://oauth2.googleapis.com/token",
+        client_id=GOOGLE_CLIENT_ID,
+        client_secret=GOOGLE_CLIENT_SECRET,
+        scopes=[
+            "https://www.googleapis.com/auth/youtube.readonly",
+            "https://www.googleapis.com/auth/youtube.force-ssl",  # Required for captions access
+            "https://www.googleapis.com/auth/userinfo.email",
+            "openid"
+        ],
+    )
+    
+    # Refresh the token
+    creds.refresh(GoogleAuthRequest())
+    
+    # Initialize YouTube client with credentials
+    youtube_client = YouTubeClient(credentials=creds)
     
     if not youtube_client.youtube:
         raise ValueError("YouTube client not authenticated")
@@ -166,6 +196,10 @@ def _fetch_authenticated_captions(video_id: str, video: Video) -> dict:
         id=caption_id,
         tfmt='srt'
     ).execute()
+    
+    # Decode bytes to string if needed
+    if isinstance(caption_content, bytes):
+        caption_content = caption_content.decode('utf-8')
     
     # Parse SRT to our format
     transcript_data = _parse_srt_to_transcript(caption_content, language)
