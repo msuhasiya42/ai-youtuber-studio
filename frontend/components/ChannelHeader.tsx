@@ -36,7 +36,7 @@ const ChannelHeader: React.FC<ChannelHeaderProps> = ({ channel, onDisconnect, on
     setIsSyncing(true);
     try {
       const { syncChannelVideos } = await import('../services/backendApi');
-      const result = await syncChannelVideos(channel.id);
+      const result = await syncChannelVideos(channel.id, 20);
 
       const queuedCount = result.queued_for_processing || 0;
       const newCount = result.new_videos || 0;
