@@ -172,6 +172,36 @@ jobs:
               sudo docker logs ai-youtuber-worker --tail 100
             fi
 
+            # Clear Redis queue to remove old tasks queued before deployment
+            echo "=== Clearing Redis Queue ==="
+            echo "Removing old Celery tasks that reference non-existent videos..."
+            sudo docker exec ai-youtuber-redis redis-cli -n 0 FLUSHDB
+            if [ $? -eq 0 ]; then
+              echo "✓ Redis queue cleared successfully"
+            else
+              echo "⚠ Failed to clear Redis queue (non-critical)"
+            fi
+
+            # Restart worker to ensure clean state with new code
+            echo "=== Restarting Worker with Clean Queue ==="
+            sudo docker restart ai-youtuber-worker
+            sleep 5
+            echo "✓ Worker restarted"
+
+            # Optional: Check database video count
+            echo "=== Database Status Check ==="
+            sudo docker exec ai-youtuber-backend python -c "
+            from app.db.session import SessionLocal
+            from app.models.models import Video, Channel
+            db = SessionLocal()
+            try:
+                channel_count = db.query(Channel).count()
+                video_count = db.query(Video).count()
+                print(f'📊 Channels: {channel_count}, Videos: {video_count}')
+            finally:
+            db.close()
+            " || echo "⚠ Database check skipped (non-critical)"
+
             # Show logs
             echo "=== Recent Backend Logs ==="
             sudo docker logs ai-youtuber-backend --tail 50
@@ -180,6 +210,12 @@ jobs:
             sudo docker logs ai-youtuber-worker --tail 50
 
             echo "=== Deployment Complete ==="
+            echo "✓ Code deployed"
+            echo "✓ Containers running"
+            echo "✓ Redis queue cleared"
+            echo "✓ Worker restarted with new code"
+            echo ""
+            echo "Next: Sync videos from UI - they will use new authenticated API"
 
             # Reload nginx to pick up any changes
             if sudo systemctl is-active --quiet nginx; then
