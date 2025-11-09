@@ -25,8 +25,10 @@ REDIRECT_URI = os.getenv("GOOGLE_OAUTH_REDIRECT_URI", "http://localhost:8000/api
 SCOPES = [
     "https://www.googleapis.com/auth/youtube.readonly",
     "https://www.googleapis.com/auth/userinfo.email",
+    "https://www.googleapis.com/auth/youtube.force-ssl",  # Required for captions.list/download
     "openid",
-    "https://www.googleapis.com/auth/yt-analytics.readonly", # NEW SCOPE
+    "https://www.googleapis.com/auth/yt-analytics.readonly",  # Non-monetary analytics
+    "https://www.googleapis.com/auth/yt-analytics-monetary.readonly",  # Monetary analytics (revenue, ad performance)
 ]
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"  # Only for dev!
