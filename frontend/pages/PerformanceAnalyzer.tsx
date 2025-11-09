@@ -16,7 +16,7 @@ const PerformanceAnalyzer: React.FC<PerformanceAnalyzerProps> = ({ channelId, ch
     setError(null);
 
     try {
-      const result = await analyzeChannelPatterns(channelId, 10);
+      const result = await analyzeChannelPatterns(channelId, 50);
       setPatterns(result);
     } catch (err: any) {
       setError(err.message || 'Failed to analyze patterns');

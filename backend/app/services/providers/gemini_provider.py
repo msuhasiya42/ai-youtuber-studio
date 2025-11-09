@@ -8,7 +8,7 @@ class GeminiProvider(LLMProvider):
         api_key = os.getenv("GEMINI_API_KEY")
         if api_key:
             genai.configure(api_key=api_key)
-        self.model = genai.GenerativeModel("gemini-1.5-flash") if api_key else None
+        self.model = genai.GenerativeModel("gemini-2.5-flash") if api_key else None
 
     def embed(self, texts: list[str]) -> list[list[float]]:
         # Minimal mock embeddings if not configured

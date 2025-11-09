@@ -49,7 +49,18 @@ def fetch_video_captions(video_id: str, db_video_id: int = None) -> dict:
 
         # Fetch captions list for the video
         logger.info(f"Fetching caption tracks for video: {video_id}")
-        captions_response = youtube_client.service.captions().list(
+        
+        # Check if YouTube client is authenticated (captions API requires auth)
+        if not youtube_client.youtube:
+            logger.error(f"Cannot fetch captions for {video_id} - YouTube client not authenticated")
+            return {
+                "success": False,
+                "status": "auth_required",
+                "error": "YouTube Data API authentication required to fetch captions",
+                "video_id": video_id
+            }
+        
+        captions_response = youtube_client.youtube.captions().list(
             part="snippet",
             videoId=video_id
         ).execute()
@@ -82,7 +93,7 @@ def fetch_video_captions(video_id: str, db_video_id: int = None) -> dict:
         logger.info(f"Downloading caption track: {caption_id} (language: {language}, kind: {track_kind})")
 
         # Download caption content
-        caption_content = youtube_client.service.captions().download(
+        caption_content = youtube_client.youtube.captions().download(
             id=caption_id,
             tfmt='srt'  # SubRip format
         ).execute()

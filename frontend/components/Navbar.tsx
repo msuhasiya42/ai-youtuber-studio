@@ -10,7 +10,7 @@ const Navbar: React.FC = () => {
     { path: '/content-studio', label: 'Content Studio', icon: '🎬' },
     { path: '/analyzer', label: 'Performance Analyzer', icon: '📊' },
     { path: '/processing-status', label: 'Processing Status', icon: '⚙️' },
-    { path: '/all-videos', label: 'All Videos', icon: '📹' },
+    // { path: '/all-videos', label: 'All Videos', icon: '📹' },
   ];
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
