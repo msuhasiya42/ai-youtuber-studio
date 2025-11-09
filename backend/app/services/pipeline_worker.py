@@ -69,6 +69,14 @@ def process_video_pipeline(video_id: int, youtube_video_id: str):
         captions_result = fetch_video_captions(youtube_video_id, db_video_id=video_id)
         if not captions_result.get("success"):
             error_msg = captions_result.get("error", "No captions available or caption fetch error")
+            
+            # Check if this should be skipped silently (no captions or no auth)
+            if captions_result.get("skip"):
+                logger.warning(f"Skipping video {video_id}: {error_msg}")
+                update_video_status(video_id, VideoProcessingStatus.SYNCED, None)  # Leave in synced state
+                return {"success": False, "error": error_msg, "step": "caption_fetch", "skipped": True}
+            
+            # Otherwise, mark as error
             logger.error(f"Caption fetch failed for video {video_id}: {error_msg}")
             update_video_status(video_id, VideoProcessingStatus.ERROR, error_msg)
             return {"success": False, "error": error_msg, "step": "caption_fetch"}
