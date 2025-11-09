@@ -268,7 +268,7 @@ async def sync_channel_videos(
 
     new_videos_count = 0
     updated_videos_count = 0
-    queued_for_processing = 0
+    videos_to_queue = []  # Collect videos to queue after commit
 
     for idx, video_data in enumerate(videos_data, 1):
         video_id = video_data["video_id"]
@@ -293,16 +293,8 @@ async def sync_channel_videos(
             # Queue for processing if not yet processed or failed
             from app.models.models import VideoProcessingStatus
             if existing_video.processing_status in [VideoProcessingStatus.SYNCED, VideoProcessingStatus.ERROR]:
-                try:
-                    logger.debug(f"Queueing existing video {existing_video.id} for processing (status: {existing_video.processing_status})")
-                    queue_video_processing.delay(existing_video.id, existing_video.youtube_video_id)
-                    queued_for_processing += 1
-                    logger.info(f"Successfully queued existing video {existing_video.id} ({video_id}) for processing")
-                except Exception as e:
-                    logger.warning(
-                        f"Failed to queue existing video {existing_video.id} ({video_id}) for processing: {e}",
-                        exc_info=True
-                    )
+                videos_to_queue.append((existing_video.id, existing_video.youtube_video_id))
+                logger.debug(f"Will queue existing video {existing_video.id} for processing (status: {existing_video.processing_status})")
         else:
             # Create new video
             logger.info(f"[{idx}/{len(videos_data)}] Creating new video: {video_id} - {video_title[:50]}")
@@ -319,17 +311,9 @@ async def sync_channel_videos(
             db.add(new_video)
             db.flush()  # Get the video ID without committing
 
-            # Queue for processing
-            try:
-                logger.debug(f"Queueing video {new_video.id} for processing")
-                queue_video_processing.delay(new_video.id, new_video.youtube_video_id)
-                queued_for_processing += 1
-                logger.info(f"Successfully queued video {new_video.id} ({video_id}) for processing")
-            except Exception as e:
-                logger.warning(
-                    f"Failed to queue video {new_video.id} ({video_id}) for processing: {e}",
-                    exc_info=True
-                )
+            # Mark for queueing after commit
+            videos_to_queue.append((new_video.id, new_video.youtube_video_id))
+            logger.debug(f"Will queue new video {new_video.id} for processing")
 
             new_videos_count += 1
 
@@ -337,13 +321,32 @@ async def sync_channel_videos(
         logger.debug("Committing database transaction")
         db.commit()
         logger.info(
-            f"Sync complete - new: {new_videos_count}, updated: {updated_videos_count}, "
-            f"queued: {queued_for_processing} (user_id={current_user.id}, channel_id={channel_id})"
+            f"Database committed - new: {new_videos_count}, updated: {updated_videos_count} "
+            f"(user_id={current_user.id}, channel_id={channel_id})"
         )
     except Exception as e:
         logger.error(f"Database commit failed: {e}", exc_info=True)
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Failed to save videos: {e}")
+
+    # Queue videos for processing AFTER commit
+    queued_for_processing = 0
+    for video_db_id, youtube_video_id in videos_to_queue:
+        try:
+            logger.debug(f"Queueing video {video_db_id} ({youtube_video_id}) for processing")
+            queue_video_processing.delay(video_db_id, youtube_video_id)
+            queued_for_processing += 1
+            logger.info(f"Successfully queued video {video_db_id} ({youtube_video_id}) for processing")
+        except Exception as e:
+            logger.warning(
+                f"Failed to queue video {video_db_id} ({youtube_video_id}) for processing: {e}",
+                exc_info=True
+            )
+
+    logger.info(
+        f"Sync complete - new: {new_videos_count}, updated: {updated_videos_count}, "
+        f"queued: {queued_for_processing} (user_id={current_user.id}, channel_id={channel_id})"
+    )
 
     return {
         "success": True,

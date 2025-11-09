@@ -34,6 +34,7 @@ google-api-python-client==2.186.0
 google-auth==2.29.0
 google-auth-oauthlib==1.2.0
 isodate==0.6.1
+youtube-transcript-api==0.6.2
 
 # AI & ML
 openai==1.51.2

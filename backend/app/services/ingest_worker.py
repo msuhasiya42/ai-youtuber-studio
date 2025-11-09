@@ -1,6 +1,7 @@
 """
-Ingest worker for fetching video captions/transcripts from YouTube API.
-Replaces yt-dlp audio downloads with direct YouTube Caption API usage.
+Ingest worker for fetching video captions/transcripts from YouTube.
+Uses youtube-transcript-api for public captions (no auth required).
+Falls back to YouTube Data API for private/member-only content.
 """
 from celery_worker import app as celery_app
 import json
@@ -9,6 +10,7 @@ from app.services.youtube_client import YouTubeClient
 from app.core.logging_config import get_logger
 from app.db.session import SessionLocal
 from app.models.models import Video
+from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled, NoTranscriptFound
 
 logger = get_logger(__name__)
 
@@ -37,69 +39,38 @@ def fetch_video_captions(video_id: str, db_video_id: int = None) -> dict:
             if not video:
                 logger.warning(f"Video {db_video_id} not found in database")
 
-        # Initialize YouTube client
-        # If video exists, use owner's credentials; otherwise use service account
-        youtube_client = None
-        if video and video.channel and video.channel.owner:
-            youtube_client = YouTubeClient(user=video.channel.owner)
-        else:
-            # Fallback: try to fetch using service account or public API
-            logger.warning("No user credentials available, attempting public caption fetch")
-            youtube_client = YouTubeClient()
-
-        # Fetch captions list for the video
-        logger.info(f"Fetching caption tracks for video: {video_id}")
-        
-        # Check if YouTube client is authenticated (captions API requires auth)
-        if not youtube_client.youtube:
-            logger.error(f"Cannot fetch captions for {video_id} - YouTube client not authenticated")
+        # Try public transcript API first (no auth required)
+        logger.info(f"Attempting to fetch public transcript for video: {video_id}")
+        try:
+            transcript_data = _fetch_public_transcript(video_id)
+            language = transcript_data.get("language", "en")
+            track_kind = "public"
+            logger.info(f"Successfully fetched public transcript (language: {language})")
+        except (TranscriptsDisabled, NoTranscriptFound) as e:
+            logger.warning(f"Public transcript not available for {video_id}: {e}")
+            
+            # Fallback to authenticated YouTube Data API if user has credentials
+            if video and video.channel and video.channel.owner:
+                logger.info(f"Attempting authenticated caption fetch for {video_id}")
+                transcript_data = _fetch_authenticated_captions(video_id, video)
+                language = transcript_data.get("language", "en")
+                track_kind = "authenticated"
+            else:
+                logger.error(f"No public transcript and no user credentials for {video_id}")
+                return {
+                    "success": False,
+                    "status": "no_captions",
+                    "error": "No public captions available and no user authentication",
+                    "video_id": video_id
+                }
+        except Exception as e:
+            logger.error(f"Unexpected error fetching transcript for {video_id}: {e}")
             return {
                 "success": False,
-                "status": "auth_required",
-                "error": "YouTube Data API authentication required to fetch captions",
+                "status": "error",
+                "error": f"Transcript fetch failed: {str(e)}",
                 "video_id": video_id
             }
-        
-        captions_response = youtube_client.youtube.captions().list(
-            part="snippet",
-            videoId=video_id
-        ).execute()
-
-        if not captions_response.get('items'):
-            logger.warning(f"No captions available for video {video_id}")
-            return {
-                "success": False,
-                "status": "no_captions",
-                "error": "No captions available for this video",
-                "video_id": video_id
-            }
-
-        # Prefer auto-generated English captions or first available
-        caption_track = None
-        for item in captions_response['items']:
-            snippet = item['snippet']
-            if snippet.get('language') == 'en':
-                caption_track = item
-                if snippet.get('trackKind') == 'asr':  # Auto-generated
-                    break
-
-        if not caption_track:
-            caption_track = captions_response['items'][0]
-
-        caption_id = caption_track['id']
-        language = caption_track['snippet']['language']
-        track_kind = caption_track['snippet'].get('trackKind', 'standard')
-
-        logger.info(f"Downloading caption track: {caption_id} (language: {language}, kind: {track_kind})")
-
-        # Download caption content
-        caption_content = youtube_client.youtube.captions().download(
-            id=caption_id,
-            tfmt='srt'  # SubRip format
-        ).execute()
-
-        # Parse SRT to extract text and timestamps
-        transcript_data = _parse_srt_to_transcript(caption_content, language)
 
         # Upload transcript to storage
         transcript_s3_key = f"transcripts/{video_id}.json"
@@ -142,6 +113,110 @@ def fetch_video_captions(video_id: str, db_video_id: int = None) -> dict:
         }
     finally:
         db.close()
+
+
+def _fetch_public_transcript(video_id: str) -> dict:
+    """
+    Fetch public transcript using youtube-transcript-api (no auth required).
+    
+    Args:
+        video_id: YouTube video ID
+        
+    Returns:
+        dict with text, language, duration, segments, and source
+        
+    Raises:
+        TranscriptsDisabled: If transcripts are disabled for the video
+        NoTranscriptFound: If no transcript is available
+    """
+    # Fetch transcript - prefers English, falls back to auto-generated or any available
+    transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
+    
+    # Try to get English transcript first
+    try:
+        transcript = transcript_list.find_transcript(['en'])
+        language = 'en'
+    except:
+        # Fall back to any available transcript
+        transcript = transcript_list.find_generated_transcript(['en'])
+        language = transcript.language_code
+    
+    # Fetch the actual transcript data
+    transcript_data = transcript.fetch()
+    
+    # Convert to our format
+    segments = []
+    full_text_parts = []
+    
+    for entry in transcript_data:
+        text = entry['text'].strip()
+        full_text_parts.append(text)
+        segments.append({
+            "start": round(entry['start'], 3),
+            "end": round(entry['start'] + entry['duration'], 3),
+            "text": text
+        })
+    
+    duration = segments[-1]['end'] if segments else 0
+    
+    return {
+        "text": ' '.join(full_text_parts),
+        "language": language,
+        "duration": duration,
+        "segments": segments,
+        "source": "youtube_transcript_api"
+    }
+
+
+def _fetch_authenticated_captions(video_id: str, video: Video) -> dict:
+    """
+    Fetch captions using authenticated YouTube Data API.
+    Used for private/member-only content when public API fails.
+    
+    Args:
+        video_id: YouTube video ID
+        video: Video model instance with channel and owner
+        
+    Returns:
+        dict with text, language, duration, segments, and source
+    """
+    youtube_client = YouTubeClient(user=video.channel.owner)
+    
+    if not youtube_client.youtube:
+        raise ValueError("YouTube client not authenticated")
+    
+    # Fetch captions list
+    captions_response = youtube_client.youtube.captions().list(
+        part="snippet",
+        videoId=video_id
+    ).execute()
+    
+    if not captions_response.get('items'):
+        raise ValueError("No captions available via authenticated API")
+    
+    # Prefer English auto-generated or first available
+    caption_track = None
+    for item in captions_response['items']:
+        snippet = item['snippet']
+        if snippet.get('language') == 'en':
+            caption_track = item
+            if snippet.get('trackKind') == 'asr':
+                break
+    
+    if not caption_track:
+        caption_track = captions_response['items'][0]
+    
+    caption_id = caption_track['id']
+    language = caption_track['snippet']['language']
+    
+    # Download caption content in SRT format
+    caption_content = youtube_client.youtube.captions().download(
+        id=caption_id,
+        tfmt='srt'
+    ).execute()
+    
+    # Parse SRT to our format
+    return _parse_srt_to_transcript(caption_content, language)
 
 
 def _parse_srt_to_transcript(srt_content: str, language: str) -> dict:
