@@ -1,110 +1,198 @@
 """
-Ingest worker for downloading audio from YouTube videos using yt-dlp.
+Ingest worker for fetching video captions/transcripts from YouTube API.
+Replaces yt-dlp audio downloads with direct YouTube Caption API usage.
 """
 from celery_worker import app as celery_app
-import yt_dlp
-import os
-import tempfile
+import json
 from app.services.storage_client import get_storage_client
+from app.services.youtube_client import YouTubeClient
 from app.core.logging_config import get_logger
+from app.db.session import SessionLocal
+from app.models.models import Video
 
 logger = get_logger(__name__)
 
 
 @celery_app.task
-def download_audio(video_id: str) -> dict:
+def fetch_video_captions(video_id: str, db_video_id: int = None) -> dict:
     """
-    Download audio from a YouTube video and upload to MinIO storage.
+    Fetch captions/transcript directly from YouTube using YouTube Data API v3.
 
     Args:
         video_id: YouTube video ID (not full URL)
+        db_video_id: Optional database video ID for updating record
 
     Returns:
-        dict with status and s3_key
+        dict with status and transcript_s3_key
     """
-    logger.info(f"Starting audio download for video: {video_id}")
-    video_url = f"https://www.youtube.com/watch?v={video_id}"
+    logger.info(f"Fetching captions for video: {video_id}")
     storage_client = get_storage_client()
+    db = SessionLocal()
 
-    # Create temporary directory for download
-    with tempfile.TemporaryDirectory() as temp_dir:
-        output_template = os.path.join(temp_dir, f"{video_id}.%(ext)s")
-        logger.debug(f"Temporary directory created: {temp_dir}")
+    try:
+        # Get video from database to access owner's YouTube client
+        video = None
+        if db_video_id:
+            video = db.query(Video).filter(Video.id == db_video_id).first()
+            if not video:
+                logger.warning(f"Video {db_video_id} not found in database")
 
-        # yt-dlp options for audio extraction
-        ydl_opts = {
-            'format': 'bestaudio/best',
-            'outtmpl': output_template,
-            'postprocessors': [{
-                'key': 'FFmpegExtractAudio',
-                'preferredcodec': 'mp3',
-                'preferredquality': '192',
-            }],
-            'quiet': True,
-            'no_warnings': True,
-        }
-
-        cookies_file = os.getenv("YTDLP_COOKIES_FILE")
-        if cookies_file:
-            ydl_opts['cookiefile'] = cookies_file
-            logger.info(f"Using yt-dlp with cookies from: {cookies_file}")
+        # Initialize YouTube client
+        # If video exists, use owner's credentials; otherwise use service account
+        youtube_client = None
+        if video and video.channel and video.channel.owner:
+            youtube_client = YouTubeClient(user=video.channel.owner)
         else:
-            logger.warning("YTDLP_COOKIES_FILE not set. yt-dlp might encounter age restrictions or login issues.")
+            # Fallback: try to fetch using service account or public API
+            logger.warning("No user credentials available, attempting public caption fetch")
+            youtube_client = YouTubeClient()
 
-        try:
-            # Download audio
-            logger.info(f"Downloading audio from YouTube: {video_url}")
-            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                info = ydl.extract_info(video_url, download=True)
-                duration = info.get('duration', 0)
-                logger.info(f"Audio downloaded successfully (duration: {duration}s)")
+        # Fetch captions list for the video
+        logger.info(f"Fetching caption tracks for video: {video_id}")
+        captions_response = youtube_client.service.captions().list(
+            part="snippet",
+            videoId=video_id
+        ).execute()
 
-            # Find the downloaded file (should be .mp3 after postprocessing)
-            audio_file_path = os.path.join(temp_dir, f"{video_id}.mp3")
-
-            if not os.path.exists(audio_file_path):
-                logger.warning(f"Expected audio file not found at {audio_file_path}, searching for alternatives")
-                # Fallback: check for other extensions
-                for file in os.listdir(temp_dir):
-                    if file.startswith(video_id):
-                        audio_file_path = os.path.join(temp_dir, file)
-                        logger.info(f"Found alternative audio file: {file}")
-                        break
-
-            if not os.path.exists(audio_file_path):
-                error_msg = f"Downloaded audio file not found for {video_id}"
-                logger.error(error_msg)
-                raise FileNotFoundError(error_msg)
-
-            # Get file size for logging
-            file_size_mb = os.path.getsize(audio_file_path) / (1024 * 1024)
-            logger.info(f"Audio file ready for upload: {file_size_mb:.2f} MB")
-
-            # Upload to MinIO
-            s3_key = f"audio/{video_id}.mp3"
-            logger.info(f"Uploading audio to storage: {s3_key}")
-            storage_client.upload_file(
-                file_path=audio_file_path,
-                object_name=s3_key,
-                content_type="audio/mpeg"
-            )
-            logger.info(f"Audio upload completed successfully: {s3_key}")
-
-            return {
-                "success": True,
-                "status": "success",
-                "s3_key": s3_key,
-                "video_id": video_id,
-                "file_size_mb": round(file_size_mb, 2)
-            }
-
-        except Exception as e:
-            logger.error(f"Error downloading audio for {video_id}: {e}", exc_info=True)
+        if not captions_response.get('items'):
+            logger.warning(f"No captions available for video {video_id}")
             return {
                 "success": False,
-                "status": "error",
-                "error": str(e),
+                "status": "no_captions",
+                "error": "No captions available for this video",
                 "video_id": video_id
             }
+
+        # Prefer auto-generated English captions or first available
+        caption_track = None
+        for item in captions_response['items']:
+            snippet = item['snippet']
+            if snippet.get('language') == 'en':
+                caption_track = item
+                if snippet.get('trackKind') == 'asr':  # Auto-generated
+                    break
+
+        if not caption_track:
+            caption_track = captions_response['items'][0]
+
+        caption_id = caption_track['id']
+        language = caption_track['snippet']['language']
+        track_kind = caption_track['snippet'].get('trackKind', 'standard')
+
+        logger.info(f"Downloading caption track: {caption_id} (language: {language}, kind: {track_kind})")
+
+        # Download caption content
+        caption_content = youtube_client.service.captions().download(
+            id=caption_id,
+            tfmt='srt'  # SubRip format
+        ).execute()
+
+        # Parse SRT to extract text and timestamps
+        transcript_data = _parse_srt_to_transcript(caption_content, language)
+
+        # Upload transcript to storage
+        transcript_s3_key = f"transcripts/{video_id}.json"
+        transcript_json = json.dumps(transcript_data, indent=2).encode('utf-8')
+        transcript_size_kb = len(transcript_json) / 1024
+
+        logger.info(f"Uploading transcript to storage: {transcript_s3_key} ({transcript_size_kb:.2f} KB)")
+        storage_client.upload_bytes(
+            data=transcript_json,
+            object_name=transcript_s3_key,
+            content_type="application/json"
+        )
+        logger.info(f"Transcript uploaded successfully: {transcript_s3_key}")
+
+        # Update video record if available
+        if video:
+            video.transcript_s3_key = transcript_s3_key
+            db.add(video)
+            db.commit()
+            logger.info(f"Updated video {db_video_id} with transcript key")
+
+        return {
+            "success": True,
+            "status": "success",
+            "transcript_s3_key": transcript_s3_key,
+            "video_id": video_id,
+            "language": language,
+            "track_kind": track_kind,
+            "text_length": len(transcript_data['text']),
+            "segments_count": len(transcript_data['segments'])
+        }
+
+    except Exception as e:
+        logger.error(f"Error fetching captions for {video_id}: {e}", exc_info=True)
+        return {
+            "success": False,
+            "status": "error",
+            "error": str(e),
+            "video_id": video_id
+        }
+    finally:
+        db.close()
+
+
+def _parse_srt_to_transcript(srt_content: str, language: str) -> dict:
+    """
+    Parse SRT (SubRip) format captions into transcript data structure.
+
+    Args:
+        srt_content: Raw SRT content string
+        language: Language code
+
+    Returns:
+        dict with text, language, duration, and segments
+    """
+    import re
+
+    segments = []
+    full_text_parts = []
+
+    # Split SRT into blocks (separated by double newlines)
+    blocks = srt_content.strip().split('\n\n')
+
+    for block in blocks:
+        lines = block.strip().split('\n')
+        if len(lines) < 3:
+            continue
+
+        # Parse timestamp line (format: 00:00:01,234 --> 00:00:05,678)
+        timestamp_line = lines[1]
+        timestamp_match = re.match(
+            r'(\d{2}):(\d{2}):(\d{2}),(\d{3})\s*-->\s*(\d{2}):(\d{2}):(\d{2}),(\d{3})',
+            timestamp_line
+        )
+
+        if not timestamp_match:
+            continue
+
+        # Convert timestamp to seconds
+        start_h, start_m, start_s, start_ms = map(int, timestamp_match.groups()[:4])
+        end_h, end_m, end_s, end_ms = map(int, timestamp_match.groups()[4:])
+
+        start_seconds = start_h * 3600 + start_m * 60 + start_s + start_ms / 1000
+        end_seconds = end_h * 3600 + end_m * 60 + end_s + end_ms / 1000
+
+        # Get text (lines after timestamp)
+        text = ' '.join(lines[2:]).strip()
+        full_text_parts.append(text)
+
+        segments.append({
+            "start": round(start_seconds, 3),
+            "end": round(end_seconds, 3),
+            "text": text
+        })
+
+    # Calculate total duration
+    duration = segments[-1]['end'] if segments else 0
+
+    return {
+        "text": ' '.join(full_text_parts),
+        "language": language,
+        "duration": duration,
+        "segments": segments,
+        "source": "youtube_captions"
+    }
 
 

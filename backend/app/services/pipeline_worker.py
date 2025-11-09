@@ -2,9 +2,8 @@
 Video Processing Pipeline Worker
 
 Orchestrates the complete video processing pipeline:
-1. Download audio from YouTube
-2. Transcribe audio using Whisper
-3. Index transcript in ChromaDB vector store
+1. Fetch captions from YouTube
+2. Index transcript in ChromaDB vector store
 
 This worker manages the end-to-end processing flow and updates video status.
 """
@@ -45,7 +44,7 @@ def update_video_status(
 def process_video_pipeline(video_id: int, youtube_video_id: str):
     """
     Complete video processing pipeline.
-    Downloads audio, transcribes it, and indexes in vector store.
+    Fetches captions (no audio download) and indexes in vector store.
 
     Args:
         video_id: Database video ID
@@ -54,8 +53,7 @@ def process_video_pipeline(video_id: int, youtube_video_id: str):
     Returns:
         dict with processing results
     """
-    from app.services.ingest_worker import download_audio
-    from app.services.transcribe_worker import transcribe_audio
+    from app.services.ingest_worker import fetch_video_captions
     from app.services.storage_client import StorageClient
     from app.services.vector_store import get_vector_store
     from datetime import datetime
@@ -64,42 +62,19 @@ def process_video_pipeline(video_id: int, youtube_video_id: str):
     logger.info(f"Starting video processing pipeline for video {video_id}")
 
     try:
-        # Step 1: Download audio
-        update_video_status(video_id, VideoProcessingStatus.AUDIO_DOWNLOADING)
-        logger.info(f"Step 1/3: Downloading audio for video {video_id}")
-
-        audio_result = download_audio(youtube_video_id)
-        if not audio_result.get("success"):
-            error_msg = audio_result.get("error", "Unknown audio download error")
-            logger.error(f"Audio download failed for video {video_id}: {error_msg}")
-            update_video_status(video_id, VideoProcessingStatus.ERROR, error_msg)
-            return {"success": False, "error": error_msg, "step": "audio_download"}
-
-        audio_s3_key = audio_result["s3_key"]
-        logger.info(f"Audio downloaded successfully: {audio_s3_key}")
-
-        # Update video with audio_s3_key
-        db = SessionLocal()
-        video = db.query(Video).filter(Video.id == video_id).first()
-        if video:
-            video.audio_s3_key = audio_s3_key
-            video.processing_status = VideoProcessingStatus.AUDIO_DOWNLOADED
-            db.commit()
-        db.close()
-
-        # Step 2: Transcribe audio
+        # Step 1: Fetch captions (treat as transcription step)
         update_video_status(video_id, VideoProcessingStatus.TRANSCRIBING)
-        logger.info(f"Step 2/3: Transcribing audio for video {video_id}")
+        logger.info(f"Step 1/2: Fetching captions for video {video_id}")
 
-        transcribe_result = transcribe_audio(audio_s3_key, youtube_video_id)
-        if not transcribe_result.get("success"):
-            error_msg = transcribe_result.get("error", "Unknown transcription error")
-            logger.error(f"Transcription failed for video {video_id}: {error_msg}")
+        captions_result = fetch_video_captions(youtube_video_id, db_video_id=video_id)
+        if not captions_result.get("success"):
+            error_msg = captions_result.get("error", "No captions available or caption fetch error")
+            logger.error(f"Caption fetch failed for video {video_id}: {error_msg}")
             update_video_status(video_id, VideoProcessingStatus.ERROR, error_msg)
-            return {"success": False, "error": error_msg, "step": "transcription"}
+            return {"success": False, "error": error_msg, "step": "caption_fetch"}
 
-        transcript_s3_key = transcribe_result["transcript_s3_key"]
-        logger.info(f"Transcription completed successfully: {transcript_s3_key}")
+        transcript_s3_key = captions_result["transcript_s3_key"]
+        logger.info(f"Captions fetched successfully: {transcript_s3_key}")
 
         # Update video with transcript_s3_key
         db = SessionLocal()
@@ -110,14 +85,14 @@ def process_video_pipeline(video_id: int, youtube_video_id: str):
             db.commit()
         db.close()
 
-        # Step 3: Index in vector store
+        # Step 2: Index in vector store
         update_video_status(video_id, VideoProcessingStatus.INDEXING)
-        logger.info(f"Step 3/3: Indexing transcript for video {video_id}")
+        logger.info(f"Step 2/2: Indexing transcript for video {video_id}")
 
         # Fetch transcript from storage
         storage = StorageClient()
-        transcript_json = storage.get_object(transcript_s3_key)
-        transcript_data = json.loads(transcript_json)
+        transcript_json_bytes = storage.get_object(transcript_s3_key)
+        transcript_data = json.loads(transcript_json_bytes.decode('utf-8'))
 
         # Get video details for metadata
         db = SessionLocal()
@@ -154,7 +129,6 @@ def process_video_pipeline(video_id: int, youtube_video_id: str):
         return {
             "success": True,
             "video_id": video_id,
-            "audio_s3_key": audio_s3_key,
             "transcript_s3_key": transcript_s3_key,
             "chunks_indexed": chunks_indexed
         }
