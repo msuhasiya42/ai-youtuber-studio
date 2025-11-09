@@ -10,14 +10,37 @@ const PerformanceAnalyzer: React.FC<PerformanceAnalyzerProps> = ({ channelId, ch
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [patterns, setPatterns] = useState<PatternAnalysis | null>(null);
+  const [lastAnalyzed, setLastAnalyzed] = useState<string | null>(null);
+  const [isCached, setIsCached] = useState(false);
+
+  const loadCachedAnalysis = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const result = await analyzeChannelPatterns(channelId, 50, false); // force_refresh=false
+      setPatterns(result);
+      setLastAnalyzed(result.generated_at || null);
+      setIsCached(result.cached || false);
+    } catch (err: any) {
+      // No cached analysis available - this is fine, user can click analyze
+      console.log('No cached analysis available');
+      setPatterns(null);
+      setLastAnalyzed(null);
+      setIsCached(false);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleAnalyzePatterns = async () => {
     setLoading(true);
     setError(null);
 
     try {
-      const result = await analyzeChannelPatterns(channelId, 50);
+      const result = await analyzeChannelPatterns(channelId, 50, true); // force_refresh=true
       setPatterns(result);
+      setLastAnalyzed(result.generated_at || null);
+      setIsCached(false);
     } catch (err: any) {
       setError(err.message || 'Failed to analyze patterns');
     } finally {
@@ -26,19 +49,32 @@ const PerformanceAnalyzer: React.FC<PerformanceAnalyzerProps> = ({ channelId, ch
   };
 
   useEffect(() => {
-    // Auto-analyze on mount if we don't have patterns yet
-    if (!patterns) {
-      handleAnalyzePatterns();
-    }
-  }, []);
+    loadCachedAnalysis();
+  }, [channelId]);
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-6">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2">Performance Analyzer</h1>
-          <p className="text-gray-400">Channel: {channelName}</p>
+        {/* Header with Analyze Button */}
+        <div className="flex justify-between items-center mb-6">
+          <div>
+            <h1 className="text-4xl font-bold mb-2">Performance Analyzer</h1>
+            <p className="text-gray-400">Channel: {channelName}</p>
+            {lastAnalyzed && (
+              <p className="text-sm text-gray-500 mt-1">
+                Last analyzed: {new Date(lastAnalyzed).toLocaleString()}
+                {/* {isCached && <span className="ml-2 text-blue-400">(Cached)</span>} */}
+              </p>
+            )}
+          </div>
+          
+          <button
+            onClick={handleAnalyzePatterns}
+            disabled={loading}
+            className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? 'Analyzing...' : 'Analyze Channel Performance'}
+          </button>
         </div>
 
         {/* Error Display */}
@@ -52,6 +88,14 @@ const PerformanceAnalyzer: React.FC<PerformanceAnalyzerProps> = ({ channelId, ch
         {loading && !patterns && (
           <div className="text-center py-12">
             <p className="text-gray-400">Analyzing your top videos...</p>
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!patterns && !loading && (
+          <div className="text-center py-12 bg-gray-800 rounded-lg">
+            <p className="text-gray-400 mb-4">No analysis available yet.</p>
+            <p className="text-sm text-gray-500">Click "Analyze Channel Performance" to get started.</p>
           </div>
         )}
 
@@ -115,14 +159,6 @@ const PerformanceAnalyzer: React.FC<PerformanceAnalyzerProps> = ({ channelId, ch
                 ))}
               </ul>
             </div>
-
-            <button
-              onClick={handleAnalyzePatterns}
-              disabled={loading}
-              className="w-full bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {loading ? 'Analyzing...' : 'Refresh Analysis'}
-            </button>
           </div>
         )}
       </div>

@@ -1,12 +1,13 @@
 """
 Content Studio API endpoints - AI-powered content creation features.
 """
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from typing import Optional, List
+from datetime import datetime, timedelta
 from app.db.session import get_db
-from app.models.models import User, Channel, Video
+from app.models.models import User, Channel, Video, AIInsight
 from app.api.channels import get_current_user
 from app.services.pattern_analyzer import get_pattern_analyzer
 from app.services.title_optimizer import get_title_optimizer
@@ -47,11 +48,13 @@ class IndexVideoRequest(BaseModel):
 @router.post("/analyze-patterns")
 async def analyze_channel_patterns(
     request: AnalyzeChannelRequest,
+    force_refresh: bool = Query(False, description="Force fresh analysis even if cache exists"),
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
     """
     Analyze performance patterns from top videos.
+    Results are cached for 24 hours unless force_refresh=True.
     """
     # Verify channel belongs to user
     channel = db.query(Channel).filter(
@@ -62,7 +65,22 @@ async def analyze_channel_patterns(
     if not channel:
         raise HTTPException(status_code=404, detail="Channel not found or not authorized")
 
-    # Analyze patterns
+    # Check for cached insights unless force refresh
+    if not force_refresh:
+        cached_insight = db.query(AIInsight).filter(
+            AIInsight.channel_id == request.channel_id,
+            AIInsight.insight_type == 'pattern_analysis',
+            AIInsight.expires_at > datetime.now()
+        ).first()
+
+        if cached_insight:
+            return {
+                **cached_insight.insight_data,
+                'cached': True,
+                'generated_at': cached_insight.generated_at.isoformat()
+            }
+
+    # Run fresh analysis
     pattern_analyzer = get_pattern_analyzer()
     patterns = pattern_analyzer.analyze_channel_patterns(
         db,
@@ -70,7 +88,38 @@ async def analyze_channel_patterns(
         top_n=request.top_n
     )
 
-    return patterns
+    # Cache the results (expires in 24 hours)
+    expires_at = datetime.now() + timedelta(hours=24)
+
+    # Upsert AI insight
+    existing_insight = db.query(AIInsight).filter(
+        AIInsight.channel_id == request.channel_id,
+        AIInsight.insight_type == 'pattern_analysis'
+    ).first()
+
+    if existing_insight:
+        existing_insight.insight_data = patterns
+        existing_insight.generated_at = datetime.now()
+        existing_insight.expires_at = expires_at
+        existing_insight.videos_analyzed = patterns.get('videos_analyzed', 0)
+    else:
+        new_insight = AIInsight(
+            channel_id=request.channel_id,
+            insight_type='pattern_analysis',
+            insight_data=patterns,
+            generated_at=datetime.now(),
+            expires_at=expires_at,
+            videos_analyzed=patterns.get('videos_analyzed', 0)
+        )
+        db.add(new_insight)
+
+    db.commit()
+
+    return {
+        **patterns,
+        'cached': False,
+        'generated_at': datetime.now().isoformat()
+    }
 
 
 @router.post("/generate-script")

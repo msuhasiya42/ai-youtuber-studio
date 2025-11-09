@@ -1,0 +1,987 @@
+[2025-11-09 15:22:11] [ERROR   ] [req:76361221] [app.api.channels:249] Failed to refresh credentials for user 3: ('invalid_scope: Bad Request', {'error': 'invalid_scope', 'error_description': 'Bad Request'})
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/api/channels.py", line 246, in sync_channel_videos
+    creds.refresh(GoogleAuthRequest())
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/google/oauth2/credentials.py", line 431, in refresh
+    ) = reauth.refresh_grant(
+        ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/google/oauth2/reauth.py", line 365, in refresh_grant
+    _client._handle_error_response(response_data, retryable_error)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/google/oauth2/_client.py", line 72, in _handle_error_response
+    raise exceptions.RefreshError(
+google.auth.exceptions.RefreshError: ('invalid_scope: Bad Request', {'error': 'invalid_scope', 'error_description': 'Bad Request'})
+[2025-11-09 15:22:11] [ERROR   ] [req:76361221] [app.main:49] Response: POST /api/channels/3/sync-videos [status:401] [duration:386.72ms]
+[2025-11-09 15:22:32] [ERROR   ] [req:bb965c8a] [app.api.channels:249] Failed to refresh credentials for user 3: ('invalid_scope: Bad Request', {'error': 'invalid_scope', 'error_description': 'Bad Request'})
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/api/channels.py", line 246, in sync_channel_videos
+    creds.refresh(GoogleAuthRequest())
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/google/oauth2/credentials.py", line 431, in refresh
+    ) = reauth.refresh_grant(
+        ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/google/oauth2/reauth.py", line 365, in refresh_grant
+    _client._handle_error_response(response_data, retryable_error)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/google/oauth2/_client.py", line 72, in _handle_error_response
+    raise exceptions.RefreshError(
+google.auth.exceptions.RefreshError: ('invalid_scope: Bad Request', {'error': 'invalid_scope', 'error_description': 'Bad Request'})
+[2025-11-09 15:22:32] [ERROR   ] [req:bb965c8a] [app.main:49] Response: POST /api/channels/3/sync-videos [status:401] [duration:344.12ms]
+[2025-11-09 15:23:24] [ERROR   ] [req:78c4b058] [app.main:49] Response: GET /api/channels/me [status:401] [duration:3.20ms]
+[2025-11-09 15:23:24] [ERROR   ] [req:8aecfcbd] [app.main:49] Response: GET /api/channels/me [status:401] [duration:4.33ms]
+[2025-11-09 15:23:24] [ERROR   ] [req:875acfe4] [app.main:49] Response: GET /api/channels/me [status:401] [duration:6.07ms]
+[2025-11-09 15:25:01] [ERROR   ] [req:85efc9ac] [app.main:49] Response: POST /api/videos/76/retry [status:405] [duration:2.50ms]
+[2025-11-09 15:25:02] [ERROR   ] [req:8542549c] [app.main:49] Response: POST /api/videos/75/retry [status:405] [duration:2.76ms]
+[2025-11-09 15:25:03] [ERROR   ] [req:69efca71] [app.main:49] Response: POST /api/videos/75/retry [status:405] [duration:1.35ms]
+[2025-11-09 15:25:04] [ERROR   ] [req:ab8df12f] [app.main:49] Response: POST /api/videos/74/retry [status:405] [duration:1.66ms]
+[2025-11-09 15:28:20] [ERROR   ] [req:99293989] [app.services.youtube_client:151] Error fetching videos for channel UCEvzYexJxTTypNFuw0LVvpw: <HttpError 403 when requesting https://youtube.googleapis.com/youtube/v3/search?part=id%2Csnippet&channelId=UCEvzYexJxTTypNFuw0LVvpw&maxResults=20&order=date&type=video&alt=json returned "The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.". Details: "[{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]">
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/youtube_client.py", line 99, in fetch_last_videos
+    ).execute()
+      ^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/googleapiclient/_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/googleapiclient/http.py", line 938, in execute
+    raise HttpError(resp, content, uri=self.uri)
+googleapiclient.errors.HttpError: <HttpError 403 when requesting https://youtube.googleapis.com/youtube/v3/search?part=id%2Csnippet&channelId=UCEvzYexJxTTypNFuw0LVvpw&maxResults=20&order=date&type=video&alt=json returned "The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.". Details: "[{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]">
+[2025-11-09 15:28:20] [ERROR   ] [req:99293989] [app.api.channels:215] Fetch videos from YouTube - Failed after 422.56ms: <HttpError 403 when requesting https://youtube.googleapis.com/youtube/v3/search?part=id%2Csnippet&channelId=UCEvzYexJxTTypNFuw0LVvpw&maxResults=20&order=date&type=video&alt=json returned "The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.". Details: "[{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]">
+[2025-11-09 15:28:20] [ERROR   ] [req:99293989] [app.api.channels:265] Failed to fetch videos from YouTube for channel 3: <HttpError 403 when requesting https://youtube.googleapis.com/youtube/v3/search?part=id%2Csnippet&channelId=UCEvzYexJxTTypNFuw0LVvpw&maxResults=20&order=date&type=video&alt=json returned "The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.". Details: "[{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]">
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/api/channels.py", line 258, in sync_channel_videos
+    videos_data = youtube_client.fetch_last_videos(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/youtube_client.py", line 99, in fetch_last_videos
+    ).execute()
+      ^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/googleapiclient/_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/googleapiclient/http.py", line 938, in execute
+    raise HttpError(resp, content, uri=self.uri)
+googleapiclient.errors.HttpError: <HttpError 403 when requesting https://youtube.googleapis.com/youtube/v3/search?part=id%2Csnippet&channelId=UCEvzYexJxTTypNFuw0LVvpw&maxResults=20&order=date&type=video&alt=json returned "The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.". Details: "[{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]">
+[2025-11-09 15:28:20] [ERROR   ] [req:99293989] [app.main:49] Response: POST /api/channels/3/sync-videos [status:500] [duration:865.49ms]
+[2025-11-09 15:28:35] [ERROR   ] [req:365b5d70] [app.services.youtube_client:151] Error fetching videos for channel UCEvzYexJxTTypNFuw0LVvpw: <HttpError 403 when requesting https://youtube.googleapis.com/youtube/v3/search?part=id%2Csnippet&channelId=UCEvzYexJxTTypNFuw0LVvpw&maxResults=20&order=date&type=video&alt=json returned "The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.". Details: "[{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]">
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/youtube_client.py", line 99, in fetch_last_videos
+    ).execute()
+      ^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/googleapiclient/_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/googleapiclient/http.py", line 938, in execute
+    raise HttpError(resp, content, uri=self.uri)
+googleapiclient.errors.HttpError: <HttpError 403 when requesting https://youtube.googleapis.com/youtube/v3/search?part=id%2Csnippet&channelId=UCEvzYexJxTTypNFuw0LVvpw&maxResults=20&order=date&type=video&alt=json returned "The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.". Details: "[{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]">
+[2025-11-09 15:28:35] [ERROR   ] [req:365b5d70] [app.api.channels:215] Fetch videos from YouTube - Failed after 170.91ms: <HttpError 403 when requesting https://youtube.googleapis.com/youtube/v3/search?part=id%2Csnippet&channelId=UCEvzYexJxTTypNFuw0LVvpw&maxResults=20&order=date&type=video&alt=json returned "The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.". Details: "[{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]">
+[2025-11-09 15:28:35] [ERROR   ] [req:365b5d70] [app.api.channels:265] Failed to fetch videos from YouTube for channel 3: <HttpError 403 when requesting https://youtube.googleapis.com/youtube/v3/search?part=id%2Csnippet&channelId=UCEvzYexJxTTypNFuw0LVvpw&maxResults=20&order=date&type=video&alt=json returned "The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.". Details: "[{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]">
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/api/channels.py", line 258, in sync_channel_videos
+    videos_data = youtube_client.fetch_last_videos(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/youtube_client.py", line 99, in fetch_last_videos
+    ).execute()
+      ^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/googleapiclient/_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/googleapiclient/http.py", line 938, in execute
+    raise HttpError(resp, content, uri=self.uri)
+googleapiclient.errors.HttpError: <HttpError 403 when requesting https://youtube.googleapis.com/youtube/v3/search?part=id%2Csnippet&channelId=UCEvzYexJxTTypNFuw0LVvpw&maxResults=20&order=date&type=video&alt=json returned "The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.". Details: "[{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]">
+[2025-11-09 15:28:35] [ERROR   ] [req:365b5d70] [app.main:49] Response: POST /api/channels/3/sync-videos [status:500] [duration:512.41ms]
+[2025-11-09 15:28:43] [ERROR   ] [req:0718197b] [app.services.youtube_client:151] Error fetching videos for channel UCEvzYexJxTTypNFuw0LVvpw: <HttpError 403 when requesting https://youtube.googleapis.com/youtube/v3/search?part=id%2Csnippet&channelId=UCEvzYexJxTTypNFuw0LVvpw&maxResults=20&order=date&type=video&alt=json returned "The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.". Details: "[{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]">
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/youtube_client.py", line 99, in fetch_last_videos
+    ).execute()
+      ^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/googleapiclient/_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/googleapiclient/http.py", line 938, in execute
+    raise HttpError(resp, content, uri=self.uri)
+googleapiclient.errors.HttpError: <HttpError 403 when requesting https://youtube.googleapis.com/youtube/v3/search?part=id%2Csnippet&channelId=UCEvzYexJxTTypNFuw0LVvpw&maxResults=20&order=date&type=video&alt=json returned "The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.". Details: "[{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]">
+[2025-11-09 15:28:43] [ERROR   ] [req:0718197b] [app.api.channels:215] Fetch videos from YouTube - Failed after 485.72ms: <HttpError 403 when requesting https://youtube.googleapis.com/youtube/v3/search?part=id%2Csnippet&channelId=UCEvzYexJxTTypNFuw0LVvpw&maxResults=20&order=date&type=video&alt=json returned "The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.". Details: "[{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]">
+[2025-11-09 15:28:43] [ERROR   ] [req:0718197b] [app.api.channels:265] Failed to fetch videos from YouTube for channel 3: <HttpError 403 when requesting https://youtube.googleapis.com/youtube/v3/search?part=id%2Csnippet&channelId=UCEvzYexJxTTypNFuw0LVvpw&maxResults=20&order=date&type=video&alt=json returned "The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.". Details: "[{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]">
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/api/channels.py", line 258, in sync_channel_videos
+    videos_data = youtube_client.fetch_last_videos(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/youtube_client.py", line 99, in fetch_last_videos
+    ).execute()
+      ^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/googleapiclient/_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/googleapiclient/http.py", line 938, in execute
+    raise HttpError(resp, content, uri=self.uri)
+googleapiclient.errors.HttpError: <HttpError 403 when requesting https://youtube.googleapis.com/youtube/v3/search?part=id%2Csnippet&channelId=UCEvzYexJxTTypNFuw0LVvpw&maxResults=20&order=date&type=video&alt=json returned "The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.". Details: "[{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]">
+[2025-11-09 15:28:43] [ERROR   ] [req:0718197b] [app.main:49] Response: POST /api/channels/3/sync-videos [status:500] [duration:895.35ms]
+[2025-11-09 18:48:59] [ERROR   ] [req:b733a8a4] [app.main:49] Response: POST /api/videos/77/retry [status:405] [duration:1.48ms]
+[2025-11-09 18:49:37] [ERROR   ] [req:0dea0b5a] [app.services.youtube_client:151] Error fetching videos for channel UCEvzYexJxTTypNFuw0LVvpw: <HttpError 403 when requesting https://youtube.googleapis.com/youtube/v3/search?part=id%2Csnippet&channelId=UCEvzYexJxTTypNFuw0LVvpw&maxResults=20&order=date&type=video&alt=json returned "The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.". Details: "[{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]">
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/youtube_client.py", line 99, in fetch_last_videos
+    ).execute()
+      ^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/googleapiclient/_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/googleapiclient/http.py", line 938, in execute
+    raise HttpError(resp, content, uri=self.uri)
+googleapiclient.errors.HttpError: <HttpError 403 when requesting https://youtube.googleapis.com/youtube/v3/search?part=id%2Csnippet&channelId=UCEvzYexJxTTypNFuw0LVvpw&maxResults=20&order=date&type=video&alt=json returned "The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.". Details: "[{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]">
+[2025-11-09 18:49:37] [ERROR   ] [req:0dea0b5a] [app.api.channels:215] Fetch videos from YouTube - Failed after 407.57ms: <HttpError 403 when requesting https://youtube.googleapis.com/youtube/v3/search?part=id%2Csnippet&channelId=UCEvzYexJxTTypNFuw0LVvpw&maxResults=20&order=date&type=video&alt=json returned "The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.". Details: "[{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]">
+[2025-11-09 18:49:37] [ERROR   ] [req:0dea0b5a] [app.api.channels:265] Failed to fetch videos from YouTube for channel 3: <HttpError 403 when requesting https://youtube.googleapis.com/youtube/v3/search?part=id%2Csnippet&channelId=UCEvzYexJxTTypNFuw0LVvpw&maxResults=20&order=date&type=video&alt=json returned "The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.". Details: "[{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]">
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/api/channels.py", line 258, in sync_channel_videos
+    videos_data = youtube_client.fetch_last_videos(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/youtube_client.py", line 99, in fetch_last_videos
+    ).execute()
+      ^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/googleapiclient/_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/googleapiclient/http.py", line 938, in execute
+    raise HttpError(resp, content, uri=self.uri)
+googleapiclient.errors.HttpError: <HttpError 403 when requesting https://youtube.googleapis.com/youtube/v3/search?part=id%2Csnippet&channelId=UCEvzYexJxTTypNFuw0LVvpw&maxResults=20&order=date&type=video&alt=json returned "The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.". Details: "[{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]">
+[2025-11-09 18:49:37] [ERROR   ] [req:0dea0b5a] [app.main:49] Response: POST /api/channels/3/sync-videos [status:500] [duration:833.98ms]
+[2025-11-09 19:00:40] [ERROR   ] [req:3ed63a93] [app.main:49] Response: POST /api/content-studio/generate-script [status:500] [duration:128.34ms]
+[2025-11-09 19:03:51] [ERROR   ] [req:e80cb0ce] [app.services.vector_store:43] Failed to initialize VectorStore: Could not connect to a Chroma server. Are you sure it is running?
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 72, in map_httpcore_exceptions
+    yield
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 236, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 101, in handle_request
+    raise exc
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 78, in handle_request
+    stream = self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 124, in _connect
+    stream = self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpcore/_backends/sync.py", line 207, in connect_tcp
+    with map_exceptions(exc_map):
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: [Errno 8] nodename nor servname provided, or not known
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/client.py", line 122, in get_user_identity
+    return self._server.get_user_identity()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 150, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/fastapi.py", line 211, in get_user_identity
+    return UserIdentity(**self._make_request("get", "/auth/identity"))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/fastapi.py", line 116, in _make_request
+    response = self._session.request(method, url, **cast(Any, kwargs))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_client.py", line 837, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_client.py", line 926, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_client.py", line 954, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_client.py", line 991, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1027, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 235, in handle_request
+    with map_httpcore_exceptions():
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 89, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno 8] nodename nor servname provided, or not known
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/vector_store.py", line 26, in __init__
+    self.client = chromadb.HttpClient(
+                  ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/__init__.py", line 293, in HttpClient
+    return ClientCreator(tenant=tenant, database=database, settings=settings)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/client.py", line 75, in __init__
+    user_identity = self.get_user_identity()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/client.py", line 124, in get_user_identity
+    raise ValueError(
+ValueError: Could not connect to a Chroma server. Are you sure it is running?
+[2025-11-09 19:03:51] [ERROR   ] [req:4896de91] [app.services.vector_store:43] Failed to initialize VectorStore: Could not connect to a Chroma server. Are you sure it is running?
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 72, in map_httpcore_exceptions
+    yield
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 236, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 101, in handle_request
+    raise exc
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 78, in handle_request
+    stream = self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 124, in _connect
+    stream = self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpcore/_backends/sync.py", line 207, in connect_tcp
+    with map_exceptions(exc_map):
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: [Errno 8] nodename nor servname provided, or not known
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/client.py", line 122, in get_user_identity
+    return self._server.get_user_identity()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 150, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/fastapi.py", line 211, in get_user_identity
+    return UserIdentity(**self._make_request("get", "/auth/identity"))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/fastapi.py", line 116, in _make_request
+    response = self._session.request(method, url, **cast(Any, kwargs))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_client.py", line 837, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_client.py", line 926, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_client.py", line 954, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_client.py", line 991, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1027, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 235, in handle_request
+    with map_httpcore_exceptions():
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 89, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno 8] nodename nor servname provided, or not known
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/vector_store.py", line 26, in __init__
+    self.client = chromadb.HttpClient(
+                  ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/__init__.py", line 293, in HttpClient
+    return ClientCreator(tenant=tenant, database=database, settings=settings)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/client.py", line 75, in __init__
+    user_identity = self.get_user_identity()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/client.py", line 124, in get_user_identity
+    raise ValueError(
+ValueError: Could not connect to a Chroma server. Are you sure it is running?
+[2025-11-09 19:03:51] [ERROR   ] [req:4896de91] [app.main:62] Request failed: POST /api/content-studio/analyze-patterns [duration:534.22ms] [error:Could not connect to a Chroma server. Are you sure it is running?]
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 157, in call_next
+    message = await recv_stream.receive()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/anyio/streams/memory.py", line 126, in receive
+    raise EndOfStream from None
+anyio.EndOfStream
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/main.py", line 44, in dispatch
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 163, in call_next
+    raise app_exc
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/api/content_studio.py", line 66, in analyze_channel_patterns
+    pattern_analyzer = get_pattern_analyzer()
+                       ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pattern_analyzer.py", line 261, in get_pattern_analyzer
+    _pattern_analyzer = PatternAnalyzer()
+                        ^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pattern_analyzer.py", line 19, in __init__
+    self.vector_store = get_vector_store()
+                        ^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/vector_store.py", line 294, in get_vector_store
+    _vector_store = VectorStore()
+                    ^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/vector_store.py", line 26, in __init__
+    self.client = chromadb.HttpClient(
+                  ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/__init__.py", line 293, in HttpClient
+    return ClientCreator(tenant=tenant, database=database, settings=settings)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/client.py", line 75, in __init__
+    user_identity = self.get_user_identity()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/client.py", line 124, in get_user_identity
+    raise ValueError(
+ValueError: Could not connect to a Chroma server. Are you sure it is running?
+[2025-11-09 19:03:51] [ERROR   ] [req:e80cb0ce] [app.main:62] Request failed: POST /api/content-studio/analyze-patterns [duration:547.41ms] [error:Could not connect to a Chroma server. Are you sure it is running?]
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 157, in call_next
+    message = await recv_stream.receive()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/anyio/streams/memory.py", line 126, in receive
+    raise EndOfStream from None
+anyio.EndOfStream
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/main.py", line 44, in dispatch
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 163, in call_next
+    raise app_exc
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/api/content_studio.py", line 66, in analyze_channel_patterns
+    pattern_analyzer = get_pattern_analyzer()
+                       ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pattern_analyzer.py", line 261, in get_pattern_analyzer
+    _pattern_analyzer = PatternAnalyzer()
+                        ^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pattern_analyzer.py", line 19, in __init__
+    self.vector_store = get_vector_store()
+                        ^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/vector_store.py", line 294, in get_vector_store
+    _vector_store = VectorStore()
+                    ^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/vector_store.py", line 26, in __init__
+    self.client = chromadb.HttpClient(
+                  ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/__init__.py", line 293, in HttpClient
+    return ClientCreator(tenant=tenant, database=database, settings=settings)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/client.py", line 75, in __init__
+    user_identity = self.get_user_identity()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/client.py", line 124, in get_user_identity
+    raise ValueError(
+ValueError: Could not connect to a Chroma server. Are you sure it is running?
+[2025-11-09 19:05:18] [ERROR   ] [req:005ce756] [app.services.vector_store:43] Failed to initialize VectorStore: Could not connect to a Chroma server. Are you sure it is running?
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 72, in map_httpcore_exceptions
+    yield
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 236, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 101, in handle_request
+    raise exc
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 78, in handle_request
+    stream = self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 124, in _connect
+    stream = self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpcore/_backends/sync.py", line 207, in connect_tcp
+    with map_exceptions(exc_map):
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: [Errno 8] nodename nor servname provided, or not known
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/client.py", line 122, in get_user_identity
+    return self._server.get_user_identity()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 150, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/fastapi.py", line 211, in get_user_identity
+    return UserIdentity(**self._make_request("get", "/auth/identity"))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/fastapi.py", line 116, in _make_request
+    response = self._session.request(method, url, **cast(Any, kwargs))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_client.py", line 837, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_client.py", line 926, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_client.py", line 954, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_client.py", line 991, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1027, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 235, in handle_request
+    with map_httpcore_exceptions():
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 89, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno 8] nodename nor servname provided, or not known
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/vector_store.py", line 26, in __init__
+    self.client = chromadb.HttpClient(
+                  ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/__init__.py", line 293, in HttpClient
+    return ClientCreator(tenant=tenant, database=database, settings=settings)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/client.py", line 75, in __init__
+    user_identity = self.get_user_identity()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/client.py", line 124, in get_user_identity
+    raise ValueError(
+ValueError: Could not connect to a Chroma server. Are you sure it is running?
+[2025-11-09 19:05:19] [ERROR   ] [req:df8ce5bc] [app.services.vector_store:43] Failed to initialize VectorStore: Could not connect to a Chroma server. Are you sure it is running?
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 72, in map_httpcore_exceptions
+    yield
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 236, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 101, in handle_request
+    raise exc
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 78, in handle_request
+    stream = self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 124, in _connect
+    stream = self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpcore/_backends/sync.py", line 207, in connect_tcp
+    with map_exceptions(exc_map):
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: [Errno 8] nodename nor servname provided, or not known
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/client.py", line 122, in get_user_identity
+    return self._server.get_user_identity()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 150, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/fastapi.py", line 211, in get_user_identity
+    return UserIdentity(**self._make_request("get", "/auth/identity"))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/fastapi.py", line 116, in _make_request
+    response = self._session.request(method, url, **cast(Any, kwargs))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_client.py", line 837, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_client.py", line 926, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_client.py", line 954, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_client.py", line 991, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1027, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 235, in handle_request
+    with map_httpcore_exceptions():
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 89, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno 8] nodename nor servname provided, or not known
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/vector_store.py", line 26, in __init__
+    self.client = chromadb.HttpClient(
+                  ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/__init__.py", line 293, in HttpClient
+    return ClientCreator(tenant=tenant, database=database, settings=settings)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/client.py", line 75, in __init__
+    user_identity = self.get_user_identity()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/client.py", line 124, in get_user_identity
+    raise ValueError(
+ValueError: Could not connect to a Chroma server. Are you sure it is running?
+[2025-11-09 19:05:19] [ERROR   ] [req:005ce756] [app.main:62] Request failed: POST /api/content-studio/analyze-patterns [duration:369.57ms] [error:Could not connect to a Chroma server. Are you sure it is running?]
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 157, in call_next
+    message = await recv_stream.receive()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/anyio/streams/memory.py", line 126, in receive
+    raise EndOfStream from None
+anyio.EndOfStream
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/main.py", line 44, in dispatch
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 163, in call_next
+    raise app_exc
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/api/content_studio.py", line 66, in analyze_channel_patterns
+    pattern_analyzer = get_pattern_analyzer()
+                       ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pattern_analyzer.py", line 261, in get_pattern_analyzer
+    _pattern_analyzer = PatternAnalyzer()
+                        ^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pattern_analyzer.py", line 19, in __init__
+    self.vector_store = get_vector_store()
+                        ^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/vector_store.py", line 294, in get_vector_store
+    _vector_store = VectorStore()
+                    ^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/vector_store.py", line 26, in __init__
+    self.client = chromadb.HttpClient(
+                  ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/__init__.py", line 293, in HttpClient
+    return ClientCreator(tenant=tenant, database=database, settings=settings)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/client.py", line 75, in __init__
+    user_identity = self.get_user_identity()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/client.py", line 124, in get_user_identity
+    raise ValueError(
+ValueError: Could not connect to a Chroma server. Are you sure it is running?
+[2025-11-09 19:05:19] [ERROR   ] [req:df8ce5bc] [app.main:62] Request failed: POST /api/content-studio/analyze-patterns [duration:375.57ms] [error:Could not connect to a Chroma server. Are you sure it is running?]
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 157, in call_next
+    message = await recv_stream.receive()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/anyio/streams/memory.py", line 126, in receive
+    raise EndOfStream from None
+anyio.EndOfStream
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/main.py", line 44, in dispatch
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 163, in call_next
+    raise app_exc
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/api/content_studio.py", line 66, in analyze_channel_patterns
+    pattern_analyzer = get_pattern_analyzer()
+                       ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pattern_analyzer.py", line 261, in get_pattern_analyzer
+    _pattern_analyzer = PatternAnalyzer()
+                        ^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pattern_analyzer.py", line 19, in __init__
+    self.vector_store = get_vector_store()
+                        ^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/vector_store.py", line 294, in get_vector_store
+    _vector_store = VectorStore()
+                    ^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/vector_store.py", line 26, in __init__
+    self.client = chromadb.HttpClient(
+                  ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/__init__.py", line 293, in HttpClient
+    return ClientCreator(tenant=tenant, database=database, settings=settings)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/client.py", line 75, in __init__
+    user_identity = self.get_user_identity()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/client.py", line 124, in get_user_identity
+    raise ValueError(
+ValueError: Could not connect to a Chroma server. Are you sure it is running?
+[2025-11-09 19:11:15] [ERROR   ] [req:0058604b] [app.services.vector_store:43] Failed to initialize VectorStore: {"error":"KeyError('_type')"} (trace ID: 0)
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/base_http_client.py", line 100, in _raise_chroma_error
+    resp.raise_for_status()
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_models.py", line 763, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Server error '500 Internal Server Error' for url 'http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/vector_store.py", line 33, in __init__
+    self.collection = self.client.get_or_create_collection(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/client.py", line 249, in get_or_create_collection
+    model = self._server.get_or_create_collection(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 150, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/fastapi.py", line 316, in get_or_create_collection
+    return self.create_collection(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 150, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/fastapi.py", line 271, in create_collection
+    resp_json = self._make_request(
+                ^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/fastapi.py", line 117, in _make_request
+    BaseHTTPClient._raise_chroma_error(response)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/base_http_client.py", line 104, in _raise_chroma_error
+    raise Exception(f"{resp.text} (trace ID: {trace_id})")
+Exception: {"error":"KeyError('_type')"} (trace ID: 0)
+[2025-11-09 19:11:29] [ERROR   ] [req:1c40c73a] [app.services.vector_store:43] Failed to initialize VectorStore: {"error":"KeyError('_type')"} (trace ID: 0)
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/base_http_client.py", line 100, in _raise_chroma_error
+    resp.raise_for_status()
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/httpx/_models.py", line 763, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Server error '500 Internal Server Error' for url 'http://localhost:8001/api/v2/tenants/default_tenant/databases/default_database/collections'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/vector_store.py", line 33, in __init__
+    self.collection = self.client.get_or_create_collection(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/client.py", line 249, in get_or_create_collection
+    model = self._server.get_or_create_collection(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 150, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/fastapi.py", line 316, in get_or_create_collection
+    return self.create_collection(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 150, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/fastapi.py", line 271, in create_collection
+    resp_json = self._make_request(
+                ^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/fastapi.py", line 117, in _make_request
+    BaseHTTPClient._raise_chroma_error(response)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/base_http_client.py", line 104, in _raise_chroma_error
+    raise Exception(f"{resp.text} (trace ID: {trace_id})")
+Exception: {"error":"KeyError('_type')"} (trace ID: 0)
+[2025-11-09 19:11:29] [ERROR   ] [req:0058604b] [app.main:62] Request failed: POST /api/content-studio/analyze-patterns [duration:34645.35ms] [error:{"error":"KeyError('_type')"} (trace ID: 0)]
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 157, in call_next
+    message = await recv_stream.receive()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/anyio/streams/memory.py", line 126, in receive
+    raise EndOfStream from None
+anyio.EndOfStream
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/main.py", line 44, in dispatch
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 163, in call_next
+    raise app_exc
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/api/content_studio.py", line 66, in analyze_channel_patterns
+    pattern_analyzer = get_pattern_analyzer()
+                       ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pattern_analyzer.py", line 261, in get_pattern_analyzer
+    _pattern_analyzer = PatternAnalyzer()
+                        ^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pattern_analyzer.py", line 19, in __init__
+    self.vector_store = get_vector_store()
+                        ^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/vector_store.py", line 294, in get_vector_store
+    _vector_store = VectorStore()
+                    ^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/vector_store.py", line 33, in __init__
+    self.collection = self.client.get_or_create_collection(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/client.py", line 249, in get_or_create_collection
+    model = self._server.get_or_create_collection(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 150, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/fastapi.py", line 316, in get_or_create_collection
+    return self.create_collection(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 150, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/fastapi.py", line 271, in create_collection
+    resp_json = self._make_request(
+                ^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/fastapi.py", line 117, in _make_request
+    BaseHTTPClient._raise_chroma_error(response)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/base_http_client.py", line 104, in _raise_chroma_error
+    raise Exception(f"{resp.text} (trace ID: {trace_id})")
+Exception: {"error":"KeyError('_type')"} (trace ID: 0)
+[2025-11-09 19:11:29] [ERROR   ] [req:1c40c73a] [app.main:62] Request failed: POST /api/content-studio/analyze-patterns [duration:34664.93ms] [error:{"error":"KeyError('_type')"} (trace ID: 0)]
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 157, in call_next
+    message = await recv_stream.receive()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/anyio/streams/memory.py", line 126, in receive
+    raise EndOfStream from None
+anyio.EndOfStream
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/main.py", line 44, in dispatch
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 163, in call_next
+    raise app_exc
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/api/content_studio.py", line 66, in analyze_channel_patterns
+    pattern_analyzer = get_pattern_analyzer()
+                       ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pattern_analyzer.py", line 261, in get_pattern_analyzer
+    _pattern_analyzer = PatternAnalyzer()
+                        ^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/pattern_analyzer.py", line 19, in __init__
+    self.vector_store = get_vector_store()
+                        ^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/vector_store.py", line 294, in get_vector_store
+    _vector_store = VectorStore()
+                    ^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/app/services/vector_store.py", line 33, in __init__
+    self.collection = self.client.get_or_create_collection(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/client.py", line 249, in get_or_create_collection
+    model = self._server.get_or_create_collection(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 150, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/fastapi.py", line 316, in get_or_create_collection
+    return self.create_collection(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 150, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/fastapi.py", line 271, in create_collection
+    resp_json = self._make_request(
+                ^^^^^^^^^^^^^^^^^^^
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/fastapi.py", line 117, in _make_request
+    BaseHTTPClient._raise_chroma_error(response)
+  File "/Users/mayursuhasiya/Desktop/Projects/ai-youtuber-studio/backend/.venv/lib/python3.12/site-packages/chromadb/api/base_http_client.py", line 104, in _raise_chroma_error
+    raise Exception(f"{resp.text} (trace ID: {trace_id})")
+Exception: {"error":"KeyError('_type')"} (trace ID: 0)

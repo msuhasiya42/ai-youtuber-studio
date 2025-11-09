@@ -9,7 +9,7 @@ interface ContentStudioProps {
 type Tab = 'script' | 'titles';
 
 const ContentStudio: React.FC<ContentStudioProps> = ({ channelId, channelName }) => {
-  const [activeTab, setActiveTab] = useState<Tab>('script');
+  const [activeTab, setActiveTab] = useState<Tab>('titles');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -85,7 +85,7 @@ const ContentStudio: React.FC<ContentStudioProps> = ({ channelId, channelName })
         {/* Tabs */}
         <div className="border-b border-gray-700 mb-6">
           <nav className="flex gap-8">
-            <button
+            {/* <button
               onClick={() => setActiveTab('script')}
               className={`pb-4 px-2 font-medium border-b-2 transition-colors ${
                 activeTab === 'script'
@@ -94,7 +94,7 @@ const ContentStudio: React.FC<ContentStudioProps> = ({ channelId, channelName })
               }`}
             >
               Script Generator
-            </button>
+            </button> */}
             <button
               onClick={() => setActiveTab('titles')}
               className={`pb-4 px-2 font-medium border-b-2 transition-colors ${

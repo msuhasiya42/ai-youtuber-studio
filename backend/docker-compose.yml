@@ -62,7 +62,7 @@ services:
 
   # ChromaDB Vector Store
   chromadb:
-    image: chromadb/chroma:0.6.3
+    image: chromadb/chroma:latest
     container_name: chromadb
     restart: unless-stopped
     ports:

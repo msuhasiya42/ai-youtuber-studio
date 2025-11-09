@@ -48,7 +48,9 @@ docs/
 
 # Scripts (we'll copy selectively if needed)
 scripts/
-*.sh
+# Allow docker-entrypoint.sh but exclude other .sh files
+# (commenting out *.sh since negation in dockerignore is tricky)
+# *.sh
 
 # Temporary files
 tmp/
@@ -62,4 +64,3 @@ temp/
 Dockerfile
 .dockerignore
 docker-compose*.yml
-!docker-entrypoint.sh

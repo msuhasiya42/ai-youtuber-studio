@@ -24,6 +24,8 @@ export interface PatternAnalysis {
   };
   content_themes: string[];
   recommendations: string[];
+  cached?: boolean;
+  generated_at?: string;
 }
 
 export interface GeneratedScript {
@@ -51,13 +53,20 @@ export interface TitleSuggestion {
   factors: Array<{factor: string; points: number}>;
 }
 
-export async function analyzeChannelPatterns(channelId: number, topN: number = 10): Promise<PatternAnalysis> {
-  const res = await fetch(`${API_URL}/api/content-studio/analyze-patterns`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'include',
-    body: JSON.stringify({ channel_id: channelId, top_n: topN })
-  });
+export async function analyzeChannelPatterns(
+  channelId: number, 
+  topN: number = 10,
+  forceRefresh: boolean = false
+): Promise<PatternAnalysis> {
+  const res = await fetch(
+    `${API_URL}/api/content-studio/analyze-patterns?force_refresh=${forceRefresh}`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ channel_id: channelId, top_n: topN })
+    }
+  );
 
   if (!res.ok) {
     const error = await res.json();
