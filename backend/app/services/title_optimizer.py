@@ -148,7 +148,7 @@ SUCCESSFUL TITLE PATTERNS FROM THIS CHANNEL:
 TRENDING KEYWORDS: {", ".join(common_keywords)}
 
 REQUIREMENTS:
-- Each title should be 50-60 characters
+- Each title should be 20-30 characters
 - Use proven patterns (how-to, numbers, questions, emotional triggers)
 - Include relevant keywords
 - Make them click-worthy but not clickbait
